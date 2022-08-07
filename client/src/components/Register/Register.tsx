@@ -12,10 +12,16 @@ export default function Register() {
 			<Title>Register an account</Title>
 
 			<S.Label htmlFor="username">Username:</S.Label>
-			<S.Input name="username" type="text" onChange={(e) => handleChange(e)} />
+			<S.Input
+				id="username"
+				name="username"
+				type="text"
+				onChange={(e) => handleChange(e)}
+			/>
 
 			<S.Label htmlFor="password">Password:</S.Label>
 			<S.Input
+				id="password"
 				name="password"
 				type="password"
 				onChange={(e) => handleChange(e)}
@@ -24,6 +30,7 @@ export default function Register() {
 
 			<S.Label htmlFor="repeatPassword">Repeat password:</S.Label>
 			<S.Input
+				id="repeatPassword"
 				name="repeatPassword"
 				type="password"
 				onChange={(e) => handleChange(e)}
