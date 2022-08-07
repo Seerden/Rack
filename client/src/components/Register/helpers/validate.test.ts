@@ -18,7 +18,7 @@ describe("isKeyofNewUser", () => {
 describe("isValidNewUser", () => {
 	const newUser: NewUser = {};
 
-	const validUser = structuredClone(newUser);
+	const validUser = { ...newUser };
 	validUser.username = "Billy Bob";
 	validUser.password = "hunter2";
 	validUser.repeatPassword = "hunter2";
