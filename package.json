@@ -1,0 +1,27 @@
+{
+   "name": "rack",
+   "version": "0.0.1",
+   "description": "Weightlifting exercise tracking application",
+   "main": "index.js",
+   "scripts": {
+      "dev": "cd ./docker && docker-compose --file ./docker-compose.dev.yml up --force-recreate --remove-orphans",
+      "dev-build": "cd ./docker && docker-compose --file ./docker-compose.dev.yml up --force-recreate --remove-orphans --build server database store client test-database",
+      "dev-down": "cd ./docker && docker-compose --file ./docker-compose.dev.yml down --volumes",
+      "db": "docker exec -it docker_database_1 psql rack -U postgres",
+      "test-db": "docker exec -it docker_test-database_1 psql rack-test -U postgres -p 5434",
+      "test-back": "docker exec -it docker_backend_1 npm test --watchAll",
+      "store": "docker exec -it docker_store_1 redis-cli"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/seerden/mana.git"
+   },
+   "author": "",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/seerden/rack/issues"
+   },
+   "homepage": "https://github.com/seerden/rack#readme",
+   "devDependencies": {},
+   "dependencies": {}
+}
