@@ -8,3 +8,8 @@ export const newWorkoutState = atom<NewWorkout>({
 		exercises: [],
 	},
 });
+
+export const openIndexState = atom<number>({
+	key: "openIndex",
+	default: 0,
+});
