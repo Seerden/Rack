@@ -1,12 +1,16 @@
 import { Router } from "express";
-import { NewUser } from "../../../types/user.types";
+import { isNewUser } from "../../../types/user.types";
 import { userExists } from "./get-user";
 import { insertUser, parseNewUserForDatabase } from "./register";
 
 export const userRouter = Router({ mergeParams: true });
 
 userRouter.post("/register", async (req, res) => {
-   const newUser: NewUser = req.body.newUser;
+   const newUser: any = req.body.newUser;
+
+   if (!isNewUser(newUser)) {
+      res.status(400).json({ message: "Invalid `newUser` in request body." });
+   }
 
    // This check is also done inside `insertUser`, but this way it's easiest to
    // send the correct response type without complicating `insertUser`
