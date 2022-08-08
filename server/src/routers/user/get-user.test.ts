@@ -1,6 +1,6 @@
 import { UserInput } from "../../../types/user.types";
 import { sqlConnection } from "../../db/init";
-import { getUser } from "./get-user";
+import { getUser, userExists } from "./get-user";
 import { insertUser } from "./register";
 
 describe("getUser", () => {
@@ -27,6 +27,23 @@ describe("getUser", () => {
          const shouldBeUndefined = await getUser({ sql, username: `${Math.random()}` });
 
          expect(shouldBeUndefined).toBeUndefined();
+
+         sql`rollback`;
+      });
+   });
+});
+
+describe("userExists", () => {
+   it("returns true for existing user, false for nonexistent user", async () => {
+      const user: UserInput = {
+         username: `${Math.random()}`,
+         password_hash: "1",
+      };
+      sqlConnection.begin(async (sql) => {
+         await insertUser({ sql, userInput: user });
+
+         expect(userExists({ sql, username: user.username })).toBeTruthy();
+         expect(userExists({ sql, username: `${Math.random()}` })).toBeFalsy();
 
          sql`rollback`;
       });
