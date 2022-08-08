@@ -37,7 +37,7 @@ describe("isValidNewUser", () => {
 	});
 
 	test("returns false if 0-length strings provided", () => {
-		expect(isValidNewUser({ ...validUser, username: "" }));
+		expect(isValidNewUser({ ...validUser, username: "" })).toBeFalsy();
 	});
 
 	test("returns false if passwords don't match", () => {
