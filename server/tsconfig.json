@@ -10,6 +10,7 @@
       "lib": ["ES2021"],
       "incremental": true,
       "skipLibCheck": true,
+      "strictNullChecks": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "baseUrl": ".",
