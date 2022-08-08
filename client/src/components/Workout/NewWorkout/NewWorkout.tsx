@@ -4,7 +4,7 @@ import useNewWorkout from "./hooks/useNewWorkout";
 import * as S from "./NewWorkout.style";
 
 export default function NewWorkout() {
-	const { elements, dispatch } = useNewWorkout();
+	const { elements, dispatch, handleInputChange } = useNewWorkout();
 
 	return (
 		<S.Form>
@@ -13,7 +13,12 @@ export default function NewWorkout() {
 			<SubTitle>Workout details</SubTitle>
 			<S.NameField>
 				<S.Label htmlFor="name">Name</S.Label>
-				<S.Input id="name" name="name" type="text" />
+				<S.Input
+					id="name"
+					name="name"
+					type="text"
+					onChange={(e) => handleInputChange(e)}
+				/>
 			</S.NameField>
 
 			<SubTitle>Exercises</SubTitle>
