@@ -48,6 +48,17 @@ export const Field = styled.div<{ gridArea?: string }>`
 	}
 `;
 
+export const NameField = styled(Field)`
+	background-color: #f3f3f3;
+	margin-bottom: 0.5rem;
+	border-radius: 8px;
+	padding: 0.8rem 1.2rem;
+
+	${Input} {
+		max-width: 15rem;
+	}
+`;
+
 export const InputGroup = styled.span`
 	display: flex;
 	flex-direction: row;
@@ -72,7 +83,6 @@ export const Icon = styled.span`
 `;
 
 export const Fieldset = styled.fieldset`
-	box-sizing: border-box;
 	outline: none;
 	border: none;
 	padding: 0.8rem 1rem;
