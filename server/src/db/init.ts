@@ -17,15 +17,15 @@ const options = {
    user: PG_USER,
    pass: PG_PASS,
    database: PG_DB,
-   port: +PG_PORT,
+   port: +(PG_PORT ?? 5432),
 };
 
 const testOptions = {
    user: PG_USER,
    pass: PG_PASS,
    database: PG_TEST_DB,
-   port: +PG_TEST_PORT,
+   port: +(PG_TEST_PORT ?? 5434),
    host: DB_TEST_HOST,
 };
 
-export const sql = postgres(IS_TEST_ENVIRONMENT ? testOptions : options);
+export const sqlConnection = postgres(IS_TEST_ENVIRONMENT ? testOptions : options);
