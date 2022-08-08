@@ -38,7 +38,7 @@ export const Button = styled.button`
 
 	display: flex;
 	justify-content: center;
-	padding: 0.7rem 1.5rem;
+	padding: 0.52rem 0.98rem;
 
 	outline: none;
 	border: 2px solid #bbb;
