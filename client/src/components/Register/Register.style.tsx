@@ -5,7 +5,7 @@ import { inputLabelStyle } from "../../helpers/theme/snippets/text";
 
 const elementWidth = "200px";
 const boxShadow = css`
-	box-shadow: 0 0.4rem 0.5rem -0.15rem #a5a5a5;
+	box-shadow: 0 0.4rem 0.5rem -0.15rem #c1c1c1;
 `;
 
 export const Form = styled.form`
