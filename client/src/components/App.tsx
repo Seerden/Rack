@@ -6,6 +6,7 @@ import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../helpers/theme/theme";
 import { queryClient } from "../hooks/query-client";
+import NewWorkout from "./Workout/NewWorkout/NewWorkout";
 
 const Register = lazy(() => import("components/Register/Register"));
 
@@ -32,6 +33,9 @@ const App = () => {
 							<Routes>
 								<Route path="/" element={<>Welcome</>} />
 								<Route path="register" element={<Register />} />
+								<Route path="workout">
+									<Route path="new" element={<NewWorkout />} />
+								</Route>
 								<Route path="*" element={<div>404</div>} />
 							</Routes>
 						</main>
