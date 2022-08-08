@@ -1,7 +1,8 @@
 import cors from "cors";
 import "dotenv/config";
 import express, { RequestHandler } from "express";
-import { indexRouter } from "./lib/routers/index-router";
+import { indexRouter } from "./src/routers/index-router";
+import { userRouter } from "./src/routers/user/user-router";
 
 /** Configure Express server and start listening for requests. */
 async function startServer() {
@@ -25,6 +26,7 @@ async function startServer() {
    app.use(express.json() as RequestHandler);
 
    app.use("/", indexRouter);
+   app.use("/user", userRouter);
 
    const port = process.env.PORT || 5000;
 
