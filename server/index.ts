@@ -1,7 +1,7 @@
 import cors from "cors";
 import "dotenv/config";
 import express, { RequestHandler } from "express";
-import { indexRouter } from "./lib/routers/index-router";
+import { indexRouter } from "./src/routers/index-router";
 
 /** Configure Express server and start listening for requests. */
 async function startServer() {
