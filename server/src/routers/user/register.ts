@@ -2,6 +2,7 @@ import { hash } from "bcryptjs";
 import { WithSQL } from "../../../types/sql.types";
 import { NewUser, User, UserInput } from "../../../types/user.types";
 import { sqlConnection } from "../../db/init";
+import { userExists } from "./get-user";
 
 /** Parse a raw NewUser (presumably from the client) to a UserInput for database
  * insertion. */
@@ -21,11 +22,17 @@ export async function insertUser({
    sql = sqlConnection,
    userInput,
 }: WithSQL<{ userInput: UserInput }>) {
-   const [insertedUser] = await sql<[User?]>`
-      insert into users 
-      (username, password) ${sql(userInput)}
-      returning *
-   `;
+   const insertedUser = await sql.begin(async (q) => {
+      if (await userExists({ sql: q, username: userInput.username })) return;
+
+      const [insertedUser] = await q<[User?]>`
+         insert into users 
+         (username, password) ${q(userInput)}
+         returning *
+      `;
+
+      return insertedUser;
+   });
 
    return insertedUser;
 }
