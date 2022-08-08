@@ -1,12 +1,10 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { inputStyle } from "../../helpers/theme/snippets/input";
 import { pageStyle } from "../../helpers/theme/snippets/page";
+import { inputShadow } from "../../helpers/theme/snippets/shadow";
 import { inputLabelStyle } from "../../helpers/theme/snippets/text";
 
 const elementWidth = "200px";
-const boxShadow = css`
-	box-shadow: 0 0.4rem 0.5rem -0.15rem #c1c1c1;
-`;
 
 export const Form = styled.form`
 	${pageStyle};
@@ -26,7 +24,7 @@ export const Input = styled.input`
 
 	&:focus,
 	&:active {
-		${boxShadow};
+		${inputShadow};
 		transform: translateY(-2px);
 	}
 `;
@@ -59,7 +57,7 @@ export const Button = styled.button`
 		&:hover,
 		&:active,
 		&:focus {
-			${boxShadow}
+			${inputShadow}
 			transform: translateY(-4px);
 		}
 
