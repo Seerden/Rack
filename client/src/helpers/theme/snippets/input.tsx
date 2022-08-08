@@ -4,7 +4,8 @@ export const inputStyle = css`
 	font-size: 0.88rem;
 
 	border: 3px solid #f1f1f1;
-	padding: 0.2rem 0.5rem;
+	border-radius: 7px;
+	padding: 0.3rem 0.5rem;
 	outline: none;
 
 	&:active,
