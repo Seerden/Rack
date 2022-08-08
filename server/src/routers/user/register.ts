@@ -7,7 +7,7 @@ import { userExists } from "./get-user";
 /** Parse a raw NewUser (presumably from the client) to a UserInput for database
  * insertion. */
 export async function parseNewUserForDatabase(newUser: NewUser): Promise<UserInput> {
-   const hashedPassword = await hash(newUser.password, 22);
+   const hashedPassword = await hash(newUser.password, 11);
 
    const parsedNewUser: UserInput = {
       username: newUser.username,
@@ -27,7 +27,7 @@ export async function insertUser({
 
       const [insertedUser] = await q<[User?]>`
          insert into users 
-         (username, password) ${q(userInput)}
+         ${q(userInput)}
          returning *
       `;
 
