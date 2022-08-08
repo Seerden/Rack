@@ -1,5 +1,5 @@
 import { FaPlusCircle, FaSave } from "react-icons/fa";
-import { Title } from "../../../helpers/theme/snippets/Title";
+import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
 import useNewWorkout from "./hooks/useNewWorkout";
 import * as S from "./NewWorkout.style";
 
@@ -10,6 +10,13 @@ export default function NewWorkout() {
 		<S.Form>
 			<Title>New workout</Title>
 
+			<SubTitle>Workout details</SubTitle>
+			<S.NameField>
+				<S.Label htmlFor="name">Name</S.Label>
+				<S.Input id="name" name="name" type="text" />
+			</S.NameField>
+
+			<SubTitle>Exercises</SubTitle>
 			{elements}
 
 			<S.ActionBar>
