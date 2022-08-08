@@ -1,36 +1,28 @@
+import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
 
 type NewExerciseProps = {
 	index: number;
 };
 
-function stringWithIndex(s: string, index: number) {
-	return `${s}-${index}`;
-}
-
-const stringWithIndexFunctor = (index: number) => {
-	return (s: string) => stringWithIndex(s, index);
-};
-
 export default function NewExercise({ index }: NewExerciseProps) {
-	const withIndex = stringWithIndexFunctor(index);
-	const exerciseField = withIndex("exercise");
-	const startingWeightField = withIndex("starting_weight");
-	const setsField = withIndex("sets");
-	const repsField = withIndex("reps");
-	const progressionField = withIndex("progression");
+	const { fields } = useNewExercise(index);
 
 	return (
 		<S.Fieldset>
 			<S.Field gridArea="exercise">
-				<S.Label htmlFor={exerciseField}>Exercise:</S.Label>
-				<S.Input type="text" id={exerciseField} name={exerciseField} />
+				<S.Label htmlFor={fields.exercise}>Exercise:</S.Label>
+				<S.Input type="text" id={fields.exercise} name={fields.exercise} />
 			</S.Field>
 
 			<S.Field gridArea="weight">
-				<S.Label htmlFor={startingWeightField}>Starting weight</S.Label>
+				<S.Label htmlFor={fields.starting_weight}>Starting weight</S.Label>
 				<S.InputWithSelect>
-					<S.Input type="text" id={startingWeightField} name={startingWeightField} />
+					<S.Input
+						type="text"
+						id={fields.starting_weight}
+						name={fields.starting_weight}
+					/>
 					<S.Select>
 						<option>kg</option>
 						<option>lbs</option>
@@ -42,21 +34,21 @@ export default function NewExercise({ index }: NewExerciseProps) {
 				<S.Label>Rep scheme:</S.Label>
 				<S.InputGroup>
 					<S.SubField>
-						<S.Label htmlFor={setsField}>Sets</S.Label>
-						<S.Input id={setsField} name={setsField} type={"number"} min={1} />
+						<S.Label htmlFor={fields.sets}>Sets</S.Label>
+						<S.Input id={fields.sets} name={fields.sets} type={"number"} min={1} />
 					</S.SubField>
 					<S.Icon>x</S.Icon>
 					<S.SubField>
-						<S.Label htmlFor={repsField}>Reps</S.Label>
-						<S.Input id={repsField} name={repsField} type={"number"} min={1} />
+						<S.Label htmlFor={fields.reps}>Reps</S.Label>
+						<S.Input id={fields.reps} name={fields.reps} type={"number"} min={1} />
 					</S.SubField>
 				</S.InputGroup>
 			</S.Field>
 
 			<S.Field gridArea="progress">
-				<S.Label htmlFor={progressionField}>Weight progression</S.Label>
+				<S.Label htmlFor={fields.progression}>Weight progression</S.Label>
 				<S.InputWithSelect>
-					<S.Input type="text" id={progressionField} name={progressionField} />
+					<S.Input type="text" id={fields.progression} name={fields.progression} />
 					<S.Select>
 						<option>kg</option>
 						<option>lbs</option>
