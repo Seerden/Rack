@@ -13,3 +13,10 @@ function stringWithIndex(s: string, index: number) {
 export function stringWithIndexFunctor(index: number) {
 	return (s: string) => stringWithIndex(s, index);
 }
+
+/** Split a field like `exercise-1` into ['exercise', 1] */
+export function splitNameAndIndex(s: string) {
+	const [name, index] = s.split("-");
+
+	return [name, +index] as const;
+}
