@@ -4,12 +4,12 @@ import { inputShadow } from "../../../../helpers/theme/snippets/shadow";
 export const fadeIn = keyframes`
    0% {
       opacity: 0;
-      transform: translateX(-200px);
+      transform: scaleY(0)
    } 50% {
       opacity: 1;
    }
    100% {
-      transform: translateX(0);
+      transform: scaleY(1);
    }
 `;
 
