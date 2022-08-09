@@ -14,7 +14,7 @@ export const fadeIn = keyframes`
 `;
 
 export const Details = styled.details`
-	margin-bottom: 0.6rem;
+	border-radius: 9px;
 	padding: 1rem 2rem;
 	${inputShadow};
 
