@@ -102,7 +102,7 @@ export const Fieldset = styled.fieldset`
 	grid-template-columns: repeat(2, 1fr);
 	grid-row-gap: 1.3rem;
 
-	animation: ${fadeIn} 110ms ease-out;
+	animation: ${fadeIn} 145ms ease-in;
 `;
 
 export const InputWithSelect = styled.span`

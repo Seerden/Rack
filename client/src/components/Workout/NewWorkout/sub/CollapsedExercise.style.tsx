@@ -27,6 +27,8 @@ export const Details = styled.details`
 			transition: all 45ms ease;
 		}
 	}
+
+	transition: all 45ms ease;
 `;
 
 export const Summary = styled.summary`
@@ -39,6 +41,6 @@ export const Summary = styled.summary`
 
 	user-select: none;
 
-	animation: ${fadeIn} 110ms ease-out;
+	animation: ${fadeIn} 145ms ease-in;
 	animation-fill-mode: forwards;
 `;
