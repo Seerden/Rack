@@ -33,3 +33,5 @@ export type Exercise = NewExercise & {
 export type WorkoutInput = NewWorkout & {
    exercises: NewExercise[];
 };
+
+export type WorkoutWithExercises = Workout & { exercises: Exercise[] };
