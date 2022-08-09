@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { lazy } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { HashRouter as Router, Link, Route, Routes } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { theme } from "../helpers/theme/theme";
@@ -31,8 +31,23 @@ const App = () => {
 					<Router>
 						<main>
 							<Routes>
-								<Route path="/" element={<>Welcome</>} />
-								<Route path="register" element={<Register />} />
+								<Route
+									path="/"
+									element={
+										<>
+											Welcome{" "}
+											<Link to="/workout/new">Create a new workout</Link>{" "}
+										</>
+									}
+								/>
+								<Route
+									path="register"
+									element={
+										<Suspense fallback={<></>}>
+											<Register />
+										</Suspense>
+									}
+								/>
 								<Route path="workout">
 									<Route path="new" element={<NewWorkout />} />
 								</Route>
