@@ -18,3 +18,5 @@ export interface User extends UserInput {
 export function isNewUser(newUser: any): newUser is NewUser {
    return typeof newUser.username === "string" && typeof newUser.password === "string";
 }
+
+export type WithUserId<T> = T & { user_id: User["user_id"] };
