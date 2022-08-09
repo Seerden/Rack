@@ -1,6 +1,7 @@
 import cors from "cors";
 import "dotenv/config";
 import express, { RequestHandler } from "express";
+import { exerciseRouter } from "./src/routers/exercise/exercise-router";
 import { indexRouter } from "./src/routers/index-router";
 import { userRouter } from "./src/routers/user/user-router";
 
@@ -27,6 +28,7 @@ async function startServer() {
 
    app.use("/", indexRouter);
    app.use("/user", userRouter);
+   app.use("/exercise", exerciseRouter);
 
    const port = process.env.PORT || 5000;
 
