@@ -5,7 +5,7 @@ const exerciseFields = [
 	"starting_weight",
 	"sets",
 	"reps",
-	"progression",
+	"weight_progression",
 ] as const;
 
 export default function useNewExercise(index: number) {
