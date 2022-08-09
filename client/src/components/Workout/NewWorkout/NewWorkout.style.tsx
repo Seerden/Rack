@@ -177,3 +177,9 @@ export const ActionBar = styled.div`
 
 	grid-template-columns: 1fr ${saveWidth};
 `;
+
+export const Exercises = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+`;
