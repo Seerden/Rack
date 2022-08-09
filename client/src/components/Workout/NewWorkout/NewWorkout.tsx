@@ -1,10 +1,13 @@
 import { FaPlusCircle, FaSave } from "react-icons/fa";
+import { useSetRecoilState } from "recoil";
 import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
 import useNewWorkout from "./hooks/useNewWorkout";
 import * as S from "./NewWorkout.style";
+import { openIndexState } from "./state/new-workout-state";
 
 export default function NewWorkout() {
 	const { elements, dispatch, handleInputChange } = useNewWorkout();
+	const setOpenIndex = useSetRecoilState(openIndexState);
 
 	return (
 		<S.Form>
@@ -22,13 +25,14 @@ export default function NewWorkout() {
 			</S.NameField>
 
 			<SubTitle>Exercises</SubTitle>
-			{elements}
+			<S.Exercises>{elements}</S.Exercises>
 
 			<S.ActionBar>
 				<S.AddButton
 					onClick={(e) => {
 						e.preventDefault();
 						dispatch("add");
+						setOpenIndex(elements.length); // automatically 'open' the just-added element
 					}}
 				>
 					<FaPlusCircle />
