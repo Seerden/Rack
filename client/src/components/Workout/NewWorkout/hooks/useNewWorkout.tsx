@@ -1,11 +1,12 @@
 import { useEffect, useReducer } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { splitNameAndIndex } from "../helpers/field-with-index";
-import { newWorkoutState } from "../state/new-workout-state";
+import { newWorkoutState, openIndexState } from "../state/new-workout-state";
 import NewExercise from "../sub/NewExercise";
 
 export default function useNewWorkout() {
 	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
+	const setOpenIndex = useSetRecoilState(openIndexState);
 
 	/** Reducer to manipulate `elements` state. Note that this has to be defined
 	 * inside this component so that it has access to local state setters. */
@@ -14,6 +15,8 @@ export default function useNewWorkout() {
 
 		switch (action) {
 			case "add":
+				setOpenIndex(rowCount);
+
 				return state.concat(
 					<NewExercise
 						key={rowCount}
