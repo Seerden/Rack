@@ -1,4 +1,4 @@
-create table workouts if not exists (
+create table if not exists workouts (
    workout_id serial primary key,
    user_id serial not null,
    name varchar(32) not null,
