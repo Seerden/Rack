@@ -3,6 +3,7 @@ import { inputStyle } from "../../../helpers/theme/snippets/input";
 import { pageStyle } from "../../../helpers/theme/snippets/page";
 import { inputShadow } from "../../../helpers/theme/snippets/shadow";
 import { inputLabelStyle } from "../../../helpers/theme/snippets/text";
+import { fadeIn } from "./sub/CollapsedExercise.style";
 
 export const Form = styled.form`
 	${pageStyle};
@@ -100,6 +101,8 @@ export const Fieldset = styled.fieldset`
 		"scheme progress";
 	grid-template-columns: repeat(2, 1fr);
 	grid-row-gap: 1.3rem;
+
+	animation: ${fadeIn} 110ms ease-out;
 `;
 
 export const InputWithSelect = styled.span`
@@ -140,7 +143,6 @@ export const Button = styled.button`
 	background-color: inherit;
 
 	&:hover,
-	&:active,
 	&:focus {
 		box-shadow: 0 0.6rem 0rem -0.5rem #666;
 
