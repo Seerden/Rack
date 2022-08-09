@@ -6,6 +6,6 @@ create table if not exists workouts (
    
    constraint fk_workout_user 
       foreign key(user_id)
-      references users(user)_id
+      references users(user_id)
       on delete cascade
 );
