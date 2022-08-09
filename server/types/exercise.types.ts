@@ -3,6 +3,7 @@ export type NewWorkout = {
    description?: string;
 };
 
+/** Matches type of `workouts` table. */
 export type Workout = NewWorkout & {
    workout_id: number;
    user_id: number;
@@ -22,7 +23,13 @@ export type NewExercise = {
    weight_unit: WEIGHT_UNITS;
 };
 
+/** Matches type of `exercises` table. */
 export type Exercise = NewExercise & {
    exercise_id: number;
    workout_id: number;
+};
+
+/** This is the expected type of the object coming from the client. */
+export type WorkoutInput = NewWorkout & {
+   exercises: NewExercise[];
 };
