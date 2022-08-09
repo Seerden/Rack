@@ -15,8 +15,6 @@ export default function useNewWorkout() {
 
 		switch (action) {
 			case "add":
-				setOpenIndex(rowCount);
-
 				return state.concat(
 					<NewExercise
 						key={rowCount}
