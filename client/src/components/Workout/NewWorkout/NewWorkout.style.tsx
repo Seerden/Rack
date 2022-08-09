@@ -173,8 +173,11 @@ export const SaveButton = styled(Button)`
 `;
 
 export const ActionBar = styled.div`
-	display: grid;
+	position: sticky;
+	bottom: 0;
+	border-radius: 5px;
 
+	display: grid;
 	grid-template-columns: 1fr ${saveWidth};
 `;
 
