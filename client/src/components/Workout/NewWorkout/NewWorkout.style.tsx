@@ -49,7 +49,27 @@ export const Field = styled.div<{ gridArea?: string }>`
 	}
 `;
 
-export const NameField = styled(Field)`
+export const Select = styled.select`
+	height: 100%;
+	border: 3px solid transparent;
+	background-color: #fff;
+
+	&:active,
+	&:focus {
+		border-color: #ddd;
+		outline: none;
+	}
+`;
+
+export const MetaField = styled(Field)`
+	display: grid;
+	grid-template-columns: 1fr max-content;
+
+	div {
+		display: flex;
+		flex-direction: column;
+	}
+
 	background-color: #f3f3f3;
 	margin-bottom: 0.5rem;
 	border-radius: 8px;
@@ -57,6 +77,10 @@ export const NameField = styled(Field)`
 
 	${Input} {
 		max-width: 15rem;
+	}
+
+	${Select} {
+		max-width: 6rem;
 	}
 `;
 
@@ -105,24 +129,25 @@ export const Fieldset = styled.fieldset`
 	animation: ${fadeIn} 145ms ease-in;
 `;
 
-export const InputWithSelect = styled.span`
+export const InputWithUnit = styled.span`
 	display: flex;
 
 	${Input} {
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
+		max-width: 5rem;
 	}
-`;
 
-export const Select = styled.select`
-	height: 100%;
-	border: 3px solid transparent;
-	background-color: #eee;
-
-	&:active,
-	&:focus {
-		border-color: #ddd;
-		outline: none;
+	span {
+		display: flex;
+		height: 100%;
+		padding: 0.3rem 0.6rem;
+		padding-right: 0.75rem;
+		align-self: center;
+		font-size: 0.88rem;
+		background-color: #eee;
+		user-select: none;
+		border-radius: 0 7px 7px 0;
 	}
 `;
 
