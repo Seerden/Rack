@@ -9,7 +9,7 @@ import NewExercise from "../sub/NewExercise";
 export default function useNewWorkout() {
 	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
 	const { mutate } = useCreateWorkout();
-   const weightUnit = useRecoilValue(weightUnitState);
+	const weightUnit = useRecoilValue(weightUnitState);
 
 	/** Reducer to manipulate `elements` state. Note that this has to be defined
 	 * inside this component so that it has access to local state setters. */
