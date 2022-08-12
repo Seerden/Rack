@@ -1,7 +1,7 @@
 import { stringWithIndexFunctor } from "../helpers/field-with-index";
 
 const exerciseFields = [
-	"exercise",
+	"exercise_name",
 	"starting_weight",
 	"sets",
 	"reps",
