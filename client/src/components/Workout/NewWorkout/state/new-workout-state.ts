@@ -13,3 +13,8 @@ export const openIndexState = atom<number>({
 	key: "openIndex",
 	default: 0,
 });
+
+export const weightUnitState = atom<WeightUnit>({
+	key: "weightUnit",
+	default: "kg",
+});
