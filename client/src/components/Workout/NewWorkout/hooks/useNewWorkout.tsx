@@ -1,11 +1,13 @@
-import { useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import { useRecoilState } from "recoil";
+import useCreateWorkout from "../../../../helpers/fetch/workouts/useCreateWorkout";
 import { splitNameAndIndex } from "../helpers/field-with-index";
 import { newWorkoutState } from "../state/new-workout-state";
 import NewExercise from "../sub/NewExercise";
 
 export default function useNewWorkout() {
 	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
+	const { mutate } = useCreateWorkout();
 
 	/** Reducer to manipulate `elements` state. Note that this has to be defined
 	 * inside this component so that it has access to local state setters. */
@@ -51,5 +53,14 @@ export default function useNewWorkout() {
 		}
 	}
 
-	return { elements, dispatch, handleInputChange } as const;
+	const handleSubmit = useCallback(() => {
+		mutate(newWorkout, {
+			onSuccess: (data) => {
+				// TODO: once authentication ipmlemented, redirect to /workouts
+				alert(JSON.stringify(data));
+			},
+		});
+	}, [newWorkout]);
+
+	return { elements, dispatch, handleInputChange, handleSubmit } as const;
 }
