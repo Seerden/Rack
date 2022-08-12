@@ -4,9 +4,9 @@ import {
    Workout,
    WorkoutInput,
    WorkoutWithExercises,
-} from "../../../types/exercise.types";
+} from "../../../types/shared/exercise.types";
+import { WithUserId } from "../../../types/shared/user.types";
 import { WithSQL } from "../../../types/sql.types";
-import { WithUserId } from "../../../types/user.types";
 import { sqlConnection } from "../../db/init";
 import { newExercisesWithWorkoutId } from "./exercises-with-ids";
 

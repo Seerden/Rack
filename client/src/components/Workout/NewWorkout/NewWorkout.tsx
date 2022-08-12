@@ -1,7 +1,7 @@
 import { FaPlusCircle, FaSave } from "react-icons/fa";
 import { useSetRecoilState } from "recoil";
 import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
-import { WeightUnit } from "../../../types/exercise.types";
+import { WeightUnit } from "../../../types/shared/exercise.types";
 import useNewWorkout from "./hooks/useNewWorkout";
 import * as S from "./NewWorkout.style";
 import { openIndexState, weightUnitState } from "./state/new-workout-state";

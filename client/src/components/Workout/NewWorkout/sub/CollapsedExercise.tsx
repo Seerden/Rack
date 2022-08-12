@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { TbCaretLeft } from "react-icons/tb";
 import { useRecoilState } from "recoil";
-import { NewExercise } from "../../../../types/server/exercise.types";
+import { NewExercise } from "../../../../types/shared/exercise.types";
 import { openIndexState } from "../state/new-workout-state";
 import * as S from "./CollapsedExercise.style";
 

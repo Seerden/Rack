@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { WorkoutInput } from "../../../types/exercise.types";
+import { WorkoutInput } from "../../../types/shared/exercise.types";
 import { createWorkout } from "./create-workout";
 
 export const exerciseRouter = Router({ mergeParams: true });

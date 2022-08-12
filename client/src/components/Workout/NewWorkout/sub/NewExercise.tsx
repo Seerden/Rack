@@ -1,6 +1,6 @@
 import { ChangeEventHandler, useMemo } from "react";
 import { useRecoilValue } from "recoil";
-import { NewExercise } from "../../../../types/exercise.types";
+import { NewExercise, WEIGHT_UNITS } from "../../../../types/shared/exercise.types";
 import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
 import {
@@ -16,12 +16,12 @@ type NewExerciseProps = {
 };
 
 const defaultExercise: NewExercise = {
-	exercise: "",
+	exercise_name: "",
 	reps: 0,
 	sets: 0,
 	starting_weight: 0,
 	weight_progression: 0,
-	weight_unit: "kg",
+	weight_unit: WEIGHT_UNITS.KG,
 };
 
 export default function NewExercise({ index, onChange }: NewExerciseProps) {

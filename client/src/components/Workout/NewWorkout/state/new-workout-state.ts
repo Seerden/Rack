@@ -1,6 +1,9 @@
 import { atom } from "recoil";
-import { WeightUnit } from "../../../../types/exercise.types";
-import { NewExercise, WorkoutInput } from "../../../../types/server/exercise.types";
+import {
+	NewExercise,
+	WeightUnit,
+	WorkoutInput,
+} from "../../../../types/shared/exercise.types";
 
 export type RawNewWorkout = Omit<WorkoutInput, "exercises"> & {
 	exercises: Array<Omit<NewExercise, "weight_unit">>;
