@@ -6,11 +6,16 @@ import * as S from "./NewWorkout.style";
 import { openIndexState } from "./state/new-workout-state";
 
 export default function NewWorkout() {
-	const { elements, dispatch, handleInputChange } = useNewWorkout();
+	const { elements, dispatch, handleInputChange, handleSubmit } = useNewWorkout();
 	const setOpenIndex = useSetRecoilState(openIndexState);
 
 	return (
-		<S.Form>
+		<S.Form
+			onSubmit={(e) => {
+				e.preventDefault();
+				handleSubmit();
+			}}
+		>
 			<Title>New workout</Title>
 
 			<SubTitle>Workout details</SubTitle>
