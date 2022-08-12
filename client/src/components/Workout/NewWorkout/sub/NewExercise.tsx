@@ -39,12 +39,12 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 	return (
 		<S.Fieldset>
 			<S.Field gridArea="exercise">
-				<S.Label htmlFor={fields.exercise}>Exercise:</S.Label>
+				<S.Label htmlFor={fields.exercise_name}>Exercise:</S.Label>
 				<S.Input
 					type="text"
-					id={fields.exercise}
-					name={fields.exercise}
-					defaultValue={exercise.exercise}
+					id={fields.exercise_name}
+					name={fields.exercise_name}
+					defaultValue={exercise.exercise_name}
 					onChange={(e) => onChange?.(e)}
 				/>
 			</S.Field>

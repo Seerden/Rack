@@ -1,7 +1,7 @@
 import { atom } from "recoil";
-import { NewWorkout } from "../../../../types/exercise.types";
+import { WorkoutInput } from "../../../../types/server/exercise.types";
 
-export const newWorkoutState = atom<NewWorkout>({
+export const newWorkoutState = atom<WorkoutInput>({
 	key: "newWorkout",
 	default: {
 		name: "",
