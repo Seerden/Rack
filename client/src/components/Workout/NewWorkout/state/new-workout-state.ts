@@ -1,7 +1,12 @@
 import { atom } from "recoil";
-import { WorkoutInput } from "../../../../types/server/exercise.types";
+import { WeightUnit } from "../../../../types/exercise.types";
+import { NewExercise, WorkoutInput } from "../../../../types/server/exercise.types";
 
-export const newWorkoutState = atom<WorkoutInput>({
+export type RawNewWorkout = Omit<WorkoutInput, "exercises"> & {
+	exercises: Array<Omit<NewExercise, "weight_unit">>;
+};
+
+export const newWorkoutState = atom<RawNewWorkout>({
 	key: "newWorkout",
 	default: {
 		name: "",

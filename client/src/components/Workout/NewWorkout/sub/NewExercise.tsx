@@ -3,7 +3,11 @@ import { useRecoilValue } from "recoil";
 import { NewExercise } from "../../../../types/exercise.types";
 import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
-import { newWorkoutState, openIndexState } from "../state/new-workout-state";
+import {
+	newWorkoutState,
+	openIndexState,
+	weightUnitState,
+} from "../state/new-workout-state";
 import CollapsedExercise from "./CollapsedExercise";
 
 type NewExerciseProps = {
@@ -23,6 +27,7 @@ const defaultExercise: NewExercise = {
 export default function NewExercise({ index, onChange }: NewExerciseProps) {
 	const { fields } = useNewExercise(index);
 	const newWorkout = useRecoilValue(newWorkoutState);
+	const weightUnit = useRecoilValue(weightUnitState);
 	const exercise = useMemo(() => {
 		return newWorkout?.exercises[index] ?? defaultExercise;
 	}, [newWorkout]);
@@ -51,7 +56,7 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 
 			<S.Field gridArea="weight">
 				<S.Label htmlFor={fields.starting_weight}>Starting weight</S.Label>
-				<S.InputWithSelect>
+				<S.InputWithUnit>
 					<S.Input
 						type="text"
 						id={fields.starting_weight}
@@ -59,11 +64,8 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 						defaultValue={exercise.starting_weight}
 						onChange={(e) => onChange?.(e)}
 					/>
-					<S.Select>
-						<option>kg</option>
-						<option>lbs</option>
-					</S.Select>
-				</S.InputWithSelect>
+					<span>{weightUnit}</span>
+				</S.InputWithUnit>
 			</S.Field>
 
 			<S.Field gridArea="scheme">
@@ -97,7 +99,7 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 
 			<S.Field gridArea="progress">
 				<S.Label htmlFor={fields.weight_progression}>Weight progression</S.Label>
-				<S.InputWithSelect>
+				<S.InputWithUnit>
 					<S.Input
 						type="text"
 						defaultValue={exercise.weight_progression}
@@ -105,11 +107,8 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 						name={fields.weight_progression}
 						onChange={(e) => onChange?.(e)}
 					/>
-					<S.Select>
-						<option>kg</option>
-						<option>lbs</option>
-					</S.Select>
-				</S.InputWithSelect>
+					<span>{weightUnit}</span>
+				</S.InputWithUnit>
 			</S.Field>
 		</S.Fieldset>
 	);

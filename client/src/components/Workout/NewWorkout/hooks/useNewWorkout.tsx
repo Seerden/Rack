@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useReducer } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import useCreateWorkout from "../../../../helpers/fetch/workouts/useCreateWorkout";
 import { splitNameAndIndex } from "../helpers/field-with-index";
-import { newWorkoutState } from "../state/new-workout-state";
+import { parseNewWorkout } from "../helpers/parse";
+import { newWorkoutState, weightUnitState } from "../state/new-workout-state";
 import NewExercise from "../sub/NewExercise";
 
 export default function useNewWorkout() {
 	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
 	const { mutate } = useCreateWorkout();
+   const weightUnit = useRecoilValue(weightUnitState);
 
 	/** Reducer to manipulate `elements` state. Note that this has to be defined
 	 * inside this component so that it has access to local state setters. */
@@ -36,13 +38,16 @@ export default function useNewWorkout() {
 		console.log({ newWorkout });
 	}, [newWorkout]);
 
-	function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+	function handleInputChange(
+		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+	) {
 		const { name, value } = e.currentTarget;
 
 		const [field, exerciseIndex] = splitNameAndIndex(name);
 
-		// If true, we're changing an exercise field, not a workout field.
-		if (typeof exerciseIndex === "number") {
+		// NewExercise input names are like 'exercise_name-1', and NewWorkout
+		// inputs like 'name' -- these, when split, will have exerciseIndex === NaN.
+		if (!isNaN(exerciseIndex)) {
 			setNewWorkout((cur) => {
 				const exercises = structuredClone(cur.exercises);
 
@@ -50,11 +55,16 @@ export default function useNewWorkout() {
 
 				return { ...cur, exercises };
 			});
+		} else {
+			setNewWorkout((cur) => ({
+				...cur,
+				[name]: value,
+			}));
 		}
 	}
 
 	const handleSubmit = useCallback(() => {
-		mutate(newWorkout, {
+		mutate(parseNewWorkout(newWorkout, weightUnit), {
 			onSuccess: (data) => {
 				// TODO: once authentication ipmlemented, redirect to /workouts
 				alert(JSON.stringify(data));
