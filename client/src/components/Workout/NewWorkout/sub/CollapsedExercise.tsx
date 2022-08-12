@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { TbCaretLeft } from "react-icons/tb";
 import { useRecoilState } from "recoil";
-import { NewExercise } from "../../../../types/exercise.types";
+import { NewExercise } from "../../../../types/server/exercise.types";
 import { openIndexState } from "../state/new-workout-state";
 import * as S from "./CollapsedExercise.style";
 
@@ -9,7 +9,7 @@ type CollapsedExerciseProps = Partial<NewExercise>;
 
 export default function CollapsedExercise({
 	index,
-	exercise,
+	exercise_name,
 	sets,
 	reps,
 	starting_weight,
@@ -34,7 +34,9 @@ export default function CollapsedExercise({
 						setOpenIndex(index);
 					}}
 				>
-					{exercise && exercise?.length > 0 ? exercise : "Unnamed exercise"}
+					{exercise_name && exercise_name?.length > 0
+						? exercise_name
+						: "Unnamed exercise"}
 					<TbCaretLeft />
 				</S.Summary>
 			</S.Details>
