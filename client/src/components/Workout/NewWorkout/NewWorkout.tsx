@@ -1,15 +1,23 @@
 import { FaPlusCircle, FaSave } from "react-icons/fa";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
 import { WeightUnit } from "../../../types/shared/exercise.types";
+import { parseNewWorkout } from "./helpers/parse";
+import { isValidNewWorkout } from "./helpers/validate";
 import useNewWorkout from "./hooks/useNewWorkout";
 import * as S from "./NewWorkout.style";
-import { openIndexState, weightUnitState } from "./state/new-workout-state";
+import {
+	newWorkoutState,
+	openIndexState,
+	weightUnitState,
+} from "./state/new-workout-state";
 
 export default function NewWorkout() {
 	const { elements, dispatch, handleInputChange, handleSubmit } = useNewWorkout();
+	const newWorkout = useRecoilValue(newWorkoutState);
 	const setOpenIndex = useSetRecoilState(openIndexState);
-	const setWeightUnit = useSetRecoilState(weightUnitState);
+	const [weightUnit, setWeightUnit] = useRecoilState(weightUnitState);
+	const isValid = isValidNewWorkout(parseNewWorkout(newWorkout, weightUnit));
 
 	return (
 		<S.Form
@@ -58,9 +66,9 @@ export default function NewWorkout() {
 					<FaPlusCircle />
 					Add another exercise
 				</S.AddButton>
-				<S.SaveButton>
-					<FaSave fill="forestgreen" />
-					Save new workout
+				<S.SaveButton disabled={!isValid}>
+					<FaSave fill={isValid ? "forestgreen" : "orangered"} />
+					{isValid ? "Save new workout" : "Fill out all fields"}
 				</S.SaveButton>
 			</S.ActionBar>
 		</S.Form>
