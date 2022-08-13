@@ -9,11 +9,9 @@ type CollapsedExerciseProps = Partial<NewExercise>;
 
 export default function CollapsedExercise({
 	index,
-	exercise_name,
-	sets,
-	reps,
-	starting_weight,
-}: CollapsedExerciseProps & { index: number }) {
+	isValid,
+	...exercise
+}: CollapsedExerciseProps & { index: number; isValid?: boolean }) {
 	const [openIndex, setOpenIndex] = useRecoilState(openIndexState);
 
 	useEffect(() => {
@@ -21,25 +19,24 @@ export default function CollapsedExercise({
 	}, [openIndex]);
 
 	return (
-		<>
-			<S.Details
+		<S.Details
+			isValid={isValid}
+			onClick={(e) => {
+				e.stopPropagation();
+				setOpenIndex(index);
+			}}
+		>
+			<S.Summary
 				onClick={(e) => {
 					e.stopPropagation();
 					setOpenIndex(index);
 				}}
 			>
-				<S.Summary
-					onClick={(e) => {
-						e.stopPropagation();
-						setOpenIndex(index);
-					}}
-				>
-					{exercise_name && exercise_name?.length > 0
-						? exercise_name
-						: "Unnamed exercise"}
-					<TbCaretLeft />
-				</S.Summary>
-			</S.Details>
-		</>
+				{exercise.exercise_name && exercise.exercise_name?.length > 0
+					? exercise.exercise_name
+					: "Unnamed exercise"}
+				<TbCaretLeft />
+			</S.Summary>
+		</S.Details>
 	);
 }

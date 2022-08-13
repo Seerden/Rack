@@ -1,6 +1,7 @@
 import { ChangeEventHandler, useMemo } from "react";
 import { useRecoilValue } from "recoil";
 import { NewExercise, WEIGHT_UNITS } from "../../../../types/shared/exercise.types";
+import { isValidNewExercise } from "../helpers/validate";
 import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
 import {
@@ -32,17 +33,20 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 		return newWorkout?.exercises[index] ?? defaultExercise;
 	}, [newWorkout]);
 
+	const isValid = isValidNewExercise(exercise);
+
 	const openIdx = useRecoilValue(openIndexState);
 	const collapsed = useMemo(() => {
 		return openIdx !== index;
 	}, [openIdx]);
 
 	if (collapsed) {
-		return <CollapsedExercise index={index} {...exercise} />;
+		console.log({ isValid, a: 1 });
+		return <CollapsedExercise index={index} {...exercise} isValid={isValid} />;
 	}
 
 	return (
-		<S.Fieldset>
+		<S.Fieldset isValid={isValid}>
 			<S.Field gridArea="exercise">
 				<S.Label htmlFor={fields.exercise_name}>Exercise:</S.Label>
 				<S.Input
