@@ -1,8 +1,11 @@
-export type NewUser = {
+export type UserLogin = {
 	password: string;
-	repeatPassword: string;
 	username: string;
 };
+
+export interface NewUser extends UserLogin {
+	repeatPassword: string;
+}
 
 export type UserInput = {
 	password_hash: string;
