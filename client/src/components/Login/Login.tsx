@@ -1,7 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router";
+import { Title } from "../../helpers/theme/snippets/Title";
 import useAuth from "../../hooks/useAuth";
 import { UserLogin } from "../../types/shared/user.types";
+import * as S from "./Login.style";
 
 export default function Login() {
 	const [user, setUser] = useState<UserLogin>({ username: "", password: "" });
@@ -19,7 +21,7 @@ export default function Login() {
 	const { login } = useAuth();
 
 	return (
-		<form
+		<S.Form
 			onSubmit={(e) => {
 				e.preventDefault();
 				login(user, {
@@ -29,9 +31,11 @@ export default function Login() {
 				});
 			}}
 		>
+			<Title>Log in</Title>
+
 			<div>
-				<label htmlFor="username">Username</label>
-				<input
+				<S.Label htmlFor="username">Username</S.Label>
+				<S.Input
 					type="text"
 					name="username"
 					id="username"
@@ -40,17 +44,17 @@ export default function Login() {
 			</div>
 
 			<div>
-				<label htmlFor="password">Password</label>
-				<input
+				<S.Label htmlFor="password">Password</S.Label>
+				<S.Input
 					type="password"
 					name="password"
 					id="password"
 					onChange={(e) => handleInputChange(e)}
 				/>
 			</div>
-			<button disabled={!isValidUser(user)} type="submit">
-				Log in
-			</button>
-		</form>
+			<S.Button disabled={!isValidUser(user)} type="submit">
+				{isValidUser(user) ? "Log in" : "Fill in all fields"}
+			</S.Button>
+		</S.Form>
 	);
 }
