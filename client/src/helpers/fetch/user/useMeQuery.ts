@@ -22,5 +22,8 @@ export default function useMeQuery({
 			console.log("No user found, destroying local user");
 			localUser.destroy();
 		},
+		retry: false,
+		refetchOnMount: false,
+		refetchOnWindowFocus: false,
 	});
 }
