@@ -6,6 +6,6 @@ export async function getMe({ req, res }: { req: Request; res: Response }) {
 	if (req.session?.user_id) {
 		return res.json({ user: await getUser({ user_id: req.session.user_id }) });
 	} else {
-		return res.status(401).json({ message: "No active user." });
+		return res.status(401).json({ user: null, message: "No active user." });
 	}
 }
