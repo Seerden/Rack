@@ -7,8 +7,11 @@ import Redis from "ioredis";
 export const redisClient = new Redis("redis://store:6379");
 export const RedisStore = connectRedis(session);
 
+export const sessionCookieName = "rack-session";
+
 export const redisSession: session.SessionOptions = {
 	store: new RedisStore({ client: redisClient }),
+	name: sessionCookieName,
 	saveUninitialized: false,
 	secret: process.env.SESSION_SECRET!,
 	resave: false,
