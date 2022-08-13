@@ -4,8 +4,8 @@ import { lazy, Suspense } from "react";
 import { HashRouter as Router, Link, Route, Routes } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
+import { queryClient } from "../helpers/query-client";
 import { theme } from "../helpers/theme/theme";
-import { queryClient } from "../hooks/query-client";
 import NewWorkout from "./Workout/NewWorkout/NewWorkout";
 
 const Register = lazy(() => import("components/Register/Register"));
