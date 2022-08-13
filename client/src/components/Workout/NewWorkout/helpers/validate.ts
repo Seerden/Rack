@@ -3,7 +3,7 @@ import { NewExercise, WorkoutInput } from "../../../../types/shared/exercise.typ
 export function isValidNewWorkout(workout: WorkoutInput) {
 	const { exercises, name } = workout;
 
-	return name?.length && exercises.every((e) => isValidNewExercise(e));
+	return name?.length > 0 && exercises.every((e) => isValidNewExercise(e));
 }
 
 export function isValidNewExercise(
