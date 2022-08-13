@@ -4,6 +4,7 @@ import {
 	WorkoutInput,
 } from "../../../../types/shared/exercise.types";
 import { RawNewWorkout } from "../state/new-workout-state";
+import { filterValidExercises } from "./filter";
 
 /**
  * The NewWorkout/NewExercise form component combination results in a
@@ -16,10 +17,12 @@ export function parseNewWorkout(
 ): WorkoutInput {
 	const exercises = structuredClone(newWorkout.exercises);
 
-	const exercisesWithUnit = exercises.map((e) => ({
-		...e,
-		weight_unit,
-	})) as NewExercise[];
+	const exercisesWithUnit = filterValidExercises(
+		exercises.map((e) => ({
+			...e,
+			weight_unit,
+		})) as NewExercise[]
+	);
 
 	return { ...newWorkout, exercises: exercisesWithUnit };
 }
