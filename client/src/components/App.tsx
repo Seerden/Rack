@@ -9,6 +9,8 @@ import { theme } from "../helpers/theme/theme";
 import NewWorkout from "./Workout/NewWorkout/NewWorkout";
 
 const Register = lazy(() => import("components/Register/Register"));
+const Login = lazy(() => import("components/Login/Login"));
+const Header = lazy(() => import("components/Header/Header"));
 
 const client = queryClient;
 
@@ -30,6 +32,7 @@ const App = () => {
 				<ThemeProvider theme={theme}>
 					<Router>
 						<main>
+							<Header />
 							<Routes>
 								<Route
 									path="/"
@@ -45,6 +48,15 @@ const App = () => {
 									element={
 										<Suspense fallback={<></>}>
 											<Register />
+										</Suspense>
+									}
+								/>
+
+								<Route
+									path="login"
+									element={
+										<Suspense fallback={<></>}>
+											<Login />
 										</Suspense>
 									}
 								/>
