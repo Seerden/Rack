@@ -18,7 +18,7 @@ export const Details = styled.details<{ isValid?: boolean }>`
 	padding: 1rem 2rem;
 	${inputShadow};
 
-	border-left: 3px solid ${(p) => (p.isValid ? "lime" : "orangered")};
+	border-left: 3px solid ${(p) => (p.isValid ? "green" : "orangered")};
 	transition: all 45ms ease-in;
 
 	&:hover {
