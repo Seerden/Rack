@@ -8,3 +8,6 @@ docker/pg-data-test
 docker/redis-data
 
 **/**/*.ffs_db
+
+client/*.env
+server/*.env
