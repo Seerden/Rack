@@ -107,10 +107,15 @@ export const Icon = styled.span`
 	padding-bottom: 0.5rem;
 `;
 
-export const Fieldset = styled.fieldset`
+export const Fieldset = styled.fieldset<{ isValid?: boolean }>`
 	outline: none;
 	border: none;
 	padding: 0.8rem 1rem;
+
+	border-left: 3px solid ${(p) => (p.isValid ? "lime" : "orangered")};
+	border-radius: ${(p) => (p.isValid ? 5 : 3)}px;
+
+	transition: all 45ms ease-out;
 
 	${inputShadow};
 

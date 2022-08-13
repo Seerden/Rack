@@ -13,10 +13,13 @@ export const fadeIn = keyframes`
    }
 `;
 
-export const Details = styled.details`
+export const Details = styled.details<{ isValid?: boolean }>`
 	border-radius: 9px;
 	padding: 1rem 2rem;
 	${inputShadow};
+
+	border-left: 3px solid ${(p) => (p.isValid ? "lime" : "orangered")};
+	transition: all 45ms ease-in;
 
 	&:hover {
 		background-color: #f3f3f3;
