@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { isNewUser } from "../../../types/shared/user.types";
+import { destroySession } from "./destroy-session";
 import { userExists } from "./get-user";
+import { login } from "./log-in";
+import { getMe } from "./me";
 import { insertUser, parseNewUserForDatabase } from "./register";
 
 export const userRouter = Router({ mergeParams: true });
@@ -22,4 +25,16 @@ userRouter.post("/register", async (req, res) => {
 	});
 
 	return res.status(201).json({ user: insertedUser });
+});
+
+userRouter.post("/login", async (req, res) => {
+	await login(req.body.user, req, res);
+});
+
+userRouter.post("/logout", (req, res) => {
+	destroySession({ req, res });
+});
+
+userRouter.get("/me", async (req, res) => {
+	await getMe({ req, res });
 });
