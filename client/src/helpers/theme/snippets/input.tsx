@@ -1,4 +1,5 @@
 import { css } from "styled-components";
+import { inputShadow } from "./shadow";
 
 export const inputStyle = css`
 	font-size: 0.88rem;
@@ -16,3 +17,12 @@ export const inputStyle = css`
 
 	transition: all 45ms ease-out;
 `;
+
+export const activeInputStyle = css`
+   &:focus,
+	&:active {
+		${inputShadow};
+		transform: translateY(-2px);
+	}
+
+`
