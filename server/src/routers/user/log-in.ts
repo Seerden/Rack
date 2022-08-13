@@ -1,6 +1,6 @@
 import { compare } from "bcryptjs";
 import { Request, Response } from "express";
-import { NewUser } from "../../../types/shared/user.types";
+import { UserLogin } from "../../../types/shared/user.types";
 import { destroySession } from "./destroy-session";
 import { getUser } from "./get-user";
 
@@ -8,11 +8,7 @@ import { getUser } from "./get-user";
  * Request handler that logs a user in if provided a valid usernmae/password
  * combination.
  */
-export async function login(
-	user: Omit<NewUser, "repeat_password">,
-	req: Request,
-	res: Response
-) {
+export async function login(user: UserLogin, req: Request, res: Response) {
 	const foundUser = await getUser({ username: user.username });
 
 	if (foundUser) {
