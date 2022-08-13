@@ -1,6 +1,8 @@
 import { User } from "../../types/shared/user.types";
 
 function setLocalUser(user: User) {
+	if (!user) return;
+
 	localStorage.setItem("user", JSON.stringify(user));
 }
 
