@@ -112,7 +112,7 @@ export const Fieldset = styled.fieldset<{ isValid?: boolean }>`
 	border: none;
 	padding: 0.8rem 1rem;
 
-	border-left: 3px solid ${(p) => (p.isValid ? "lime" : "orangered")};
+	border-left: 3px solid ${(p) => (p.isValid ? "green" : "orangered")};
 	border-radius: ${(p) => (p.isValid ? 5 : 3)}px;
 
 	transition: all 45ms ease-out;
@@ -172,13 +172,15 @@ export const Button = styled.button`
 	${inputShadow};
 	background-color: inherit;
 
-	&:hover,
-	&:focus {
-		box-shadow: 0 0.6rem 0rem -0.5rem #666;
+	&:not(&:disabled) {
+		&:hover,
+		&:focus {
+			box-shadow: 0 0.6rem 0rem -0.5rem #666;
 
-		border-color: #888;
-		transform: translateY(-2px);
-		background-color: #f3f3f3;
+			border-color: #888;
+			transform: translateY(-2px);
+			background-color: #f3f3f3;
+		}
 	}
 
 	transition: all 25ms ease-in-out;
@@ -191,15 +193,19 @@ export const AddButton = styled(Button)`
 `;
 
 export const SaveButton = styled(Button)`
+	${(p) =>
+		!p.disabled &&
+		css`
+			border-color: forestgreen;
+
+			&:hover {
+				border-color: forestgreen;
+			}
+
+			box-shadow: none;
+		`}
+
 	width: ${saveWidth};
-
-	border-color: forestgreen;
-
-	&:hover {
-		border-color: forestgreen;
-	}
-
-	box-shadow: none;
 `;
 
 export const ActionBar = styled.div`
