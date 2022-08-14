@@ -3,19 +3,10 @@ import useLogin from "./hooks/useLogin";
 import * as S from "./Login.style";
 
 export default function Login() {
-	const { handleInputChange, user, isValid, login, navigate } = useLogin();
+	const { handleInputChange, isValid, handleSubmit } = useLogin();
 
 	return (
-		<S.Form
-			onSubmit={(e) => {
-				e.preventDefault();
-				login(user, {
-					onSuccess: ({ user }) => {
-						navigate(`/u/${user.username}`);
-					},
-				});
-			}}
-		>
+		<S.Form onSubmit={(e) => handleSubmit(e)}>
 			<Title>Log in</Title>
 
 			<div>
