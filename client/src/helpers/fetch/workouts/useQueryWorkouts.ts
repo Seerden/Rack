@@ -7,8 +7,12 @@ import { baseUrl } from "../fetch-constants";
 async function getWorkoutsByUser(user_id?: number) {
 	if (!user_id) return;
 
-	// TODO: add options (method, credentials)
-	return (await fetch(`${baseUrl}/exercise/workouts/user/${user_id}`)).json();
+	return (
+		await fetch(`${baseUrl}/exercise/workouts/user/${user_id}`, {
+			method: "GET",
+			credentials: "include",
+		})
+	).json();
 }
 
 export default function useQueryWorkoutsByUser() {
