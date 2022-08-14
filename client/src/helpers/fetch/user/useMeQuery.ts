@@ -5,7 +5,9 @@ import { localUser } from "../../auth/user-storage";
 import { baseUrl } from "../fetch-constants";
 
 export async function getMe() {
-	const response = await fetch(`${baseUrl}/user/me`);
+	const response = await fetch(`${baseUrl}/user/me`, {
+		credentials: "include",
+	});
 	return response.json();
 }
 
