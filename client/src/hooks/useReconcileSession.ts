@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { localUser } from "../helpers/auth/user-storage";
 import useMeQuery from "../helpers/fetch/user/useMeQuery";
 import useAuth from "./useAuth";
@@ -6,7 +5,7 @@ import useAuth from "./useAuth";
 /** Reconcile client-side authentication state with server-side state. */
 export default function useReconcileSession() {
 	const { logout } = useAuth();
-	const { refetch: fetchMe } = useMeQuery({
+	useMeQuery({
 		onSuccess: ({ user }) => {
 			const localMe = localUser.get();
 
@@ -21,8 +20,4 @@ export default function useReconcileSession() {
 			}
 		},
 	});
-
-	useEffect(() => {
-		fetchMe({});
-	}, []);
 }
