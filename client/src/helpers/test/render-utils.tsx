@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import "@testing-library/jest-dom";
 import { render, RenderOptions } from "@testing-library/react";
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { MemoryRouter } from "react-router";
 import { ThemeProvider } from "styled-components";
 import { queryClient } from "../query-client";
@@ -17,7 +17,7 @@ const WithProviders = ({ children }: { children: ReactNode }) => {
 	);
 };
 
-const customRender = (ui: React.ReactElement<any>, options?: RenderOptions) =>
+const customRender = (ui: ReactElement<any>, options?: Omit<RenderOptions, "wrapper">) =>
 	render(ui, { wrapper: WithProviders, ...{ ...(options ?? {}) } });
 
 export * from "@testing-library/react";
