@@ -11,6 +11,7 @@ import NewWorkout from "./Workout/NewWorkout/NewWorkout";
 const Register = lazy(() => import("components/Register/Register"));
 const Login = lazy(() => import("components/Login/Login"));
 const Header = lazy(() => import("components/Header/Header"));
+const Workouts = lazy(() => import("components/Workouts/Workouts"));
 
 const client = queryClient;
 
@@ -60,6 +61,16 @@ const App = () => {
 										</Suspense>
 									}
 								/>
+
+								<Route
+									path="workouts"
+									element={
+										<Suspense fallback={<></>}>
+											<Workouts />
+										</Suspense>
+									}
+								/>
+
 								<Route path="workout">
 									<Route path="new" element={<NewWorkout />} />
 								</Route>
