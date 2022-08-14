@@ -8,7 +8,7 @@ import * as S from "./Login.style";
 
 export default function Login() {
 	const [user, setUser] = useState<UserLogin>({ username: "", password: "" });
-	const isValid = useMemo(() => !!user && isValidUser(user), [user]);
+	const isValid = useMemo(() => isValidUser(user), [user]);
 	const navigate = useNavigate();
 
 	function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
