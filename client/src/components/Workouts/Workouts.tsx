@@ -22,7 +22,7 @@ export default function Workouts() {
 			{workouts && workouts?.length > 0 && (
 				<section>
 					<S.Header>
-						<SubTitle>Workouts</SubTitle>
+						<SubTitle>My workouts</SubTitle>
 						<Link to="/workout/new" title="Create a new workout">
 							<FaPlusCircle size={20} fill="#999" />
 						</Link>
