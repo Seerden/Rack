@@ -1,22 +1,9 @@
-import { ChangeEvent, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
 import { Title } from "../../helpers/theme/snippets/Title";
-import useAuth from "../../hooks/useAuth";
-import { UserLogin } from "../../types/shared/user.types";
-import { isValidUser } from "./helpers/validate";
+import useLogin from "./hooks/useLogin";
 import * as S from "./Login.style";
 
 export default function Login() {
-	const [user, setUser] = useState<UserLogin>({ username: "", password: "" });
-	const isValid = useMemo(() => isValidUser(user), [user]);
-	const navigate = useNavigate();
-
-	function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-		const { name, value } = e.currentTarget;
-		setUser((cur) => ({ ...cur, [name]: value }));
-	}
-
-	const { login } = useAuth();
+	const { handleInputChange, user, isValid, login, navigate } = useLogin();
 
 	return (
 		<S.Form
@@ -50,7 +37,7 @@ export default function Login() {
 					onChange={(e) => handleInputChange(e)}
 				/>
 			</div>
-			<S.Button disabled={isValid} type="submit">
+			<S.Button disabled={!isValid} type="submit">
 				{isValid ? "Log in" : "Fill in all fields"}
 			</S.Button>
 		</S.Form>
