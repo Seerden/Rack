@@ -1,36 +1,48 @@
 import cors from "cors";
 import "dotenv/config";
 import express, { RequestHandler } from "express";
-import { indexRouter } from "./lib/routers/index-router";
+import session from "express-session";
+import {
+	initializeRedisConnection,
+	redisSession,
+} from "./src/helpers/redis/redis-client";
+import { exerciseRouter } from "./src/routers/exercise/exercise-router";
+import { indexRouter } from "./src/routers/index-router";
+import { userRouter } from "./src/routers/user/user-router";
 
 /** Configure Express server and start listening for requests. */
 async function startServer() {
-   const app = express();
+	const app = express();
 
-   app.use(
-      cors({
-         origin: true, // Could also use client domain (in dev: http://localhost:3000)
-         credentials: true,
-      })
-   );
+	app.use(
+		cors({
+			origin: true, // Could also use client domain (in dev: http://localhost:3000)
+			credentials: true,
+		})
+	);
 
-   app.use(
-      express.urlencoded({
-         limit: "5mb",
-         parameterLimit: 10000,
-         extended: true,
-      }) as RequestHandler
-   );
+	app.use(
+		express.urlencoded({
+			limit: "5mb",
+			parameterLimit: 10000,
+			extended: true,
+		}) as RequestHandler
+	);
 
-   app.use(express.json() as RequestHandler);
+	app.use(express.json() as RequestHandler);
 
-   app.use("/", indexRouter);
+	await initializeRedisConnection();
+	app.use(session(redisSession));
 
-   const port = process.env.PORT || 5000;
+	app.use("/", indexRouter);
+	app.use("/user", userRouter);
+	app.use("/exercise", exerciseRouter);
 
-   app.listen(port, () => {
-      console.log(`Express server started on port ${port} at ${new Date()}`);
-   });
+	const port = process.env.PORT || 5000;
+
+	app.listen(port, () => {
+		console.log(`Express server started on port ${port} at ${new Date()}`);
+	});
 }
 
 startServer();
