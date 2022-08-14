@@ -8,8 +8,13 @@ export const exerciseRouter = Router({ mergeParams: true });
 exerciseRouter.post("/workout", async (req, res) => {
 	const newWorkout: WorkoutInput = req.body?.newWorkout;
 
-	// @ts-ignore -- FIXME: temporarily using static user_id since we don't have session authentication yet
-	const user_id = req.session?.user_id ?? 1;
+	const user_id = req.session?.user_id;
+
+	// TODO: once we wrap the route in an authentication middleware, this check
+	// becomes obsolete.
+	if (!user_id) {
+		return res.status(401).json({ message: "Not authorized." });
+	}
 
 	const workoutWithExercises = await createWorkout({ newWorkout, user_id });
 
