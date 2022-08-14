@@ -13,13 +13,11 @@ export async function getMe() {
 
 type UserData = Data<"user", Maybe<User>>;
 
-export default function useMeQuery({
-	onSuccess,
-}: {
+export default function useMeQuery(options?: {
 	onSuccess?: ({ user }: UserData) => void;
 }) {
 	return useQuery<UserData>(["me"], async () => getMe(), {
-		onSuccess: ({ user }) => onSuccess?.({ user }),
+		onSuccess: ({ user }) => options?.onSuccess?.({ user }),
 		onError: () => {
 			console.log("No user found, destroying local user");
 			localUser.destroy();
