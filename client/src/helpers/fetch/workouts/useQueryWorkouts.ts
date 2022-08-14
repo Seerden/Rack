@@ -8,7 +8,7 @@ async function getWorkoutsByUser(user_id?: number) {
 	if (!user_id) return;
 
 	// TODO: add options (method, credentials)
-	return (await fetch(`${baseUrl}/workouts/user/${user_id}`)).json();
+	return (await fetch(`${baseUrl}/exercise/workouts/user/${user_id}`)).json();
 }
 
 export default function useQueryWorkoutsByUser() {
