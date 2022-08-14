@@ -6,6 +6,8 @@ type WorkoutCardProps = {
 };
 
 export default function WorkoutCard({ workout }: WorkoutCardProps) {
+	if (!workout.exercises.length) return <></>;
+
 	return (
 		<S.Card>
 			<S.CardTitle>{workout.name}</S.CardTitle>
