@@ -4,28 +4,31 @@ import { pageStyle } from "../../helpers/theme/snippets/page";
 import { SubmitButton } from "../../helpers/theme/snippets/SubmitButton";
 import { inputLabelStyle } from "../../helpers/theme/snippets/text";
 
+// TODO: this is the same as the element width from Register.style.tsx. Consider
+// making this a snippet value.
 const elementWidth = "200px";
 
 export const Form = styled.form`
-	${pageStyle};
+	${pageStyle}
 `;
 
 export const Label = styled.label`
 	display: flex;
 
 	${inputLabelStyle};
+
+	width: ${elementWidth};
 `;
 
 export const Input = styled.input`
-	width: ${elementWidth};
-
 	${inputStyle};
-
 	${activeInputStyle};
+
+	width: ${elementWidth};
 `;
 
 export const Button = styled(SubmitButton)`
-	width: ${elementWidth};
-
 	margin-top: 1rem;
+
+	width: ${elementWidth};
 `;
