@@ -12,12 +12,11 @@ const Register = lazy(() => import("components/Register/Register"));
 const Login = lazy(() => import("components/Login/Login"));
 const Header = lazy(() => import("components/Header/Header"));
 const Workouts = lazy(() => import("components/Workouts/Workouts"));
-
-const client = queryClient;
+const WorkoutSession = lazy(() => import("components/WorkoutSession/WorkoutSession"));
 
 const App = () => {
 	return (
-		<QueryClientProvider client={client}>
+		<QueryClientProvider client={queryClient}>
 			<ReactQueryDevtools
 				initialIsOpen={false}
 				panelProps={{
@@ -62,17 +61,23 @@ const App = () => {
 									}
 								/>
 
-								<Route
-									path="workouts"
-									element={
-										<Suspense fallback={<></>}>
-											<Workouts />
-										</Suspense>
-									}
-								/>
+								<Route path="workouts">
+									<Route
+										index
+										element={
+											<Suspense fallback={<></>}>
+												<Workouts />
+											</Suspense>
+										}
+									/>
+								</Route>
 
 								<Route path="workout">
 									<Route path="new" element={<NewWorkout />} />
+									<Route path=":workoutId">
+										<Route path="session" element={<WorkoutSession />} />
+										<Route path="" element={<></>} />
+									</Route>
 								</Route>
 								<Route path="*" element={<div>404</div>} />
 							</Routes>
