@@ -32,6 +32,7 @@ export const CardExercise = styled.li`
 	padding: 0.3rem 0.7rem;
 	border-radius: 8px;
 	border: 1px solid #efefef;
+	background-color: #efefef;
 	width: max-content;
 `;
 
