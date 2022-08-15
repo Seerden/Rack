@@ -19,8 +19,7 @@ export async function login(user: UserLogin, req: Request, res: Response) {
 			return res.json({ user: foundUser });
 		}
 
-		destroySession({ req, res });
-		return res.status(401).json({ message: "Invalid credentials" });
+		return destroySession({ req, res });
 	}
 
 	return res.status(404).json({ message: "No user found for given credentials." });
