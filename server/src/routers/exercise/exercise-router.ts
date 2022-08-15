@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { WorkoutInput } from "../../../types/shared/exercise.types";
+import { insertWorkoutSession } from "./create-session";
 import { createWorkout } from "./create-workout";
 import { queryWorkoutsByUser } from "./query-workouts";
 
@@ -27,4 +28,12 @@ exerciseRouter.get("/workouts/user/:user_id/", async (req, res) => {
 	const user_id = +req.params.user_id;
 
 	res.json({ workouts: await queryWorkoutsByUser({ user_id }) });
+});
+
+exerciseRouter.post("/workouts/session", async (req, res) => {
+	const { newWorkoutSession } = req.body;
+
+	// TODO: type-guard `newWorkoutSession`
+
+	res.json(await insertWorkoutSession({ sessionWithEntries: newWorkoutSession }));
 });
