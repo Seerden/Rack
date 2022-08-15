@@ -1,8 +1,8 @@
-import { User } from "../../types/user.types";
+import { User } from "../../types/shared/user.types";
 import { localUser } from "./user-storage";
 
 const user: User = {
-	created_at: 1,
+	created_at: new Date(),
 	password_hash: "",
 	user_id: 1,
 	username: "a",
