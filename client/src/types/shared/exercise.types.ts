@@ -20,8 +20,8 @@ export type NewExercise = {
 	exercise_name: string;
 	sets: number;
 	reps: number;
-	starting_weight: number;
-	weight_progression: number;
+	starting_weight: string | number;
+	weight_progression: string | number;
 	weight_unit: WEIGHT_UNITS;
 };
 
