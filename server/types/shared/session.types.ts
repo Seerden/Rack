@@ -3,9 +3,9 @@ import { ID } from "./id.types";
 
 export type WorkoutSessionInput = {
 	workout_id: ID;
-	created_at: number;
-	started_at: number;
-	completed_at: number;
+	created_at: Date;
+	started_at: Date;
+	completed_at: Date;
 };
 
 /** Matches database model */
