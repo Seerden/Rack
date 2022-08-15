@@ -4,5 +4,7 @@ create table if not exists workout_sessions (
    created_at timestamp default now(),
    started_at timestamp not null,
    completed_at timestamp default now(),
-   duration interval generated always as (completed_at - started_at) stored
+   duration int generated always as 
+      (extract(epoch from (completed_at - started_at)::interval))
+       stored
 );
