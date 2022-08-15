@@ -74,8 +74,15 @@ const App = () => {
 
 								<Route path="workout">
 									<Route path="new" element={<NewWorkout />} />
-									<Route path=":workoutId">
-										<Route path="session" element={<WorkoutSession />} />
+									<Route path=":workout_id">
+										<Route
+											path="session"
+											element={
+												<Suspense fallback={<></>}>
+													<WorkoutSession />
+												</Suspense>
+											}
+										/>
 										<Route path="" element={<></>} />
 									</Route>
 								</Route>
