@@ -15,7 +15,7 @@ export type UserInput = {
 // Corresponds to `users` table in the database.
 export interface User extends UserInput {
 	user_id: number;
-	created_at: number;
+	created_at: Date;
 }
 
 export function isNewUser(newUser: any): newUser is NewUser {
