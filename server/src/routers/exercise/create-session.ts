@@ -21,12 +21,7 @@ export async function insertWorkoutSession({
 		const { entries, ...session } = sessionWithEntries;
 
 		const [insertedSession] = await sql<[WorkoutSession]>`
-         insert into workout_sessions ${sql(session)} returning 
-            *,
-            1000*extract(epoch from created_at) as created_at, -- unix seconds
-            1000*extract(epoch from started_at) as started_at,
-            1000*extract(epoch from completed_at) as completed_at,
-            1000*extract(epoch from duration) -- duration in seconds
+         insert into workout_sessions ${sql(session)} returning *
       `;
 
 		const entriesWithSessionId: Omit<WorkoutSessionEntry, "workout_entry_id">[] =
