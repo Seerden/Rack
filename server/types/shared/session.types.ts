@@ -19,6 +19,7 @@ export type WorkoutSessionEntryInput = {
 	weight: number;
 	weight_unit: WeightUnit;
 	reps: number;
+	created_at: Date;
 	failed?: boolean;
 };
 
