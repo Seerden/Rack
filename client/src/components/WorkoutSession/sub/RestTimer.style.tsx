@@ -21,6 +21,7 @@ export const Circle = styled.circle`
 export const SVG = styled.svg`
 	transform: rotate(-90deg);
 	transform-origin: 50% 50%;
+	place-self: center;
 `;
 
 export const Text = styled.text<{ pastDue?: boolean }>`
