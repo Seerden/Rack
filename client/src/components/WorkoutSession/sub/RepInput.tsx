@@ -48,6 +48,8 @@ export default function RepInput({ index, exercise_id, scheme }: RepInputProps) 
 		<S.Input
 			type="number"
 			min={0}
+			name={`${exercise_id}-set-${index}`}
+			autoComplete="disabled"
 			defaultValue={
 				sessionEntries[exercise_id]?.[scheme.weight]?.[index]?.reps ?? null
 			}
