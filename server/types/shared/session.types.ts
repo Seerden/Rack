@@ -1,4 +1,4 @@
-import { WeightUnit } from "./exercise.types";
+import { Exercise, WeightUnit } from "./exercise.types";
 import { ID } from "./id.types";
 
 export type WorkoutSessionInput = {
@@ -38,3 +38,5 @@ export type WorkoutSessionWithEntriesInput = WorkoutSessionInput & {
 export type WorkoutSessionWithEntries = WorkoutSession & {
 	entries: WorkoutSessionEntry[];
 };
+
+export type ExerciseWithEntries = Exercise & { entries: WorkoutSessionEntry[] };
