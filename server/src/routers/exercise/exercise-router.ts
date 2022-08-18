@@ -2,6 +2,8 @@ import { Router } from "express";
 import { WorkoutInput } from "../../../types/shared/exercise.types";
 import { insertWorkoutSession } from "./create-session";
 import { createWorkout } from "./create-workout";
+import { getSessionEntriesForExercise } from "./query-sessions";
+import { getSessionsForWorkout } from "./query-sessions-for-workout";
 import { queryWorkoutById, queryWorkoutsByUser } from "./query-workouts";
 
 export const exerciseRouter = Router({ mergeParams: true });
@@ -42,4 +44,32 @@ exerciseRouter.post("/workouts/session", async (req, res) => {
 	// TODO: type-guard `newWorkoutSession`
 
 	res.json(await insertWorkoutSession({ sessionWithEntries: newWorkoutSession }));
+});
+
+// TODO: WIP
+exerciseRouter.get("/workouts/:workout_id/session/suggested", async (req, res) => {
+	const workout_id = +req.params.workout_id;
+
+   // TODO: finalize implementation of getSessionsForWorkout()
+   const histories = await getSessionsForWorkout({});
+   const suggestedSession = histories.map(exerciseHistory => {
+      const entries = exerciseHistory.history.sort((a, b) => a.workout_session_id - b.workout_session_id);
+      const lastSession = entries.at(-1);
+
+      if (!lastSession) {
+         // suggest using starting weight
+      }
+
+      if (/* failed last session */) {
+         // suggest deload
+      }
+
+      // suggest progression using weight_progression
+   })
+});
+
+exerciseRouter.get("/workouts/exercise/:exerciseId/entries", async (req, res) => {
+	const exerciseId = +req.params.exerciseId;
+
+	res.json(await getSessionEntriesForExercise({ exercise_id: exerciseId }));
 });
