@@ -9,19 +9,19 @@ export async function getSessionsForWorkout({ sql = sqlConnection }: WithSQL<{}>
 		[
 			{
 				exercise_id: number;
-				entries: {
+				history: Array<{
 					workout_session_id: number;
 					exercise_id: number;
-					history: WorkoutSessionEntry[];
-				};
+					entries: WorkoutSessionEntry[];
+				}>;
 			}
 		]
 	>`
-      select exercise_id, jsonb_agg(sub.*) entries from (
+      select exercise_id, jsonb_agg(sub.*) history from (
          select 
             wse.exercise_id, 
-            wse.workout_session_id, 
-            jsonb_agg(wse.*) history 
+            wse.workout_session_id,
+            jsonb_agg(wse.*) entries
          from workout_session_entries wse
             inner join workout_sessions ws
                on wse.workout_session_id = ws.workout_session_id
