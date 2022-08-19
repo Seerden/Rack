@@ -30,7 +30,7 @@ export async function queryWorkoutById({
 }: WithSQL<{ workout_id: ID }>) {
 	if (typeof workout_id !== "number") throw new Error("Invalid workout_id");
 
-	const [workout] = await sql<[WorkoutWithExercises]>`
+	const [workout] = await sql<[WorkoutWithExercises?]>`
    select sub.*
       from ( 
          select distinct(w.*), jsonb_agg(to_json(e.*)) exercises
