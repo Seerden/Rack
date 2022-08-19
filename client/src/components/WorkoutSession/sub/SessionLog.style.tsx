@@ -7,6 +7,7 @@ export const Exercises = styled.ul`
 `;
 
 export const Entry = styled.li<{ isActive?: boolean }>`
+	user-select: none;
 	list-style: none;
 
 	width: max-content;
@@ -18,14 +19,20 @@ export const Entry = styled.li<{ isActive?: boolean }>`
 	flex-direction: row;
 	gap: 1rem;
 
+	padding: 0.42rem 2.2rem;
+
+	border: 2px solid transparent;
+	border-radius: 12px;
+
+	align-items: center;
+
 	${(p) =>
 		p.isActive &&
 		css`
 			position: relative;
 			font-size: 1.4rem;
 			font-weight: 700;
-			padding: 0.35rem 2.2rem;
-			border-radius: 4px;
+         border-color: #f1f1f1;
 			box-shadow: 0 0.3rem 1rem -0.25rem #dfdfdf;
 			}
 		`}
@@ -33,10 +40,16 @@ export const Entry = styled.li<{ isActive?: boolean }>`
 	${(p) =>
 		!p.isActive &&
 		css`
-			padding: 0.2rem 2.4rem;
 			color: #999;
-			border-radius: 12px;
+
+			&:hover {
+				box-shadow: 0 0.3rem 0.4rem -0.2rem #ccc;
+				background-color: #fafafa;
+				color: black;
+			}
 		`}
+
+      transition: all 55ms linear;
 `;
 
 export const Name = styled.span`
