@@ -44,7 +44,7 @@ export type ExerciseWithEntries = Exercise & { entries: WorkoutSessionEntry[] };
 export type ExerciseScheme = Pick<
 	Exercise,
 	"exercise_id" | "reps" | "sets" | "weight_unit"
-> & { weight: number };
+> & { weight: number; is_warmup?: boolean };
 
 export type HistoryList = [
 	{
@@ -56,3 +56,8 @@ export type HistoryList = [
 		}>;
 	}
 ];
+
+export type SessionExercise = {
+	exercise_id: ID;
+	session: ExerciseScheme[]; // currently we only allow one working weight, but for things like 5/3/1, having a structure like this from the start is very beneficial
+};
