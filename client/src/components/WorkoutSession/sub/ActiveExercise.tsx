@@ -1,8 +1,9 @@
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { SubTitle } from "../../../helpers/theme/snippets/Title";
+import { WEIGHT_UNITS } from "../../../types/shared/exercise.types";
+import { ExerciseScheme, SessionExercise } from "../../../types/shared/session.types";
 import { activeWorkoutState } from "../state/workout-state";
-import { ExerciseScheme, SessionExercise } from "../types/workout-state.types";
 import * as S from "./ActiveExercise.style";
 import ExerciseRow from "./ExerciseRow";
 
@@ -16,13 +17,14 @@ export default function ActiveExercise({
 	weight_unit,
 }: {
 	e: SessionExercise;
-	weight_unit: string;
+	weight_unit: WEIGHT_UNITS;
 }) {
 	const [showAddWarmup, setShowAddWarmup] = useState<boolean>(false);
-	const [session, setSession] = useRecoilState(activeWorkoutState);
+	const setSession = useSetRecoilState(activeWorkoutState);
 
 	const [warmupScheme, setWarmupScheme] = useState<Partial<ExerciseScheme>>({
-		isWarmup: true,
+		is_warmup: true,
+		weight_unit,
 	});
 
 	function handleWarmupFieldChange(e: ChangeEvent<HTMLInputElement>) {
@@ -56,15 +58,15 @@ export default function ActiveExercise({
 		<div>
 			<SubTitle>Current exercise: {e.exercise_id}</SubTitle>
 
-			{/* Add warm-up set(s) */}
 			<div>
 				{showAddWarmup ? (
 					<S.WarmupForm
 						onSubmit={(e) => {
 							e.preventDefault();
 							addWarmupSet(warmupScheme);
+							// reset warmupScheme related states
 							setShowAddWarmup(false);
-							setWarmupScheme({ isWarmup: true });
+							setWarmupScheme({ is_warmup: true });
 						}}
 					>
 						<span>Warmup set</span>
