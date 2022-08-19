@@ -6,7 +6,8 @@ import SessionLog from "./sub/SessionLog";
 import * as S from "./WorkoutSession.style";
 
 export default function WorkoutSession() {
-	const { workout, session, activeExercise } = useWorkoutSession();
+	const { workout, activeExercise, setActiveExerciseId, activeExerciseId } =
+		useWorkoutSession();
 
 	if (!workout?.exercises || !activeExercise) return <></>;
 
@@ -16,7 +17,11 @@ export default function WorkoutSession() {
 
 			<RestTimer />
 
-			<SessionLog workout={workout} session={session} />
+			<SessionLog
+				workout={workout}
+				onClick={setActiveExerciseId}
+				activeExerciseId={activeExerciseId ?? 0}
+			/>
 
 			{activeExercise && (
 				<ActiveExercise

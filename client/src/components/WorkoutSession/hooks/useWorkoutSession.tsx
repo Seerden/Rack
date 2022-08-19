@@ -27,5 +27,5 @@ export default function useWorkoutSession() {
 
 	const activeExercise = session?.find((x) => x.exercise_id === activeExerciseId);
 
-	return { workout, session, activeExercise } as const;
+	return { workout, activeExercise, setActiveExerciseId, activeExerciseId } as const;
 }
