@@ -7,13 +7,16 @@ import RepInput from "./RepInput";
 export default function ExerciseRow({
 	exercise_id,
 	scheme,
+	cycleIndex,
 }: {
 	exercise_id: ID;
 	scheme: ExerciseScheme;
+	cycleIndex: () => void;
 }) {
 	// Create a `reps` input for each set.
 	const repInputs = [...Array(scheme.sets).keys()].map((i) => (
 		<RepInput
+			cycleIndex={cycleIndex}
 			key={`${scheme.weight}-${i}`}
 			index={i}
 			scheme={scheme}

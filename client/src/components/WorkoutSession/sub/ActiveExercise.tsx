@@ -15,9 +15,11 @@ function isScheme(scheme: Partial<ExerciseScheme>): scheme is ExerciseScheme {
 export default function ActiveExercise({
 	e,
 	weight_unit,
+	cycleIndex,
 }: {
 	e: SessionExercise;
 	weight_unit: WEIGHT_UNITS;
+	cycleIndex: () => void;
 }) {
 	const [showAddWarmup, setShowAddWarmup] = useState<boolean>(false);
 	const setSession = useSetRecoilState(activeWorkoutState);
@@ -43,7 +45,10 @@ export default function ActiveExercise({
 
 			if (!(thisExerciseIndex >= 0)) return cur;
 
-			newSession[thisExerciseIndex].session.push(scheme);
+			newSession[thisExerciseIndex].session.push({
+				...scheme,
+				exercise_id: e.exercise_id,
+			});
 			return newSession;
 		});
 	}
@@ -101,6 +106,7 @@ export default function ActiveExercise({
 				.sort((a, b) => a.weight - b.weight)
 				.map((scheme) => (
 					<ExerciseRow
+						cycleIndex={cycleIndex}
 						key={scheme.weight}
 						exercise_id={e.exercise_id}
 						scheme={scheme}

@@ -6,8 +6,14 @@ import SessionLog from "./sub/SessionLog";
 import * as S from "./WorkoutSession.style";
 
 export default function WorkoutSession() {
-	const { workout, activeExercise, setActiveExerciseId, activeExerciseId } =
-		useWorkoutSession();
+	const {
+		workout,
+		activeExercise,
+		setActiveExerciseId,
+		activeExerciseId,
+		cycleActiveIndex,
+		allCompleted,
+	} = useWorkoutSession();
 
 	if (!workout?.exercises || !activeExercise) return <></>;
 
@@ -23,8 +29,15 @@ export default function WorkoutSession() {
 				activeExerciseId={activeExerciseId ?? 0}
 			/>
 
-			{activeExercise && (
+			{allCompleted && (
+				<div>
+					You've done all your working sets! Are you ready to end this session?
+				</div>
+			)}
+
+			{!allCompleted && activeExercise && (
 				<ActiveExercise
+					cycleIndex={cycleActiveIndex}
 					e={activeExercise}
 					// TODO: consider adding weight_unit to workout in addition to
 					// including it in each exercise

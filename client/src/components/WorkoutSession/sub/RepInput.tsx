@@ -9,9 +9,15 @@ type RepInputProps = {
 	index: number;
 	exercise_id: ID;
 	scheme: ExerciseScheme;
+	cycleIndex: () => void;
 };
 
-export default function RepInput({ index, exercise_id, scheme }: RepInputProps) {
+export default function RepInput({
+	index,
+	exercise_id,
+	scheme,
+	cycleIndex,
+}: RepInputProps) {
 	const [sessionEntries, setSessionEntries] = useRecoilState(sessionEntriesState);
 
 	/**
@@ -54,6 +60,12 @@ export default function RepInput({ index, exercise_id, scheme }: RepInputProps) 
 				sessionEntries[exercise_id]?.[scheme.weight]?.[index]?.reps ?? null
 			}
 			onChange={(e) => handleChange(e)}
+			onBlur={() => {
+				// On blurring the lest working set, move to the next exercise.
+				if (index === scheme.sets - 1 && !scheme.is_warmup) {
+					cycleIndex();
+				}
+			}}
 		/>
 	);
 }
