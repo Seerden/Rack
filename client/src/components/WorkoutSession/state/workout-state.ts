@@ -1,9 +1,9 @@
 import { atom } from "recoil";
-import { defaultActiveWorkout } from "../helpers/mock";
-import { SessionEntriesInput, SessionExercise } from "../types/workout-state.types";
+import { SessionExercise } from "../../../types/shared/session.types";
+import { SessionEntriesInput } from "../types/workout-state.types";
 
 export const activeWorkoutState = atom<SessionExercise[]>({
-	default: defaultActiveWorkout,
+	default: [],
 	key: "activeWorkout",
 });
 
