@@ -40,3 +40,8 @@ export type WorkoutSessionWithEntries = WorkoutSession & {
 };
 
 export type ExerciseWithEntries = Exercise & { entries: WorkoutSessionEntry[] };
+
+export type ExerciseScheme = Pick<
+	Exercise,
+	"exercise_id" | "reps" | "sets" | "weight_unit"
+> & { weight: number };
