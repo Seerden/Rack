@@ -45,3 +45,14 @@ export type ExerciseScheme = Pick<
 	Exercise,
 	"exercise_id" | "reps" | "sets" | "weight_unit"
 > & { weight: number };
+
+export type HistoryList = [
+	{
+		exercise_id: number;
+		history: Array<{
+			workout_session_id: number;
+			exercise_id: number;
+			entries: WorkoutSessionEntry[];
+		}>;
+	}
+];
