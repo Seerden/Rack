@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 
 export function handleError(
 	err: any,
@@ -8,3 +8,8 @@ export function handleError(
 ) {
 	res.status(500).send("Error encountered during processing");
 }
+
+export const logAllIncomingRequests: RequestHandler = (req, res, next) => {
+	console.log({ requestUrl: req.originalUrl });
+	next();
+};

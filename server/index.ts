@@ -8,6 +8,7 @@ import {
 } from "./src/helpers/redis/redis-client";
 import { exerciseRouter } from "./src/routers/exercise/exercise-router";
 import { indexRouter } from "./src/routers/index-router";
+import { handleError, logAllIncomingRequests } from "./src/routers/middleware";
 import { userRouter } from "./src/routers/user/user-router";
 
 /** Configure Express server and start listening for requests. */
@@ -34,9 +35,13 @@ async function startServer() {
 	await initializeRedisConnection();
 	app.use(session(redisSession));
 
+	app.use(logAllIncomingRequests);
+
 	app.use("/", indexRouter);
 	app.use("/user", userRouter);
 	app.use("/exercise", exerciseRouter);
+
+	app.use(handleError);
 
 	const port = process.env.PORT || 5000;
 
