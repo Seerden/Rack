@@ -10,11 +10,11 @@ type SessionLogProps = {
 
 export default function SessionLog({ workout, session }: SessionLogProps) {
 	return (
-		<ul>
+		<S.Exercises>
 			{workout.exercises.map((e, i) => (
 				<LogEntry exercise={e} key={e.exercise_id} isActive={i === 0} />
 			))}
-		</ul>
+		</S.Exercises>
 	);
 }
 
