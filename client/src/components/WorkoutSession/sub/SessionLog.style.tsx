@@ -4,6 +4,7 @@ export const Exercises = styled.ul`
 	display: flex;
 	gap: 0.4rem;
 	flex-direction: column;
+	margin-bottom: 1rem;
 `;
 
 export const Entry = styled.li<{ isActive?: boolean }>`
@@ -29,8 +30,7 @@ export const Entry = styled.li<{ isActive?: boolean }>`
 	${(p) =>
 		p.isActive &&
 		css`
-			position: relative;
-			font-size: 1.4rem;
+			font-size: 1.15rem;
 			font-weight: 700;
          border-color: #f1f1f1;
 			box-shadow: 0 0.3rem 1rem -0.25rem #dfdfdf;
