@@ -6,7 +6,7 @@ import SessionLog from "./sub/SessionLog";
 import * as S from "./WorkoutSession.style";
 
 export default function WorkoutSession() {
-	const { workout, session, setSession, activeExercise } = useWorkoutSession();
+	const { workout, session, activeExercise } = useWorkoutSession();
 
 	if (!workout?.exercises || !activeExercise) return <></>;
 
