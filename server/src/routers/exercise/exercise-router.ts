@@ -46,11 +46,10 @@ exerciseRouter.post("/workouts/session", async (req, res) => {
 	res.json(await insertWorkoutSession({ sessionWithEntries: newWorkoutSession }));
 });
 
-// TODO: WIP
 exerciseRouter.get("/workouts/:workout_id/session/suggested", async (req, res) => {
 	const workout_id = +req.params.workout_id;
 
-	res.json(await suggestSchemeForWorkout({ workout_id }));
+	res.json({ suggested: await suggestSchemeForWorkout({ workout_id }) });
 });
 
 exerciseRouter.get("/workouts/exercise/:exerciseId/entries", async (req, res) => {
