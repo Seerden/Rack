@@ -1,22 +1,17 @@
-import { WorkoutSessionEntry } from "../../../types/shared/session.types";
+import { ID } from "../../../types/shared/id.types";
+import { HistoryList } from "../../../types/shared/session.types";
 import { WithSQL } from "../../../types/sql.types";
 import { sqlConnection } from "../../db/init";
 
-export async function getSessionsForWorkout({ sql = sqlConnection }: WithSQL<{}>) {
-	const workout_id = 5;
-
-	return sql<
-		[
-			{
-				exercise_id: number;
-				history: Array<{
-					workout_session_id: number;
-					exercise_id: number;
-					entries: WorkoutSessionEntry[];
-				}>;
-			}
-		]
-	>`
+/**
+ * Query the session histories for all exercises of a workout, and group them by
+ * exercise, and by workout session.
+ */
+export async function getSessionsForWorkout({
+	sql = sqlConnection,
+	workout_id,
+}: WithSQL<{ workout_id: ID }>) {
+	return sql<HistoryList>`
       select exercise_id, jsonb_agg(sub.*) history from (
          select 
             wse.exercise_id, 
