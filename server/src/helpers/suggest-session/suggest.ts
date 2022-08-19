@@ -1,6 +1,9 @@
 import { Exercise } from "../../../types/shared/exercise.types";
 import { ID } from "../../../types/shared/id.types";
-import { ExerciseScheme, WorkoutSessionEntry } from "../../../types/shared/session.types";
+import {
+	SessionExercise,
+	WorkoutSessionEntry,
+} from "../../../types/shared/session.types";
 import { WithSQL } from "../../../types/sql.types";
 import { sqlConnection } from "../../db/init";
 import { getSessionsForWorkout } from "../../routers/exercise/query-sessions-for-workout";
@@ -14,16 +17,13 @@ import { latestSessionForExercise } from "./parse-history";
 export function suggestSchemeForExercise(
 	exercise: Exercise,
 	session: Maybe<WorkoutSessionEntry[]>
-): ExerciseScheme {
+): SessionExercise {
 	const { weight_progression, reps, sets, exercise_id, weight_unit, starting_weight } =
 		exercise;
 
-	const suggestedScheme: ExerciseScheme = {
+	const suggestedScheme: SessionExercise = {
 		exercise_id,
-		reps,
-		sets,
-		weight_unit,
-		weight: +starting_weight,
+		session: [{ exercise_id, reps, sets, weight_unit, weight: +starting_weight }],
 	};
 
 	if (!session || session.length === 0) {
@@ -35,9 +35,9 @@ export function suggestSchemeForExercise(
 	const lastWeight = +(session.at(-1)?.weight ?? starting_weight);
 
 	if (setsCompleted < sets || repsInLastSet < reps) {
-		suggestedScheme.weight = Math.round(0.9 * lastWeight); // TODO: refine this suggestion by allowing custom deload schemes
+		suggestedScheme.session[0].weight = Math.round(0.9 * lastWeight); // TODO: refine this suggestion by allowing custom deload schemes
 	} else {
-		suggestedScheme.weight = lastWeight + +weight_progression;
+		suggestedScheme.session[0].weight = lastWeight + +weight_progression;
 	}
 
 	return suggestedScheme;
@@ -53,7 +53,10 @@ export async function suggestSchemeForWorkout({
 }: WithSQL<{ workout_id: ID }>) {
 	const suggestedSession = await sql.begin(async (sql) => {
 		const histories = await getSessionsForWorkout({ sql, workout_id });
-		const exercises = (await queryWorkoutById({ sql, workout_id })).exercises;
+		const exercises = (await queryWorkoutById({ sql, workout_id }))?.exercises;
+
+		if (!exercises?.length) return [];
+
 		const suggestedSession = histories
 			.map((exerciseHistory) => {
 				const latestSession = latestSessionForExercise(exerciseHistory);
@@ -62,11 +65,35 @@ export async function suggestSchemeForWorkout({
 					(e) => e.exercise_id === exerciseHistory.exercise_id
 				);
 
+				console.log({ exercise });
 				if (!exercise) return;
 
 				return suggestSchemeForExercise(exercise, latestSession?.entries);
 			})
-			.filter((exerciseSession) => exerciseSession !== undefined) as ExerciseScheme[];
+			.filter((exerciseSession) => exerciseSession !== undefined) as SessionExercise[];
+
+		console.log({ suggestedSession });
+
+		for (const { reps, sets, exercise_id, weight_unit, starting_weight } of exercises) {
+			if (!suggestedSession.find((x) => x.exercise_id === exercise_id)) {
+				const suggested: SessionExercise = {
+					exercise_id,
+					session: [
+						{
+							reps,
+							sets,
+							weight_unit,
+							exercise_id,
+							weight: +starting_weight,
+						},
+					],
+				};
+
+				suggestedSession.push(suggested);
+			}
+		}
+
+		console.log(suggestedSession);
 
 		return suggestedSession;
 	});
