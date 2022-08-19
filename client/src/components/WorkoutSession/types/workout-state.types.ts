@@ -1,18 +1,4 @@
-import { WeightUnit } from "../../../types/shared/exercise.types";
-import { ID } from "../../../types/shared/id.types";
-
-export type ExerciseScheme = {
-	weight: number;
-	weight_unit: WeightUnit;
-	sets: number;
-	reps: number;
-	isWarmup?: boolean;
-};
-
-export type SessionExercise = {
-	exercise_id: ID;
-	session: ExerciseScheme[]; // currently we only allow one working weight, but for things like 5/3/1, having a structure like this from the start is very beneficial
-};
+import { SessionExercise } from "../../../types/shared/session.types";
 
 export type ActiveWorkout = SessionExercise[];
 
