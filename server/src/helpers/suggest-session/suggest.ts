@@ -65,14 +65,11 @@ export async function suggestSchemeForWorkout({
 					(e) => e.exercise_id === exerciseHistory.exercise_id
 				);
 
-				console.log({ exercise });
 				if (!exercise) return;
 
 				return suggestSchemeForExercise(exercise, latestSession?.entries);
 			})
 			.filter((exerciseSession) => exerciseSession !== undefined) as SessionExercise[];
-
-		console.log({ suggestedSession });
 
 		for (const { reps, sets, exercise_id, weight_unit, starting_weight } of exercises) {
 			if (!suggestedSession.find((x) => x.exercise_id === exercise_id)) {
@@ -92,8 +89,6 @@ export async function suggestSchemeForWorkout({
 				suggestedSession.push(suggested);
 			}
 		}
-
-		console.log(suggestedSession);
 
 		return suggestedSession;
 	});

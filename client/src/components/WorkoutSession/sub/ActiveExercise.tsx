@@ -53,7 +53,6 @@ export default function ActiveExercise({
 		type: "number",
 	};
 
-	console.log({ session: e.session });
 	return (
 		<div>
 			<SubTitle>Current exercise: {e.exercise_id}</SubTitle>

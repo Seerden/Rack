@@ -24,7 +24,6 @@ export function useQuerySuggestedWorkout(workout_id: ID) {
 		{
 			refetchOnWindowFocus: false,
 			onSuccess: ({ suggested }) => {
-				console.log({ suggested });
 				setActiveWorkout(suggested);
 			},
 		}

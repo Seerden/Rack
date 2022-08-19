@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useQuerySuggestedWorkout } from "../../../helpers/fetch/workouts/useQuerySuggestedWorkout";
 import { useQueryWorkoutById } from "../../../helpers/fetch/workouts/useQueryWorkoutById";
-import { activeWorkoutState, sessionEntriesState } from "../state/workout-state";
+import { activeWorkoutState } from "../state/workout-state";
 
 export default function useWorkoutSession() {
 	const params = useParams();
@@ -16,11 +16,6 @@ export default function useWorkoutSession() {
 
 	useQuerySuggestedWorkout(workout_id);
 
-	const sessionEntries = useRecoilValue(sessionEntriesState);
-	useEffect(() => {
-		console.log({ sessionEntries });
-	}, [sessionEntries]);
-
 	const [session, setSession] = useRecoilState(activeWorkoutState);
 
 	const [activeExerciseId, setActiveExerciseId] = useState<number>();
@@ -28,10 +23,6 @@ export default function useWorkoutSession() {
 		if (session?.length) {
 			setActiveExerciseId(session[0].exercise_id);
 		}
-	}, [session]);
-
-	useEffect(() => {
-		console.log({ session });
 	}, [session]);
 
 	const activeExercise = session?.find((x) => x.exercise_id === activeExerciseId);
