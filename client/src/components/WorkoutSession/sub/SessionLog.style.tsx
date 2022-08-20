@@ -30,8 +30,7 @@ export const Entry = styled.li<{ isActive?: boolean }>`
 	${(p) =>
 		p.isActive &&
 		css`
-			font-size: 1.15rem;
-			font-weight: 700;
+			font-weight: 600;
          border-color: #f1f1f1;
 			box-shadow: 0 0.3rem 1rem -0.25rem #dfdfdf;
 			}
