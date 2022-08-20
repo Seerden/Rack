@@ -1,7 +1,6 @@
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { SubTitle } from "../../../helpers/theme/snippets/Title";
-import { WEIGHT_UNITS } from "../../../types/shared/exercise.types";
+import { WEIGHT_UNITS, WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ExerciseScheme, SessionExercise } from "../../../types/shared/session.types";
 import { activeWorkoutState } from "../state/workout-state";
 import * as S from "./ActiveExercise.style";
@@ -12,22 +11,30 @@ function isScheme(scheme: Partial<ExerciseScheme>): scheme is ExerciseScheme {
 	return !!scheme.reps && !!scheme.reps && !!scheme.weight;
 }
 
-export default function ActiveExercise({
-	e,
-	weight_unit,
-	cycleIndex,
-}: {
+type ActiveExerciseProps = {
 	e: SessionExercise;
+	workout: WorkoutWithExercises;
 	weight_unit: WEIGHT_UNITS;
 	cycleIndex: () => void;
-}) {
+};
+
+export default function ActiveExercise({
+	e,
+	workout,
+	weight_unit,
+	cycleIndex,
+}: ActiveExerciseProps) {
 	const [showAddWarmup, setShowAddWarmup] = useState<boolean>(false);
 	const setSession = useSetRecoilState(activeWorkoutState);
 
-	const [warmupScheme, setWarmupScheme] = useState<Partial<ExerciseScheme>>({
+	const defaultWarmupScheme: Partial<ExerciseScheme> = {
 		is_warmup: true,
 		weight_unit,
-	});
+		exercise_id: e.exercise_id,
+	};
+
+	const [warmupScheme, setWarmupScheme] =
+		useState<Partial<ExerciseScheme>>(defaultWarmupScheme);
 
 	function handleWarmupFieldChange(e: ChangeEvent<HTMLInputElement>) {
 		const { name, value } = e.currentTarget;
@@ -47,7 +54,6 @@ export default function ActiveExercise({
 
 			newSession[thisExerciseIndex].session.push({
 				...scheme,
-				exercise_id: e.exercise_id,
 			});
 			return newSession;
 		});
@@ -59,18 +65,33 @@ export default function ActiveExercise({
 	};
 
 	return (
-		<div>
-			<SubTitle>Current exercise: {e.exercise_id}</SubTitle>
+		<S.ActiveExercise>
+			<S.ActiveTitle>
+				<h1>
+					{
+						workout.exercises.find((ex) => ex.exercise_id === e.exercise_id)
+							?.exercise_name
+					}
+				</h1>
+				{!showAddWarmup && (
+					<S.Button
+						onClick={() => {
+							setShowAddWarmup(true);
+						}}
+					>
+						Add warm-up weight
+					</S.Button>
+				)}
+			</S.ActiveTitle>
 
-			<div>
-				{showAddWarmup ? (
+			<S.Warmup>
+				{showAddWarmup && (
 					<S.WarmupForm
 						onSubmit={(e) => {
 							e.preventDefault();
 							addWarmupSet(warmupScheme);
-							// reset warmupScheme related states
 							setShowAddWarmup(false);
-							setWarmupScheme({ is_warmup: true });
+							setWarmupScheme(defaultWarmupScheme);
 						}}
 					>
 						<span>Warmup set</span>
@@ -91,16 +112,8 @@ export default function ActiveExercise({
 						</S.WarmupFields>
 						<button>Add to warmup</button>
 					</S.WarmupForm>
-				) : (
-					<button
-						onClick={() => {
-							setShowAddWarmup(true);
-						}}
-					>
-						Add warm-up weight
-					</button>
 				)}
-			</div>
+			</S.Warmup>
 
 			{structuredClone(e.session)
 				.sort((a, b) => a.weight - b.weight)
@@ -112,6 +125,6 @@ export default function ActiveExercise({
 						scheme={scheme}
 					/>
 				))}
-		</div>
+		</S.ActiveExercise>
 	);
 }

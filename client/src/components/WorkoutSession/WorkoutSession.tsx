@@ -38,6 +38,7 @@ export default function WorkoutSession() {
 			{!allCompleted && activeExercise && (
 				<ActiveExercise
 					cycleIndex={cycleActiveIndex}
+					workout={workout}
 					e={activeExercise}
 					// TODO: consider adding weight_unit to workout in addition to
 					// including it in each exercise
