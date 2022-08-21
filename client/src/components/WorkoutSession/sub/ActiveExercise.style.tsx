@@ -65,6 +65,8 @@ export const Reps = styled.span`
 
 	min-height: 2.4rem;
 	align-items: center;
+
+	flex-wrap: wrap;
 `;
 
 export const WarmupForm = styled.form`
