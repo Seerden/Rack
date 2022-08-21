@@ -21,6 +21,13 @@ export const Action = styled.div`
 	&:not(:nth-of-type(1)) {
 		border-top: 2px solid #fefefe;
 	}
+
+	@media screen and (max-width: 320px) {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+		align-items: flex-start;
+	}
 `;
 
 export const Input = styled.input`
@@ -66,6 +73,10 @@ export const WarmupForm = styled.form`
 
 	padding: 1.3rem 2rem;
 
+	@media screen and (max-width: 320px) {
+		padding: 0.4rem 0.6rem;
+	}
+
 	box-shadow: 6px 6px 0 -2px #ccc, -6px -6px 0 -2px white;
 	border: 3px solid #ffe800;
 	border-radius: 8px;
@@ -76,6 +87,10 @@ export const WarmupFields = styled.div`
 	display: flex;
 	flex-direction: row;
 	gap: 1rem;
+
+	@media screen and (max-width: 320px) {
+		flex-direction: column;
+	}
 
 	p {
 		* {
@@ -91,7 +106,7 @@ export const WarmupFields = styled.div`
 
 		display: flex;
 		flex-direction: column;
-		width: max-content;
+		min-width: max-content;
 	}
 `;
 
@@ -100,6 +115,10 @@ export const Button = styled.button`
 	place-self: flex-end;
 
 	padding: 0.45rem 1.4rem;
+
+	@media screen and (max-width: 320px) {
+		padding: 0.25rem 0.7rem;
+	}
 
 	background-color: #ffe600;
 	color: black;
@@ -167,11 +186,24 @@ export const ActiveTitle = styled.header`
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 1rem;
+
+	@media screen and (max-width: 320px) {
+		flex-direction: column;
+		align-items: flex-start;
+
+		button {
+			align-self: flex-end;
+		}
+	}
 `;
 
 export const WarmUpLabel = styled.h1`
 	user-select: none;
-	margin-left: -0.8rem;
+
+	@media screen and (min-width: 320px) {
+		margin-left: -0.8rem;
+	}
+
 	margin-bottom: 0.2rem;
 	font-weight: 400;
 	font-size: 1.08rem;
