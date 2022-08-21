@@ -14,6 +14,8 @@ services:
          - "/etc/nginx/certs"
       environment:
          - VIRTUAL_HOST=rack.seerden.xyz
+         - LETSENCRYPT_HOST=rack.seerden.xyz
+         - DEFAULT_HOST=nodeapp.local
 
    letsencrypt-nginx-proxy-companion:
       restart: always
@@ -23,7 +25,9 @@ services:
       volumes_from:
          - "nginx-proxy"
       environment:
+         - VIRTUAL_HOST=rack.seerden.xyz
          - LETSENCRYPT_HOST=rack.seerden.xyz
+         - DEFAULT_HOST=nodeapp.local
 
    store:
       image: redis
@@ -60,7 +64,7 @@ services:
    client:
       build:
          context: ../client
-         dockerfile: Dockerfile
+         dockerfile: Dockerfile.prod
       volumes:
          - ../client:/rack/client
          - ../client/node_modules:/rack/client/node_modules

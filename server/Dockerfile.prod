@@ -2,12 +2,14 @@ FROM node:alpine
 
 WORKDIR /rack/server
 
-COPY package*.json .
+COPY package*.json ./
 
-RUN npm build
+RUN npm install
+
 COPY . .
 
-# RUN npm run build # don't need to build in development
+RUN npm run build
+COPY . .
 
 EXPOSE 5000
 
