@@ -6,10 +6,21 @@ export const Wrapper = styled.section`
 	justify-content: center;
 `;
 
-export const TimerButton = styled.button`
+export const TimerButton = styled.button<{ stopped?: boolean }>`
+	${(p) =>
+		p.stopped &&
+		css`
+			background-color: orangered;
+
+			svg {
+				fill: ${p.stopped ? "white" : "lightgrey"};
+			}
+		`}
+
 	padding: 1rem;
 	align-self: center;
 	height: 4rem;
+	width: 4rem;
 
 	border: 2px solid transparent;
 
@@ -22,6 +33,25 @@ export const TimerButton = styled.button`
 		justify-self: flex-start;
 		border-radius: 0 8px 8px 0;
 	}
+
+	outline: 2px solid transparent;
+
+	&:hover,
+	&:focus,
+	&:active {
+		box-shadow: 0 0 0.5rem 0.1rem #cacaca;
+	}
+
+	&:hover,
+	&:focus {
+		svg {
+			transform: scale(1.1);
+		}
+
+		border-radius: 50%;
+	}
+
+	transition: all 45ms linear, border-radius 85ms ease-in;
 `;
 
 export const Timer = styled.div`

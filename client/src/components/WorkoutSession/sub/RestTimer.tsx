@@ -3,7 +3,7 @@ import { MdOutlineTimer, MdOutlineTimerOff } from "react-icons/md";
 import useRestTimer from "../hooks/useRestTimer";
 import * as S from "./RestTimer.style";
 
-const defaultRestMillis = 3 * 60 * 1000;
+const defaultRestMillis = 3 * 15 * 1000;
 
 export default function RestTimer() {
 	const { progressPercentage, millisElapsed, reset, on, toggle } = useRestTimer(
@@ -21,6 +21,7 @@ export default function RestTimer() {
 	return (
 		<S.Wrapper>
 			<S.TimerButton
+				stopped={!on}
 				title={on ? "Stop timer" : "Start timer"}
 				onClick={(e) => {
 					e.preventDefault();
@@ -36,11 +37,12 @@ export default function RestTimer() {
 				strokeDashoffset={dashOffset}
 			>
 				<S.Group>
+					<title>Rest timer is currently {!on && "not"} active</title>
 					<S.Circle
 						cx={size / 2}
 						cy={size / 2}
 						r={0.4 * size}
-						fill="#eee"
+						fill={on ? "#eee" : "orangered"}
 						strokeWidth={Math.min(7, 1 + 6 * (progressPercentage / 100))}
 						stroke={
 							progressPercentage >= 100
