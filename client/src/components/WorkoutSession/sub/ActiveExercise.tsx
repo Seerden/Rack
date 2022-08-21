@@ -1,5 +1,8 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
+import { FaPlus } from "react-icons/fa";
 import { useSetRecoilState } from "recoil";
+import { slideVariants } from "../../../helpers/framer/variants/slide-variants";
 import { WEIGHT_UNITS, WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ExerciseScheme, SessionExercise } from "../../../types/shared/session.types";
 import { activeWorkoutState } from "../state/workout-state";
@@ -65,66 +68,109 @@ export default function ActiveExercise({
 	};
 
 	return (
-		<S.ActiveExercise>
-			<S.ActiveTitle>
-				<h1>
-					{
-						workout.exercises.find((ex) => ex.exercise_id === e.exercise_id)
-							?.exercise_name
-					}
-				</h1>
-				{!showAddWarmup && (
-					<S.Button
-						onClick={() => {
-							setShowAddWarmup(true);
-						}}
-					>
-						Add warm-up weight
-					</S.Button>
-				)}
-			</S.ActiveTitle>
+		<AnimatePresence mode="popLayout" initial={false}>
+			<S.ActiveExercise
+				key={`activeExercise-${e.exercise_id}`}
+				as={motion.section}
+				variants={slideVariants}
+				initial="hidden"
+				animate="appear"
+				exit="exit"
+				style={{ overflow: "hidden" }}
+			>
+				<S.ActiveTitle as={motion.header} key="activeTitle">
+					<motion.h1>
+						{
+							workout.exercises.find((ex) => ex.exercise_id === e.exercise_id)
+								?.exercise_name
+						}
+					</motion.h1>
+					<AnimatePresence initial={false}>
+						{!showAddWarmup && (
+							<S.Button
+								as={motion.button}
+								onClick={() => {
+									setShowAddWarmup(true);
+								}}
+								initial={{
+									color: "transparent",
+									scaleX: 0,
+								}}
+								animate={{
+									color: "black",
+									scaleX: 1,
+								}}
+								exit={{
+									color: "transparent",
+									scaleX: 0,
+								}}
+							>
+								Add warm-up weight
+							</S.Button>
+						)}
+					</AnimatePresence>
+				</S.ActiveTitle>
 
-			<S.Warmup>
-				{showAddWarmup && (
-					<S.WarmupForm
-						onSubmit={(e) => {
-							e.preventDefault();
-							addWarmupSet(warmupScheme);
-							setShowAddWarmup(false);
-							setWarmupScheme(defaultWarmupScheme);
-						}}
-					>
-						<span>Warmup set</span>
-						<S.WarmupFields>
-							<span>
-								<label>Weight</label>
-								<S.Input {...inputProps} name="weight" />{" "}
-								<span>{weight_unit}</span>
-							</span>
-							<span>
-								<label>Sets</label>
-								<S.Input {...inputProps} name="sets" />
-							</span>
-							<span>
-								<label>Reps</label>
-								<S.Input {...inputProps} name="reps" />
-							</span>
-						</S.WarmupFields>
-						<button>Add to warmup</button>
-					</S.WarmupForm>
-				)}
-			</S.Warmup>
+				<AnimatePresence mode="popLayout" key="warmupPresence">
+					{showAddWarmup && (
+						<S.Warmup
+							as={motion.section}
+							layout
+							key="warmup"
+							initial={{ y: "-100%", opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{
+								type: "spring",
+								duration: 0.45,
+								bounce: 0.2,
+							}}
+						>
+							<S.WarmupForm
+								onSubmit={(e) => {
+									e.preventDefault();
+									addWarmupSet(warmupScheme);
+									setShowAddWarmup(false);
+									setWarmupScheme(defaultWarmupScheme);
+								}}
+							>
+								<h1>New warm-up set:</h1>
+								<S.WarmupFields>
+									<p>
+										<label>Weight</label>
+										<span>
+											<S.Input {...inputProps} name="weight" />{" "}
+											<span>{weight_unit}</span>
+										</span>
+									</p>
+									<p>
+										<label>Sets</label>
+										<S.Input {...inputProps} name="sets" />
+									</p>
+									<p>
+										<label>Reps</label>
+										<S.Input {...inputProps} name="reps" />
+									</p>
+									<S.SaveButton type="submit" title="Add to warm-up">
+										<FaPlus size={11} />
+									</S.SaveButton>
+								</S.WarmupFields>
+							</S.WarmupForm>
+						</S.Warmup>
+					)}
+				</AnimatePresence>
 
-			{structuredClone(e.session)
-				.sort((a, b) => a.weight - b.weight)
-				.map((scheme) => (
-					<ExerciseRow
-						cycleIndex={cycleIndex}
-						key={scheme.weight}
-						exercise_id={e.exercise_id}
-						scheme={scheme}
-					/>
-				))}
-		</S.ActiveExercise>
+				{structuredClone(e.session)
+					.sort((a, b) => a.weight - b.weight)
+					.map((scheme) => (
+						<ExerciseRow
+							cycleIndex={cycleIndex}
+							key={scheme.weight}
+							exercise_id={e.exercise_id}
+							scheme={scheme}
+						/>
+					))}
+			</S.ActiveExercise>
+		</AnimatePresence>
 	);
 }
