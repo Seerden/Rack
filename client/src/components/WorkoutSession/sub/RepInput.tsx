@@ -60,8 +60,9 @@ export default function RepInput({
 				sessionEntries[exercise_id]?.[scheme.weight]?.[index]?.reps ?? null
 			}
 			onChange={(e) => handleChange(e)}
-			onBlur={() => {
+			onBlur={(e) => {
 				// On blurring the lest working set, move to the next exercise.
+				if (!e.target.value) return;
 				if (index === scheme.sets - 1 && !scheme.is_warmup) {
 					cycleIndex();
 				}
