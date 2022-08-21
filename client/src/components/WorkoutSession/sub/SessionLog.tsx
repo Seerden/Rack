@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import { Exercise, WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ID } from "../../../types/shared/id.types";
@@ -15,7 +16,7 @@ export default function SessionLog({
 	activeExerciseId,
 }: SessionLogProps) {
 	return (
-		<S.Exercises>
+		<S.Exercises as={motion.ul}>
 			{workout.exercises.map((e, i) => (
 				<LogEntry
 					exercise={e}
@@ -36,7 +37,11 @@ type LogEntryProps = {
 
 function LogEntry({ exercise, isActive, onClick }: LogEntryProps) {
 	return (
-		<S.Entry isActive={isActive} onClick={() => onClick(exercise.exercise_id)}>
+		<S.Entry
+			as={motion.li}
+			$isActive={isActive}
+			onClick={() => onClick(exercise.exercise_id)}
+		>
 			<S.Name>{exercise.exercise_name}</S.Name>
 			<S.Weight>
 				{exercise.starting_weight}

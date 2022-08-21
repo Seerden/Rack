@@ -7,7 +7,7 @@ export const Exercises = styled.ul`
 	margin-bottom: 1rem;
 `;
 
-export const Entry = styled.li<{ isActive?: boolean }>`
+export const Entry = styled.li<{ $isActive?: boolean }>`
 	user-select: none;
 	list-style: none;
 
@@ -28,7 +28,7 @@ export const Entry = styled.li<{ isActive?: boolean }>`
 	align-items: center;
 
 	${(p) =>
-		p.isActive &&
+		p.$isActive &&
 		css`
 			font-weight: 600;
          border-color: #f1f1f1;
@@ -37,7 +37,7 @@ export const Entry = styled.li<{ isActive?: boolean }>`
 		`}
 
 	${(p) =>
-		!p.isActive &&
+		!p.$isActive &&
 		css`
 			color: #999;
 
