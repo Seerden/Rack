@@ -65,6 +65,7 @@ export default function ActiveExercise({
 	const inputProps: Partial<InputHTMLAttributes<HTMLInputElement>> = {
 		onChange: (e) => handleWarmupFieldChange(e),
 		type: "number",
+		min: 0,
 	};
 
 	return (
@@ -134,22 +135,22 @@ export default function ActiveExercise({
 									setWarmupScheme(defaultWarmupScheme);
 								}}
 							>
-								<h1>New warm-up set:</h1>
+								<S.WarmUpLabel>New warm-up set:</S.WarmUpLabel>
 								<S.WarmupFields>
 									<p>
-										<label>Weight</label>
+										<label htmlFor="weight">Weight</label>
 										<span>
-											<S.Input {...inputProps} name="weight" />{" "}
+											<S.Input {...inputProps} id="weight" name="weight" />{" "}
 											<span>{weight_unit}</span>
 										</span>
 									</p>
 									<p>
-										<label>Sets</label>
-										<S.Input {...inputProps} name="sets" />
+										<label htmlFor="sets">Sets</label>
+										<S.Input {...inputProps} id="sets" name="sets" />
 									</p>
 									<p>
-										<label>Reps</label>
-										<S.Input {...inputProps} name="reps" />
+										<label htmlFor="reps">Reps</label>
+										<S.Input {...inputProps} id="reps" name="reps" />
 									</p>
 									<S.SaveButton type="submit" title="Add to warm-up">
 										<FaPlus size={11} />

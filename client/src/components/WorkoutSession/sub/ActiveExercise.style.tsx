@@ -2,10 +2,15 @@ import styled from "styled-components";
 import { SubTitle } from "../../../helpers/theme/snippets/Title";
 
 export const Action = styled.div`
+	&:nth-of-type(1) {
+		margin-top: 0.8rem;
+	}
+
 	display: grid;
-	grid-template-columns: minmax(20%, max-content) 1fr;
+	grid-template-columns: 8rem 1fr;
 	justify-content: space-evenly;
 	align-items: center;
+	gap: 1rem;
 
 	* {
 		align-items: center;
@@ -13,7 +18,13 @@ export const Action = styled.div`
 `;
 
 export const Input = styled.input`
-	width: 3rem;
+	width: 2.9rem;
+	height: 2rem;
+	padding: 0.4rem;
+	border-radius: 9px;
+	text-align: center;
+	justify-content: center;
+	font-size: 0.93rem;
 
 	transition: all 50ms ease-out;
 
@@ -23,6 +34,16 @@ export const Input = styled.input`
 		margin: 0;
 	}
 	-moz-appearance: textfield;
+
+	border: 2px solid #eee;
+	outline: 1px solid transparent;
+
+	&:focus,
+	&:active {
+		outline: 1px solid white;
+		box-shadow: 0 0.2rem 0 0 #ffe800;
+		transform: translateY(-2px);
+	}
 `;
 
 export const Reps = styled.span`
@@ -37,7 +58,12 @@ export const WarmupForm = styled.form`
 	display: flex;
 	flex-direction: column;
 
-	padding: 2rem;
+	padding: 1.3rem 2rem;
+
+	box-shadow: 6px 6px 0 -2px #ccc, -6px -6px 0 -2px white;
+	border: 3px solid #ffe800;
+	border-radius: 8px;
+	background-color: #fefefe;
 `;
 
 export const WarmupFields = styled.div`
@@ -53,7 +79,8 @@ export const WarmupFields = styled.div`
 
 		label {
 			margin-bottom: 0.2rem;
-			font-size: 1.01rem;
+			font-size: 1rem;
+			padding-bottom: 0.1rem;
 		}
 
 		display: flex;
@@ -93,7 +120,7 @@ export const SaveButton = styled.button`
 	height: max-content;
 	margin-left: auto;
 	align-self: flex-end;
-	background-color: #ffe600;
+	background-color: #ffe800;
 	border: 1px solid #eee;
 	outline: none;
 	border-radius: 50%;
@@ -134,4 +161,12 @@ export const ActiveTitle = styled.header`
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 1rem;
+`;
+
+export const WarmUpLabel = styled.h1`
+	user-select: none;
+	margin-left: -0.8rem;
+	margin-bottom: 0.2rem;
+	font-weight: 400;
+	font-size: 1.08rem;
 `;
