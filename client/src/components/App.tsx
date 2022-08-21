@@ -1,11 +1,12 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { lazy, Suspense } from "react";
-import { HashRouter as Router, Link, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Link, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { queryClient } from "../helpers/query-client";
 import { theme } from "../helpers/theme/theme";
+import AnimatedRoutes from "./AnimatedRoutes";
 import NewWorkout from "./Workout/NewWorkout/NewWorkout";
 
 const Register = lazy(() => import("components/Register/Register"));
@@ -33,7 +34,7 @@ const App = () => {
 					<Router>
 						<main>
 							<Header />
-							<Routes>
+							<AnimatedRoutes>
 								<Route
 									path="/"
 									element={
@@ -63,6 +64,7 @@ const App = () => {
 
 								<Route path="workouts">
 									<Route
+										key="m.workouts"
 										index
 										element={
 											<Suspense fallback={<></>}>
@@ -76,6 +78,7 @@ const App = () => {
 									<Route path="new" element={<NewWorkout />} />
 									<Route path=":workout_id">
 										<Route
+											key="m.workout.session"
 											path="session"
 											element={
 												<Suspense fallback={<></>}>
@@ -87,7 +90,7 @@ const App = () => {
 									</Route>
 								</Route>
 								<Route path="*" element={<div>404</div>} />
-							</Routes>
+							</AnimatedRoutes>
 						</main>
 					</Router>
 				</ThemeProvider>
