@@ -15,6 +15,12 @@ export const Action = styled.div`
 	* {
 		align-items: center;
 	}
+
+	padding: 0.34rem 0.69rem;
+
+	&:not(:nth-of-type(1)) {
+		border-top: 2px solid #fefefe;
+	}
 `;
 
 export const Input = styled.input`
