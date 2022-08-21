@@ -1,5 +1,29 @@
 import styled, { css } from "styled-components";
 
+export const Wrapper = styled.section`
+	display: grid;
+	grid-template-columns: repeat(3, max-content);
+	justify-content: center;
+`;
+
+export const TimerButton = styled.button`
+	padding: 1rem;
+	align-self: center;
+	height: 4rem;
+
+	border: 2px solid transparent;
+
+	&:nth-of-type(1) {
+		justify-self: flex-end;
+		border-radius: 8px 0 0 8px;
+	}
+
+	&:nth-of-type(2) {
+		justify-self: flex-start;
+		border-radius: 0 8px 8px 0;
+	}
+`;
+
 export const Timer = styled.div`
 	width: 250px;
 	height: 250px;

@@ -6,6 +6,8 @@ export default function useRestTimer(targetMillis: number, initialOn?: boolean) 
 	const [millisElapsed, setMillisElapsed] = useState<number>(0);
 	const reset = () => setMillisElapsed(0);
 	const start = () => setOn(true);
+	const stop = () => setOn(false);
+	const toggle = () => setOn((on) => !on);
 	const progressPercentage = useMemo(
 		() => +((100 * millisElapsed) / targetMillis).toFixed(1),
 		[millisElapsed]
@@ -22,10 +24,13 @@ export default function useRestTimer(targetMillis: number, initialOn?: boolean) 
 	}, [delay, on]);
 
 	return {
-		setDelay,
 		progressPercentage,
 		millisElapsed,
+		setDelay,
 		start,
+		stop,
 		reset,
+		toggle,
+		on,
 	} as const;
 }
