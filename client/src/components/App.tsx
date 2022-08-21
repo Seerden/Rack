@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { lazy, Suspense } from "react";
-import { HashRouter as Router, Link, Route } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { queryClient } from "../helpers/query-client";
@@ -10,6 +10,7 @@ import AnimatedRoutes from "./AnimatedRoutes";
 import NewWorkout from "./Workout/NewWorkout/NewWorkout";
 
 const Register = lazy(() => import("components/Register/Register"));
+const Home = lazy(() => import("components/Home/Home"));
 const Login = lazy(() => import("components/Login/Login"));
 const Header = lazy(() => import("components/Header/Header"));
 const Workouts = lazy(() => import("components/Workouts/Workouts"));
@@ -35,15 +36,7 @@ const App = () => {
 						<main>
 							<Header />
 							<AnimatedRoutes>
-								<Route
-									path="/"
-									element={
-										<>
-											Welcome{" "}
-											<Link to="/workout/new">Create a new workout</Link>{" "}
-										</>
-									}
-								/>
+								<Route path="/" element={<Home />} />
 								<Route
 									path="register"
 									element={
