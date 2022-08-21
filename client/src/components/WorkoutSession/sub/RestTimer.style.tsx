@@ -58,9 +58,4 @@ export const Group = styled.g`
 	}
 
 	transition: all 55ms linear;
-
-	foreignObject {
-		transform: rotate(90deg);
-		transform-origin: 50% 50%;
-	}
 `;
