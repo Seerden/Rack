@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { ID } from "../../../types/shared/id.types";
 import { ExerciseScheme } from "../../../types/shared/session.types";
 
@@ -25,7 +26,12 @@ export default function ExerciseRow({
 	));
 
 	return (
-		<S.Action>
+		<S.Action
+			as={motion.div}
+			layout
+			key={"exercise-row"}
+			transition={{ type: "spring", bounce: 0.2, duration: 0.35 }}
+		>
 			<span>
 				{scheme.weight}
 				{scheme.weight_unit} ({scheme.sets} x {scheme.reps})
