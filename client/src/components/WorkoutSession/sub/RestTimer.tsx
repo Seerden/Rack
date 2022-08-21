@@ -15,7 +15,8 @@ export default function RestTimer() {
 
 	// SVG attributes -- TODO: put these somewhere else
 	const size = 200;
-	const dashes = 2 * Math.PI * 0.4 * size;
+	const radius = 0.45 * size;
+	const dashes = 2 * Math.PI * radius;
 	const dashOffset = Math.max(0, ((100 - progressPercentage) / 100) * dashes);
 
 	return (
@@ -41,7 +42,7 @@ export default function RestTimer() {
 					<S.Circle
 						cx={size / 2}
 						cy={size / 2}
-						r={0.4 * size}
+						r={radius}
 						fill={on ? "#eee" : "orangered"}
 						strokeWidth={Math.min(7, 1 + 6 * (progressPercentage / 100))}
 						stroke={
@@ -54,7 +55,7 @@ export default function RestTimer() {
 					<S.Circle
 						cx={size / 2}
 						cy={size / 2}
-						r={0.35 * size}
+						r={0.4 * size}
 						fill="#f2f2f2"
 						strokeWidth={0}
 					/>
