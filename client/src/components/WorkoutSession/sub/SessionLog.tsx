@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
+import { useRecoilValue } from "recoil";
 import { Exercise, WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ID } from "../../../types/shared/id.types";
+import type { SessionExercise } from "../../../types/shared/session.types";
+import { activeWorkoutState, sessionEntriesState } from "../state/workout-state";
+import { SessionEntriesInput } from "../types/workout-state.types";
 import * as S from "./SessionLog.style";
+import SetIcon from "./SetIcon";
 
 type SessionLogProps = {
 	workout: WorkoutWithExercises;
@@ -11,10 +16,13 @@ type SessionLogProps = {
 };
 
 export default function SessionLog({
-	workout,
+	workout, // TODO: this component only uses workout.exercises -- if we're sure we won't need anything else soon: only pass exercises
 	onClick,
 	activeExerciseId,
 }: SessionLogProps) {
+	const sessionEntries = useRecoilValue(sessionEntriesState);
+	const session = useRecoilValue(activeWorkoutState);
+
 	return (
 		<S.Exercises as={motion.ul}>
 			{workout.exercises.map((e, i) => (
@@ -22,6 +30,8 @@ export default function SessionLog({
 					exercise={e}
 					key={e.exercise_id}
 					isActive={e.exercise_id === activeExerciseId}
+					entries={sessionEntries[e.exercise_id]}
+					session={session?.find((s) => s.exercise_id === e.exercise_id)}
 					onClick={onClick}
 				/>
 			))}
@@ -32,10 +42,24 @@ export default function SessionLog({
 type LogEntryProps = {
 	exercise: Exercise;
 	isActive?: boolean;
+	entries: Maybe<SessionEntriesInput[number]>;
+	session: Maybe<SessionExercise>;
 	onClick: (id: ID) => void;
 };
 
-function LogEntry({ exercise, isActive, onClick }: LogEntryProps) {
+function LogEntry({ exercise, isActive, onClick, entries, session }: LogEntryProps) {
+	// TODO: the following logic becomes unstable once we allow users to adjust
+	// working weights mid-session.
+	const workingScheme = session?.session.find((x) => !x.is_warmup);
+	const workingWeight = workingScheme?.weight;
+
+	if (!workingWeight) return <></>;
+
+	const workingSets = entries?.[workingWeight]?.map((x) => x.reps);
+	const workingSetsFailed = workingSets?.map(
+		(reps) => typeof reps === "number" && reps < workingScheme.reps
+	);
+
 	return (
 		<S.Entry
 			as={motion.li}
@@ -50,6 +74,15 @@ function LogEntry({ exercise, isActive, onClick }: LogEntryProps) {
 			<S.RepScheme>
 				{exercise.sets} <FaTimes size={11} /> {exercise.reps}
 			</S.RepScheme>
+			<S.SetIcons>
+				{[...Array(workingScheme.sets).keys()]?.map((x, i) => (
+					<SetIcon
+						key={i}
+						failed={!!workingSetsFailed?.[i]}
+						passed={(workingSets?.[i] ?? 0) >= workingScheme.reps}
+					/>
+				))}
+			</S.SetIcons>
 		</S.Entry>
 	);
 }

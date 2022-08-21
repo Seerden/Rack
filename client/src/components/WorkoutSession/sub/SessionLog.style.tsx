@@ -69,3 +69,18 @@ export const RepScheme = styled.span`
 	gap: 0.3rem;
 	align-items: center;
 `;
+
+export const SetIcons = styled.span`
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	gap: 0.3rem;
+	min-width: 5rem;
+	align-items: center;
+	flex-wrap: wrap;
+
+	svg circle {
+		flex-grow: 1;
+		place-self: center;
+	}
+`;
