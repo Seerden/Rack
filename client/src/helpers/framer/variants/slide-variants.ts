@@ -18,3 +18,23 @@ export const slideVariants: Variants = {
 		opacity: 0,
 	},
 };
+
+/** Scale horizontally by expanding from right -> left. */
+export const scaleOutVariants: Variants = {
+	initial: {
+		color: "transparent",
+		scaleX: 0,
+		originX: "95%",
+		originY: "50%",
+	},
+	animate: {
+		color: "black",
+		scaleX: 1,
+	},
+	exit: {
+		color: "transparent",
+		scaleX: 0,
+		originX: "95%",
+		originY: "50%",
+	},
+};
