@@ -4,13 +4,11 @@ WORKDIR /rack/server
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install && npm install typescript nodemon -g 
+COPY ./ ./
 
-COPY . .
-
-RUN npm run build
-COPY . .
+RUN tsc -p .
 
 EXPOSE 5000
 
-CMD ["node", "dist/index.js"]
+CMD ["nodemon", "dist/index.js"]

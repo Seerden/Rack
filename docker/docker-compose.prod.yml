@@ -1,34 +1,6 @@
 version: "3.8"
 
 services:
-   nginx-proxy:
-      restart: always
-      image: jwilder/nginx-proxy
-      ports:
-         - "80:80"
-         - "443:443"
-      volumes:
-         - "/etc/nginx/vhost.d"
-         - "/usr/share/nginx/html"
-         - "/var/run/docker.sock:/tmp/docker.sock:ro"
-         - "/etc/nginx/certs"
-      environment:
-         - VIRTUAL_HOST=rack.seerden.xyz
-         - LETSENCRYPT_HOST=rack.seerden.xyz
-         - DEFAULT_HOST=nodeapp.local
-
-   letsencrypt-nginx-proxy-companion:
-      restart: always
-      image: jrcs/letsencrypt-nginx-proxy-companion
-      volumes:
-         - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      volumes_from:
-         - "nginx-proxy"
-      environment:
-         - VIRTUAL_HOST=rack.seerden.xyz
-         - LETSENCRYPT_HOST=rack.seerden.xyz
-         - DEFAULT_HOST=nodeapp.local
-
    store:
       image: redis
       command: ["redis-server", "--appendonly", "yes"]
@@ -55,6 +27,8 @@ services:
          dockerfile: Dockerfile.prod
       volumes:
          - ../server:/rack/server
+         - /rack/server/node_modules
+         - /rack/server/dist
       depends_on:
          - database
          - store

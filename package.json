@@ -5,9 +5,10 @@
    "main": "index.js",
    "scripts": {
       "dev": "cd ./docker && docker-compose --file ./docker-compose.dev.yml up --force-recreate --remove-orphans",
-      "prod": "cd ./docker && docker-compose --file ./docker-compose.prod.yml up --force-recreate --remove-orphans --build nginx-proxy letsencrypt-nginx-proxy-companion server database store client test-database",
+      "prod": "cd ./docker && docker-compose --file ./docker-compose.prod.yml up --force-recreate --remove-orphans --build server database store client test-database",
       "dev-build": "cd ./docker && docker-compose --file ./docker-compose.dev.yml up --force-recreate --remove-orphans --build server database store client test-database",
       "dev-down": "cd ./docker && docker-compose --file ./docker-compose.dev.yml down --volumes",
+      "prod-down": "cd ./docker && docker-compose --file ./docker-compose.prod.yml down --volumes",
       "db": "docker exec -it docker_database_1 psql rack -U postgres",
       "test-db": "docker exec -it docker_test-database_1 psql rack-test -U postgres -p 5434",
       "test-back": "docker exec -it docker_server_1 npm test --watchAll",
