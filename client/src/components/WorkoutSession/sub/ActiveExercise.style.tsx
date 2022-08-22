@@ -135,7 +135,6 @@ export const Button = styled.button`
 		box-shadow: 0 0.1rem 0.4rem -0.05rem #d8c200;
 	}
 
-	transform-origin: 95% 50%;
 	transition: all 25ms linear;
 `;
 
