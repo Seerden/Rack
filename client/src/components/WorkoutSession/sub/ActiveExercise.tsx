@@ -2,7 +2,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { useSetRecoilState } from "recoil";
-import { slideVariants } from "../../../helpers/framer/variants/slide-variants";
+import {
+	scaleOutVariants,
+	slideVariants,
+} from "../../../helpers/framer/variants/slide-variants";
 import { WEIGHT_UNITS, WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ExerciseScheme, SessionExercise } from "../../../types/shared/session.types";
 import { activeWorkoutState } from "../state/workout-state";
@@ -93,18 +96,10 @@ export default function ActiveExercise({
 								onClick={() => {
 									setShowAddWarmup(true);
 								}}
-								initial={{
-									color: "transparent",
-									scaleX: 0,
-								}}
-								animate={{
-									color: "black",
-									scaleX: 1,
-								}}
-								exit={{
-									color: "transparent",
-									scaleX: 0,
-								}}
+								variants={scaleOutVariants}
+								initial="initial"
+								animate="animate"
+								exit="exit"
 							>
 								Add warm-up weight
 							</S.Button>
