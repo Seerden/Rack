@@ -39,7 +39,7 @@ export const TimerButton = styled.button<{ stopped?: boolean }>`
 	&:hover,
 	&:focus,
 	&:active {
-		box-shadow: 0 0 0.5rem 0.1rem #cacaca;
+		box-shadow: 0 0 0.3rem 0.1rem #cacaca;
 	}
 
 	&:hover,
@@ -48,7 +48,7 @@ export const TimerButton = styled.button<{ stopped?: boolean }>`
 			transform: scale(1.1);
 		}
 
-		border-radius: 50%;
+		border-radius: 10px;
 	}
 
 	transition: all 45ms linear, border-radius 85ms ease-in;
