@@ -1,12 +1,13 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
 import { HashRouter as Router, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { queryClient } from "../helpers/query-client";
 import { theme } from "../helpers/theme/theme";
 import AnimatedRoutes from "./AnimatedRoutes";
+import Suspended from "./Suspended";
 import NewWorkout from "./Workout/NewWorkout/NewWorkout";
 
 const Register = lazy(() => import("components/Register/Register"));
@@ -40,18 +41,18 @@ const App = () => {
 								<Route
 									path="register"
 									element={
-										<Suspense fallback={<></>}>
+										<Suspended>
 											<Register />
-										</Suspense>
+										</Suspended>
 									}
 								/>
 
 								<Route
 									path="login"
 									element={
-										<Suspense fallback={<></>}>
+										<Suspended>
 											<Login />
-										</Suspense>
+										</Suspended>
 									}
 								/>
 
@@ -60,9 +61,9 @@ const App = () => {
 										key="m.workouts"
 										index
 										element={
-											<Suspense fallback={<></>}>
+											<Suspended>
 												<Workouts />
-											</Suspense>
+											</Suspended>
 										}
 									/>
 								</Route>
@@ -74,9 +75,9 @@ const App = () => {
 											key="m.workout.session"
 											path="session"
 											element={
-												<Suspense fallback={<></>}>
+												<Suspended>
 													<WorkoutSession />
-												</Suspense>
+												</Suspended>
 											}
 										/>
 										<Route path="" element={<></>} />
