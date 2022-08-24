@@ -42,7 +42,6 @@ export default function useWorkoutSession() {
 	}, [session, sessionEntries]);
 
 	const allCompleted = session?.length && completedExercises.length === session.length;
-
 	const [activeExerciseId, setActiveExerciseId] = useState<number>();
 
 	useEffect(() => {
@@ -59,6 +58,10 @@ export default function useWorkoutSession() {
 		const newIndex = (activeIndex + 1) % size;
 		setActiveExerciseId(session[newIndex].exercise_id);
 	}, [session, activeIndex, activeExerciseId]);
+
+	useEffect(() => {
+		console.log({ sessionEntries, session });
+	}, [sessionEntries, session]);
 
 	return {
 		workout,
