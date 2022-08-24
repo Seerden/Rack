@@ -52,6 +52,7 @@ export default function WorkoutSession() {
 
 			{!showFinalize && !!activeExercise && (
 				<ActiveExercise
+					key="m.ActiveExercise"
 					cycleIndex={cycleActiveIndex}
 					workout={workout}
 					e={activeExercise}
@@ -63,7 +64,7 @@ export default function WorkoutSession() {
 
 			{allCompleted && (
 				<AnimatePresence mode="sync" key="m.WorkoutSession">
-					<WorkoutCompleted />
+					<WorkoutCompleted key="m.completed" />
 					<AnimatePresence key="m.PresendEndButton">
 						<S.EndButton
 							key="m.endButton"

@@ -5,7 +5,7 @@ import * as S from "./WorkoutCompleted.style";
 
 export default function WorkoutCompleted() {
 	return (
-		<AnimatePresence key="m.completed">
+		<AnimatePresence>
 			<S.Section
 				key="m.exerciseCompletedSection"
 				variants={fadeInVariants}
