@@ -3,6 +3,7 @@ export type WeightUnit = "kg" | "lbs";
 export type NewWorkout = {
 	name: string;
 	description?: string;
+	weight_unit: WeightUnit;
 };
 
 /** Matches type of `workouts` table. */

@@ -30,9 +30,9 @@ export type WorkoutSessionEntry = WorkoutSessionEntryInput & {
 };
 
 // Type as expected to be passed from client -> server
-export type WorkoutSessionWithEntriesInput = WorkoutSessionInput & {
+export interface WorkoutSessionWithEntriesInput extends WorkoutSessionInput {
 	entries: WorkoutSessionEntryInput[];
-};
+}
 
 /** Expected return type from POST `exercise/workout` */
 export type WorkoutSessionWithEntries = WorkoutSession & {

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { FaPlusCircle, FaSave } from "react-icons/fa";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
@@ -18,6 +19,10 @@ export default function NewWorkout() {
 	const setOpenIndex = useSetRecoilState(openIndexState);
 	const [weightUnit, setWeightUnit] = useRecoilState(weightUnitState);
 	const isValid = isValidNewWorkout(parseNewWorkout(newWorkout, weightUnit));
+
+	useEffect(() => {
+		console.log({ newWorkout });
+	}, [newWorkout]);
 
 	return (
 		<S.Form

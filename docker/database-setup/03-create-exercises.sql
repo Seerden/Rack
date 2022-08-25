@@ -1,5 +1,3 @@
-create type weight_units as ENUM('kg', 'lbs');
-
 create table if not exists exercises (
    workout_id serial not null,
    exercise_id serial primary key,
