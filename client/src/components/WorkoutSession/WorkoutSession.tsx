@@ -24,11 +24,8 @@ export default function WorkoutSession() {
 
 	if (!workout?.exercises || !activeExercise) return <></>;
 
-	if (!activeExercise) return <></>;
-
 	return (
 		<S.Page
-			key="m.page"
 			as={motion.div}
 			variants={pageVariants}
 			initial="hidden"
