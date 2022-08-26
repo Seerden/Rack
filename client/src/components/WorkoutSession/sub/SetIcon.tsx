@@ -9,6 +9,7 @@ type SetIconProps = {
 export default function SetIcon({ failed, passed, size = 18 }: SetIconProps) {
 	return (
 		<svg width={size} height={size}>
+			<title>Set completed {failed && "un"}successfully</title>
 			<S.Circle
 				failed={failed}
 				passed={passed}
