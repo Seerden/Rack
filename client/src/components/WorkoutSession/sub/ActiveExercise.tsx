@@ -14,7 +14,11 @@ import ExerciseRow from "./ExerciseRow";
 
 /** Typeguard that validates warmupScheme is fully valid */
 function isScheme(scheme: Partial<ExerciseScheme>): scheme is ExerciseScheme {
-	return !!scheme.reps && !!scheme.reps && !!scheme.weight;
+	return (
+		["exercise_id", "reps", "sets", "weight_unit"].every(
+			(field: keyof ExerciseScheme) => !!scheme[field]
+		) && typeof scheme.weight === "number"
+	);
 }
 
 type ActiveExerciseProps = {
