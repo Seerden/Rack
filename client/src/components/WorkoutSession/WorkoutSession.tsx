@@ -42,15 +42,13 @@ export default function WorkoutSession() {
 				activeExerciseId={activeExerciseId ?? 0}
 			/>
 
-			{!!activeExercise && (
-				<ActiveExercise
-					key="m.ActiveExercise"
-					cycleIndex={cycleActiveIndex}
-					workout={workout}
-					e={activeExercise}
-					weight_unit={workout.weight_unit}
-				/>
-			)}
+			<ActiveExercise
+				key="m.ActiveExercise"
+				cycleIndex={cycleActiveIndex}
+				workout={workout}
+				e={activeExercise}
+				weight_unit={workout.weight_unit}
+			/>
 
 			{allCompleted && (
 				<AnimatePresence mode="sync" key="m.WorkoutSession">
