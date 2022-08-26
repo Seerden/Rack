@@ -1,7 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ChangeEvent, InputHTMLAttributes, useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { useSetRecoilState } from "recoil";
 import {
 	scaleOutVariants,
 	slideBounceVariants,
@@ -12,8 +10,7 @@ import {
 	WorkoutWithExercises,
 } from "../../../../types/shared/exercise.types";
 import { ExerciseScheme, SessionExercise } from "../../../../types/shared/session.types";
-import { activeWorkoutState } from "../../state/workout-state";
-import { isScheme } from "../../types/is-scheme";
+import useActiveExercise from "../../hooks/useActiveExercise";
 import * as S from "./ActiveExercise.style";
 import ExerciseRow from "./ExerciseRow";
 
@@ -30,46 +27,20 @@ export default function ActiveExercise({
 	weight_unit,
 	cycleIndex,
 }: ActiveExerciseProps) {
-	const [showAddWarmup, setShowAddWarmup] = useState<boolean>(false);
-	const setSession = useSetRecoilState(activeWorkoutState);
-
 	const defaultWarmupScheme: Partial<ExerciseScheme> = {
 		is_warmup: true,
 		weight_unit,
 		exercise_id: e.exercise_id,
 	};
 
-	const [warmupScheme, setWarmupScheme] =
-		useState<Partial<ExerciseScheme>>(defaultWarmupScheme);
-
-	function handleWarmupFieldChange(e: ChangeEvent<HTMLInputElement>) {
-		const { name, value } = e.currentTarget;
-
-		setWarmupScheme((cur) => ({ ...cur, [name]: +value }));
-	}
-
-	function addWarmupSet(scheme: Partial<ExerciseScheme>) {
-		if (!isScheme(scheme)) return;
-
-		setSession((cur) => {
-			const newSession = structuredClone(cur);
-			const thisExerciseIndex = cur.findIndex((x) => x.exercise_id === e?.exercise_id);
-
-			if (!(thisExerciseIndex >= 0)) return cur;
-
-			newSession[thisExerciseIndex].schemes.push({
-				...scheme,
-			});
-
-			return newSession;
-		});
-	}
-
-	const inputProps: InputHTMLAttributes<HTMLInputElement> = {
-		onChange: (e) => handleWarmupFieldChange(e),
-		type: "number",
-		min: 0,
-	};
+	const {
+		showAddWarmup,
+		setShowAddWarmup,
+		warmupScheme,
+		setWarmupScheme,
+		addWarmupSet,
+		inputProps,
+	} = useActiveExercise(defaultWarmupScheme, e);
 
 	return (
 		<AnimatePresence mode="popLayout" initial={false}>
@@ -160,7 +131,7 @@ export default function ActiveExercise({
 					.map((scheme) => (
 						<ExerciseRow
 							cycleIndex={cycleIndex}
-							key={scheme.weight}
+							key={`${scheme.exercise_id}-${scheme.weight}`}
 							exercise_id={e.exercise_id}
 							scheme={scheme}
 						/>
