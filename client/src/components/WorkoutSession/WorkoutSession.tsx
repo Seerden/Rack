@@ -53,7 +53,7 @@ export default function WorkoutSession() {
 			{allCompleted && (
 				<AnimatePresence mode="sync" key="m.WorkoutSession">
 					<WorkoutCompleted key="m.completed" />
-					<AnimatePresence key="m.PresendEndButton">
+					<AnimatePresence key="m.PresenceEndButton">
 						<S.EndButton
 							key="m.endButton"
 							as={motion.button}
