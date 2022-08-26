@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
-import { Exercise } from "../../../types/shared/exercise.types";
-import { ID } from "../../../types/shared/id.types";
-import type { SessionExercise } from "../../../types/shared/session.types";
-import { activeWorkoutState, sessionEntriesState } from "../state/workout-state";
-import { SessionEntriesInput } from "../types/workout-state.types";
+import { Exercise } from "../../../../types/shared/exercise.types";
+import { ID } from "../../../../types/shared/id.types";
+import type { SessionExercise } from "../../../../types/shared/session.types";
+import { activeWorkoutState, sessionEntriesState } from "../../state/workout-state";
+import { SessionEntriesInput } from "../../types/workout-state.types";
+import SetIcon from "../SetIcon";
 import * as S from "./SessionLog.style";
-import SetIcon from "./SetIcon";
 
 type SessionLogProps = {
 	exercises: Exercise[];

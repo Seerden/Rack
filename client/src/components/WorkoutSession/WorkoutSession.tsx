@@ -6,7 +6,7 @@ import { Title } from "../../helpers/theme/snippets/Title";
 import useWorkoutSession from "./hooks/useWorkoutSession";
 import ActiveExercise from "./sub/ActiveExercise";
 import RestTimer from "./sub/RestTimer";
-import SessionLog from "./sub/SessionLog";
+import SessionLog from "./sub/SessionLog/SessionLog";
 import WorkoutCompleted from "./sub/WorkoutCompleted";
 import * as S from "./WorkoutSession.style";
 
