@@ -59,5 +59,5 @@ export type HistoryList = [
 
 export type SessionExercise = {
 	exercise_id: ID;
-	session: ExerciseScheme[]; // currently we only allow one working weight, but for things like 5/3/1, having a structure like this from the start is very beneficial
+	schemes: ExerciseScheme[]; // currently we only allow one working weight, but for things like 5/3/1, having a structure like this from the start is very beneficial
 };

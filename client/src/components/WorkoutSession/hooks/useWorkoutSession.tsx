@@ -31,7 +31,7 @@ export default function useWorkoutSession() {
 		const completedIds: ID[] = [];
 
 		for (const exercise of session) {
-			const workingScheme = exercise.session.find((x) => !x.is_warmup);
+			const workingScheme = exercise.schemes.find((x) => !x.is_warmup);
 
 			if (!workingScheme) continue;
 

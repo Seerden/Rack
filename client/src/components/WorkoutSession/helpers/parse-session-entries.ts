@@ -28,7 +28,7 @@ export function parseSessionEntries(
 			if (!scheme) continue;
 
 			const thisExerciseInSession = session.find((x) => x.exercise_id === id);
-			const thisWeightScheme = thisExerciseInSession?.session.find(
+			const thisWeightScheme = thisExerciseInSession?.schemes.find(
 				(x) => x.weight === +weight
 			);
 			const repTarget = thisWeightScheme?.reps;

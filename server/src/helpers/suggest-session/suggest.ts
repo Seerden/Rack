@@ -23,7 +23,7 @@ export function suggestSchemeForExercise(
 
 	const suggestedScheme: SessionExercise = {
 		exercise_id,
-		session: [{ exercise_id, reps, sets, weight_unit, weight: +starting_weight }],
+		schemes: [{ exercise_id, reps, sets, weight_unit, weight: +starting_weight }],
 	};
 
 	if (!session || session.length === 0) {
@@ -35,9 +35,9 @@ export function suggestSchemeForExercise(
 	const lastWeight = +(session.at(-1)?.weight ?? starting_weight);
 
 	if (setsCompleted < sets || repsInLastSet < reps) {
-		suggestedScheme.session[0].weight = Math.round(0.9 * lastWeight); // TODO: refine this suggestion by allowing custom deload schemes
+		suggestedScheme.schemes[0].weight = Math.round(0.9 * lastWeight); // TODO: refine this suggestion by allowing custom deload schemes
 	} else {
-		suggestedScheme.session[0].weight = lastWeight + +weight_progression;
+		suggestedScheme.schemes[0].weight = lastWeight + +weight_progression;
 	}
 
 	return suggestedScheme;
@@ -75,7 +75,7 @@ export async function suggestSchemeForWorkout({
 			if (!suggestedSession.find((x) => x.exercise_id === exercise_id)) {
 				const suggested: SessionExercise = {
 					exercise_id,
-					session: [
+					schemes: [
 						{
 							reps,
 							sets,

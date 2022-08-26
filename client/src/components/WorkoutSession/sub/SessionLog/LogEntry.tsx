@@ -14,6 +14,10 @@ type LogEntryProps = {
 	onClick: (id: ID) => void;
 };
 
+/**
+ * Subcomponent that represents one row (equivalent to one unique `exercise`)
+ * in SessionLog.
+ */
 export default function LogEntry({
 	exercise,
 	isActive,
@@ -23,7 +27,7 @@ export default function LogEntry({
 }: LogEntryProps) {
 	// NOTE: the following logic becomes unstable once we allow users to adjust
 	// working weights mid-session.
-	const workingScheme = session?.session.find((x) => !x.is_warmup);
+	const workingScheme = session?.schemes.find((x) => !x.is_warmup);
 	const workingWeight = workingScheme?.weight;
 
 	if (!workingWeight) return <></>;

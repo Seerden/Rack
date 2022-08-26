@@ -58,7 +58,7 @@ export default function ActiveExercise({
 
 			if (!(thisExerciseIndex >= 0)) return cur;
 
-			newSession[thisExerciseIndex].session.push({
+			newSession[thisExerciseIndex].schemes.push({
 				...scheme,
 			});
 			return newSession;
@@ -156,7 +156,7 @@ export default function ActiveExercise({
 					)}
 				</AnimatePresence>
 
-				{structuredClone(e.session)
+				{structuredClone(e.schemes)
 					.sort((a, b) => a.weight - b.weight)
 					.map((scheme) => (
 						<ExerciseRow

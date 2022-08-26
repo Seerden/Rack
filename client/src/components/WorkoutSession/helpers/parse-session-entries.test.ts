@@ -31,7 +31,7 @@ describe("parseSessionEntries", () => {
 	const session: SessionExercise[] = [
 		{
 			exercise_id: 1,
-			session: [
+			schemes: [
 				{
 					exercise_id: 1,
 					reps: 5,
