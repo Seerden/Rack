@@ -22,11 +22,11 @@ export default function RepInput({
 
 	/**
 	 * Change handler that adds the performed reps to `sessionEntries` state.
-	 * NOTE: a `timestamp` is only created once the first time a value is set for
-	 * the exercise set. Changing the value doesn't re-set the timestamp.
+	 * NOTE: a `timestamp` is only created once; the first time a value is set
+	 * for  the exercise set. Changing the value doesn't re-set the timestamp.
 	 *
-	 * NOTE: all state used in here is passed as a prop, so this doesn't need to
-	 * be a callback.
+	 * NOTE: all state used in here is passed as a prop to this component, so
+	 * this function doesn't need to  be a callback.
 	 */
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		setSessionEntries((cur) => {
