@@ -9,17 +9,9 @@ import {
 import { WeightUnit, WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ExerciseScheme, SessionExercise } from "../../../types/shared/session.types";
 import { activeWorkoutState } from "../state/workout-state";
+import { isScheme } from "../types/is-scheme";
 import * as S from "./ActiveExercise.style";
 import ExerciseRow from "./ExerciseRow";
-
-/** Typeguard that validates warmupScheme is fully valid */
-function isScheme(scheme: Partial<ExerciseScheme>): scheme is ExerciseScheme {
-	return (
-		["exercise_id", "reps", "sets", "weight_unit"].every(
-			(field: keyof ExerciseScheme) => !!scheme[field]
-		) && typeof scheme.weight === "number"
-	);
-}
 
 type ActiveExerciseProps = {
 	e: SessionExercise;
