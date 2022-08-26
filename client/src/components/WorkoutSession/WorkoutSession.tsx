@@ -17,6 +17,7 @@ export default function WorkoutSession() {
 		setActiveExerciseId,
 		activeExerciseId,
 		cycleActiveIndex,
+		handleSubmit,
 		allCompleted,
 	} = useWorkoutSession();
 
@@ -72,6 +73,7 @@ export default function WorkoutSession() {
 							exit="exit"
 							onClick={(e: MouseEvent<HTMLButtonElement>) => {
 								e.preventDefault();
+								handleSubmit();
 							}}
 						>
 							Complete session
