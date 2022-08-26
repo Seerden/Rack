@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import { SubTitle } from "../../../helpers/theme/snippets/Title";
 
@@ -112,7 +113,7 @@ export const WarmupFields = styled.div`
 	}
 `;
 
-export const Button = styled.button`
+export const Button = styled(motion.button)`
 	display: flex;
 	place-self: flex-end;
 
@@ -163,13 +164,13 @@ export const SaveButton = styled.button`
 	transition: all 35ms ease-out;
 `;
 
-export const Warmup = styled.section`
+export const Warmup = styled(motion.section)`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 `;
 
-export const ActiveExercise = styled.section`
+export const ActiveExercise = styled(motion.section)`
 	${SubTitle} {
 		width: 100%;
 		place-self: center;
@@ -180,7 +181,7 @@ export const ActiveExercise = styled.section`
 	border-radius: 9px;
 `;
 
-export const ActiveTitle = styled.header`
+export const ActiveTitle = styled(motion.header)`
 	display: flex;
 	height: 2.4rem;
 	flex-direction: row;

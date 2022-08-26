@@ -49,7 +49,6 @@ export default function ActiveExercise({
 
 		setSession((cur) => {
 			const newSession = structuredClone(cur);
-
 			const thisExerciseIndex = cur.findIndex((x) => x.exercise_id === e?.exercise_id);
 
 			if (!(thisExerciseIndex >= 0)) return cur;
@@ -57,11 +56,12 @@ export default function ActiveExercise({
 			newSession[thisExerciseIndex].schemes.push({
 				...scheme,
 			});
+
 			return newSession;
 		});
 	}
 
-	const inputProps: Partial<InputHTMLAttributes<HTMLInputElement>> = {
+	const inputProps: InputHTMLAttributes<HTMLInputElement> = {
 		onChange: (e) => handleWarmupFieldChange(e),
 		type: "number",
 		min: 0,
@@ -71,24 +71,24 @@ export default function ActiveExercise({
 		<AnimatePresence mode="popLayout" initial={false}>
 			<S.ActiveExercise
 				key={`activeExercise-${e.exercise_id}`}
-				as={motion.section}
 				variants={slideVariants}
 				initial="hidden"
 				animate="appear"
 				exit="exit"
 				style={{ overflow: "hidden" }}
 			>
-				<S.ActiveTitle as={motion.header} key="activeTitle">
+				<S.ActiveTitle key="m.activeTitle">
 					<motion.h1>
 						{
 							workout.exercises.find((ex) => ex.exercise_id === e.exercise_id)
 								?.exercise_name
 						}
 					</motion.h1>
+
 					<AnimatePresence initial={false}>
 						{!showAddWarmup && (
 							<S.Button
-								as={motion.button}
+								key="m.button"
 								onClick={() => {
 									setShowAddWarmup(true);
 								}}
@@ -103,10 +103,9 @@ export default function ActiveExercise({
 					</AnimatePresence>
 				</S.ActiveTitle>
 
-				<AnimatePresence mode="popLayout" key="warmupPresence">
+				<AnimatePresence mode="popLayout" key="m.warmupPresence">
 					{showAddWarmup && (
 						<S.Warmup
-							as={motion.section}
 							layout
 							key="warmup"
 							initial={{ y: "-100%", opacity: 0 }}
@@ -135,14 +134,17 @@ export default function ActiveExercise({
 											<span>{weight_unit}</span>
 										</span>
 									</p>
+
 									<p>
 										<label htmlFor="sets">Sets</label>
 										<S.Input {...inputProps} id="sets" name="sets" />
 									</p>
+
 									<p>
 										<label htmlFor="reps">Reps</label>
 										<S.Input {...inputProps} id="reps" name="reps" />
 									</p>
+
 									<S.SaveButton type="submit" title="Add to warm-up">
 										<FaPlus size={11} />
 									</S.SaveButton>
