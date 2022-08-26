@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { useSetRecoilState } from "recoil";
 import {
 	scaleOutVariants,
+	slideBounceVariants,
 	slideVariants,
 } from "../../../helpers/framer/variants/slide-variants";
 import { WeightUnit, WorkoutWithExercises } from "../../../types/shared/exercise.types";
@@ -108,14 +109,11 @@ export default function ActiveExercise({
 						<S.Warmup
 							layout
 							key="warmup"
-							initial={{ y: "-100%", opacity: 0 }}
-							animate={{ y: 0, opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{
-								type: "spring",
-								duration: 0.45,
-								bounce: 0.2,
-							}}
+							variants={slideBounceVariants}
+							initial="initial"
+							animate="animate"
+							exit="exit"
+							transition={slideBounceVariants.transition}
 						>
 							<S.WarmupForm
 								onSubmit={(e) => {

@@ -1,4 +1,15 @@
-import { Variants } from "framer-motion";
+import { Transition, Variants } from "framer-motion";
+
+export const slideBounceVariants: Variants & Transition = {
+	initial: { y: "-100%", opacity: 0 },
+	animate: { y: 0, opacity: 1 },
+	exit: { opacity: 0 },
+	transition: {
+		type: "spring",
+		duration: 0.45,
+		bounce: 0.2,
+	},
+};
 
 /** Slide-in/out (left->right) animation. */
 export const slideVariants: Variants = {
