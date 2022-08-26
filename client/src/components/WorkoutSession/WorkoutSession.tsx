@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { MouseEvent, useState } from "react";
+import { MouseEvent } from "react";
 import { pageVariants } from "../../helpers/framer/variants/page-variants";
 import { scaleOutVariants } from "../../helpers/framer/variants/slide-variants";
 import { Title } from "../../helpers/theme/snippets/Title";
@@ -21,8 +21,6 @@ export default function WorkoutSession() {
 		allCompleted,
 	} = useWorkoutSession();
 
-	const [showFinalize, setShowFinalize] = useState<boolean>(false);
-
 	if (!workout?.exercises || !activeExercise) return <></>;
 
 	return (
@@ -34,21 +32,17 @@ export default function WorkoutSession() {
 			exit="exit"
 			style={{ overflow: "hidden" }}
 		>
-			<Title as={motion.h1}>{workout?.name} session</Title>
+			<Title>{workout?.name} session</Title>
 
 			<RestTimer />
 
-			{!showFinalize && (
-				<SessionLog
-					workout={workout}
-					onClick={setActiveExerciseId}
-					activeExerciseId={activeExerciseId ?? 0}
-				/>
-			)}
+			<SessionLog
+				workout={workout}
+				onClick={setActiveExerciseId}
+				activeExerciseId={activeExerciseId ?? 0}
+			/>
 
-			{showFinalize && <div></div>}
-
-			{!showFinalize && !!activeExercise && (
+			{!!activeExercise && (
 				<ActiveExercise
 					key="m.ActiveExercise"
 					cycleIndex={cycleActiveIndex}
