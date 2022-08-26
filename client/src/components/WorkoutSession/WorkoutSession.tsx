@@ -48,9 +48,7 @@ export default function WorkoutSession() {
 					cycleIndex={cycleActiveIndex}
 					workout={workout}
 					e={activeExercise}
-					// TODO: consider adding weight_unit to workout in addition to
-					// including it in each exercise
-					weight_unit={workout.exercises[0].weight_unit}
+					weight_unit={workout.weight_unit}
 				/>
 			)}
 

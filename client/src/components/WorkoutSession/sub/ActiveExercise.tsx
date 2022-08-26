@@ -6,7 +6,7 @@ import {
 	scaleOutVariants,
 	slideVariants,
 } from "../../../helpers/framer/variants/slide-variants";
-import { WEIGHT_UNITS, WorkoutWithExercises } from "../../../types/shared/exercise.types";
+import { WeightUnit, WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ExerciseScheme, SessionExercise } from "../../../types/shared/session.types";
 import { activeWorkoutState } from "../state/workout-state";
 import * as S from "./ActiveExercise.style";
@@ -20,7 +20,7 @@ function isScheme(scheme: Partial<ExerciseScheme>): scheme is ExerciseScheme {
 type ActiveExerciseProps = {
 	e: SessionExercise;
 	workout: WorkoutWithExercises;
-	weight_unit: WEIGHT_UNITS;
+	weight_unit: WeightUnit;
 	cycleIndex: () => void;
 };
 
