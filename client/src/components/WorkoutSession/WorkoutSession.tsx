@@ -21,7 +21,7 @@ export default function WorkoutSession() {
 		allCompleted,
 	} = useWorkoutSession();
 
-	if (!workout?.exercises || !activeExercise) return <></>;
+	if (!workout || !workout?.exercises || !activeExercise) return <></>;
 
 	return (
 		<S.Page
@@ -32,7 +32,7 @@ export default function WorkoutSession() {
 			exit="exit"
 			style={{ overflow: "hidden" }} // needs to be an inline style, otherwise Framer doesn't use it
 		>
-			<Title>{workout?.name} session</Title>
+			<Title>{workout.name} session</Title>
 
 			<RestTimer />
 
