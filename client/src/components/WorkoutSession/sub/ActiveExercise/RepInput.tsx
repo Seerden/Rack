@@ -1,8 +1,8 @@
 import { ChangeEvent } from "react";
 import { useRecoilState } from "recoil";
-import { ID } from "../../../types/shared/id.types";
-import { ExerciseScheme } from "../../../types/shared/session.types";
-import { sessionEntriesState } from "../state/workout-state";
+import { ID } from "../../../../types/shared/id.types";
+import { ExerciseScheme } from "../../../../types/shared/session.types";
+import { sessionEntriesState } from "../../state/workout-state";
 import * as S from "./ActiveExercise.style";
 
 type RepInputProps = {

@@ -1,5 +1,5 @@
-import { ID } from "../../../types/shared/id.types";
-import { ExerciseScheme } from "../../../types/shared/session.types";
+import { ID } from "../../../../types/shared/id.types";
+import { ExerciseScheme } from "../../../../types/shared/session.types";
 import * as S from "./ActiveExercise.style";
 import RepInput from "./RepInput";
 

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { SubTitle } from "../../../helpers/theme/snippets/Title";
+import { SubTitle } from "../../../../helpers/theme/snippets/Title";
 
 export const ExerciseRow = styled(motion.div)`
 	&:nth-of-type(1) {

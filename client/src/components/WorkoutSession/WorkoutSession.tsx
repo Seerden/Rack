@@ -4,7 +4,7 @@ import { pageVariants } from "../../helpers/framer/variants/page-variants";
 import { scaleOutVariants } from "../../helpers/framer/variants/slide-variants";
 import { Title } from "../../helpers/theme/snippets/Title";
 import useWorkoutSession from "./hooks/useWorkoutSession";
-import ActiveExercise from "./sub/ActiveExercise";
+import ActiveExercise from "./sub/ActiveExercise/ActiveExercise";
 import RestTimer from "./sub/RestTimer";
 import SessionLog from "./sub/SessionLog/SessionLog";
 import WorkoutCompleted from "./sub/WorkoutCompleted";

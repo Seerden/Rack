@@ -6,11 +6,14 @@ import {
 	scaleOutVariants,
 	slideBounceVariants,
 	slideVariants,
-} from "../../../helpers/framer/variants/slide-variants";
-import { WeightUnit, WorkoutWithExercises } from "../../../types/shared/exercise.types";
-import { ExerciseScheme, SessionExercise } from "../../../types/shared/session.types";
-import { activeWorkoutState } from "../state/workout-state";
-import { isScheme } from "../types/is-scheme";
+} from "../../../../helpers/framer/variants/slide-variants";
+import {
+	WeightUnit,
+	WorkoutWithExercises,
+} from "../../../../types/shared/exercise.types";
+import { ExerciseScheme, SessionExercise } from "../../../../types/shared/session.types";
+import { activeWorkoutState } from "../../state/workout-state";
+import { isScheme } from "../../types/is-scheme";
 import * as S from "./ActiveExercise.style";
 import ExerciseRow from "./ExerciseRow";
 
