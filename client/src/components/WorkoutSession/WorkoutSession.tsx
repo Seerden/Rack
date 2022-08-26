@@ -30,7 +30,7 @@ export default function WorkoutSession() {
 			initial="hidden"
 			animate="appear"
 			exit="exit"
-			style={{ overflow: "hidden" }}
+			style={{ overflow: "hidden" }} // needs to be an inline style, otherwise Framer doesn't use it
 		>
 			<Title>{workout?.name} session</Title>
 
