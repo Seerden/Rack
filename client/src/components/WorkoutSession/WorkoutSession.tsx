@@ -37,7 +37,7 @@ export default function WorkoutSession() {
 			<RestTimer />
 
 			<SessionLog
-				workout={workout}
+				exercises={workout.exercises}
 				onClick={setActiveExerciseId}
 				activeExerciseId={activeExerciseId ?? 0}
 			/>

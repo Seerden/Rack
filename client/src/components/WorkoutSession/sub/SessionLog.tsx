@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
-import { Exercise, WorkoutWithExercises } from "../../../types/shared/exercise.types";
+import { Exercise } from "../../../types/shared/exercise.types";
 import { ID } from "../../../types/shared/id.types";
 import type { SessionExercise } from "../../../types/shared/session.types";
 import { activeWorkoutState, sessionEntriesState } from "../state/workout-state";
@@ -10,13 +10,13 @@ import * as S from "./SessionLog.style";
 import SetIcon from "./SetIcon";
 
 type SessionLogProps = {
-	workout: WorkoutWithExercises;
+	exercises: Exercise[];
 	onClick: (id: ID) => void;
 	activeExerciseId: ID;
 };
 
 export default function SessionLog({
-	workout, // TODO: this component only uses workout.exercises -- if we're sure we won't need anything else soon: only pass exercises
+	exercises,
 	onClick,
 	activeExerciseId,
 }: SessionLogProps) {
@@ -25,7 +25,7 @@ export default function SessionLog({
 
 	return (
 		<S.Exercises as={motion.ul}>
-			{workout.exercises.map((e, i) => (
+			{exercises.map((e) => (
 				<LogEntry
 					exercise={e}
 					key={e.exercise_id}
@@ -48,7 +48,7 @@ type LogEntryProps = {
 };
 
 function LogEntry({ exercise, isActive, onClick, entries, session }: LogEntryProps) {
-	// TODO: the following logic becomes unstable once we allow users to adjust
+	// NOTE: the following logic becomes unstable once we allow users to adjust
 	// working weights mid-session.
 	const workingScheme = session?.session.find((x) => !x.is_warmup);
 	const workingWeight = workingScheme?.weight;
