@@ -12,6 +12,7 @@
       "db": "docker exec -it docker_database_1 psql rack -U postgres",
       "test-db": "docker exec -it docker_test-database_1 psql rack-test -U postgres -p 5434",
       "test-back": "docker exec -it docker_server_1 npm test --watchAll",
+      "test-front": "docker exec -it docker_client_1 npm test --watchAll",
       "store": "docker exec -it docker_store_1 redis-cli"
    },
    "repository": {
