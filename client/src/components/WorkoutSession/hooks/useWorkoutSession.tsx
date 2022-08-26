@@ -49,7 +49,7 @@ export default function useWorkoutSession() {
 	}, [session, sessionEntries]);
 
 	const allCompleted = session?.length && completedExercises.length === session.length;
-	const [activeExerciseId, setActiveExerciseId] = useState<number>();
+	const [activeExerciseId, setActiveExerciseId] = useState<Maybe<number>>();
 
 	const handleSubmit = useCallback(() => {
 		if (!workout || !allCompleted) return;
