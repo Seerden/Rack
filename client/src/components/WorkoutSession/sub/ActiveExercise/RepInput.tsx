@@ -22,19 +22,21 @@ export default function RepInput({
 
 	/**
 	 * Change handler that adds the performed reps to `sessionEntries` state.
-	 * NOTE: a `timestamp` is only created once; the first time a value is set
-	 * for  the exercise set. Changing the value doesn't re-set the timestamp.
-	 *
 	 * NOTE: all state used in here is passed as a prop to this component, so
 	 * this function doesn't need to  be a callback.
+	 * TODO: return the old state is the new value isn't different from the old
+	 * one.
 	 */
-	function handleChange(e: ChangeEvent<HTMLInputElement>) {
+	function updateSessionEntries(e: ChangeEvent<HTMLInputElement>) {
 		setSessionEntries((cur) => {
 			const newEntries = structuredClone(cur); // Clone so we can safely mutate directly
 			const hasValue =
 				typeof newEntries[exercise_id]?.[scheme.weight]?.[index]?.reps === "number";
 			const newValue = {
 				reps: +e.target.value,
+				// NOTE: a `timestamp` is only created once; the first time a value
+				// is set for  the exercise set. Changing the value doesn't re-set
+				// the timestamp.
 				timestamp: hasValue
 					? newEntries[exercise_id][scheme.weight][index].timestamp
 					: new Date(),
@@ -58,7 +60,7 @@ export default function RepInput({
 			name={`${exercise_id}-set-${index}`}
 			autoComplete="disabled"
 			defaultValue={defaultValue}
-			onChange={(e) => handleChange(e)}
+			onChange={(e) => updateSessionEntries(e)}
 			onBlur={(e) => {
 				// On blurring the last working set, move to the next exercise.
 				if (!e.target.value || +e.target.value === defaultValue) return;
