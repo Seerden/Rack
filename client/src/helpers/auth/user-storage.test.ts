@@ -16,13 +16,13 @@ describe("localUser", () => {
 	test("sets user and gets it correctly", () => {
 		localUser.set(user);
 
-		expect(localUser.get()).toEqual(user);
+		expect(localUser.get()?.user_id).toEqual(user.user_id);
 	});
 
 	test("destroys user properly", () => {
 		localUser.set(user);
 
-		expect(localUser.get()).toEqual(user);
+		expect(localUser.get()?.user_id).toEqual(user.user_id);
 
 		localUser.destroy();
 
