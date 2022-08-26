@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 
 export const Exercises = styled.ul`
@@ -7,7 +8,7 @@ export const Exercises = styled.ul`
 	margin-bottom: 1rem;
 `;
 
-export const Entry = styled.li<{ $isActive?: boolean }>`
+export const Entry = styled(motion.li)<{ $isActive?: boolean }>`
 	user-select: none;
 	list-style: none;
 

@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import { Exercise } from "../../../../types/shared/exercise.types";
 import { ID } from "../../../../types/shared/id.types";
@@ -35,11 +34,7 @@ export default function LogEntry({
 	);
 
 	return (
-		<S.Entry
-			as={motion.li}
-			$isActive={isActive}
-			onClick={() => onClick(exercise.exercise_id)}
-		>
+		<S.Entry $isActive={isActive} onClick={() => onClick(exercise.exercise_id)}>
 			<S.Name>{exercise.exercise_name}</S.Name>
 			<S.Weight>
 				{exercise.starting_weight}
