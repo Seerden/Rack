@@ -31,10 +31,8 @@ export default function RepInput({
 	function handleChange(e: ChangeEvent<HTMLInputElement>) {
 		setSessionEntries((cur) => {
 			const newEntries = structuredClone(cur); // Clone so we can safely mutate directly
-
 			const hasValue =
 				typeof newEntries[exercise_id]?.[scheme.weight]?.[index]?.reps === "number";
-
 			const newValue = {
 				reps: +e.target.value,
 				timestamp: hasValue
@@ -50,19 +48,20 @@ export default function RepInput({
 		});
 	}
 
+	const defaultValue =
+		sessionEntries[exercise_id]?.[scheme.weight]?.[index]?.reps ?? null;
+
 	return (
 		<S.Input
 			type="number"
 			min={0}
 			name={`${exercise_id}-set-${index}`}
 			autoComplete="disabled"
-			defaultValue={
-				sessionEntries[exercise_id]?.[scheme.weight]?.[index]?.reps ?? null
-			}
+			defaultValue={defaultValue}
 			onChange={(e) => handleChange(e)}
 			onBlur={(e) => {
-				// On blurring the lest working set, move to the next exercise.
-				if (!e.target.value) return;
+				// On blurring the last working set, move to the next exercise.
+				if (!e.target.value || +e.target.value === defaultValue) return;
 				if (index === scheme.sets - 1 && !scheme.is_warmup) {
 					cycleIndex();
 				}
