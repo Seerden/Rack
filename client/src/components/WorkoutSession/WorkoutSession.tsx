@@ -10,18 +10,21 @@ import SessionLog from "./sub/SessionLog/SessionLog";
 import WorkoutCompleted from "./sub/WorkoutCompleted";
 import * as S from "./WorkoutSession.style";
 
-export default function WorkoutSession() {
-	const {
-		workout,
-		activeExercise,
-		setActiveExerciseId,
-		activeExerciseId,
-		cycleActiveIndex,
-		handleSubmit,
-		allCompleted,
-	} = useWorkoutSession();
-
-	if (!workout || !workout?.exercises || !activeExercise) return <></>;
+export default function WorkoutSession({
+	workout,
+	activeExerciseId,
+	activeExercise,
+	allCompleted,
+	session,
+	sessionEntries,
+	setActiveExerciseId,
+	cycleActiveIndex,
+	handleSubmit,
+}: ReturnType<typeof useWorkoutSession>) {
+	// This should never happen because of the early return in
+	// WorkoutSessionView, but the typing is more straightforward if we only
+	// enforce it here.
+	if (!workout) return <></>;
 
 	return (
 		<S.Page
@@ -40,6 +43,8 @@ export default function WorkoutSession() {
 				exercises={workout.exercises}
 				onClick={setActiveExerciseId}
 				activeExerciseId={activeExerciseId ?? 0}
+				session={session}
+				sessionEntries={sessionEntries}
 			/>
 
 			<ActiveExercise

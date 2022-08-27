@@ -100,5 +100,7 @@ export default function useWorkoutSession() {
 		cycleActiveIndex,
 		allCompleted,
 		handleSubmit,
+		session,
+		sessionEntries,
 	} as const;
 }

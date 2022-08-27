@@ -15,7 +15,9 @@ const Home = lazy(() => import("components/Home/Home"));
 const Login = lazy(() => import("components/Login/Login"));
 const Header = lazy(() => import("components/Header/Header"));
 const Workouts = lazy(() => import("components/Workouts/Workouts"));
-const WorkoutSession = lazy(() => import("components/WorkoutSession/WorkoutSession"));
+const WorkoutSessionView = lazy(
+	() => import("components/WorkoutSession/WorkoutSessionView")
+);
 
 const App = () => {
 	return (
@@ -76,7 +78,7 @@ const App = () => {
 											path="session"
 											element={
 												<Suspended>
-													<WorkoutSession />
+													<WorkoutSessionView />
 												</Suspended>
 											}
 										/>
