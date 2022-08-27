@@ -9,14 +9,12 @@ export default function useActiveExercise(
 	e: SessionExercise
 ) {
 	const [showAddWarmup, setShowAddWarmup] = useState<boolean>(false);
-	const setSession = useSetRecoilState(activeWorkoutState);
-
 	const [warmupScheme, setWarmupScheme] =
 		useState<Partial<ExerciseScheme>>(defaultWarmupScheme);
+	const setSession = useSetRecoilState(activeWorkoutState);
 
 	function handleWarmupFieldChange(e: ChangeEvent<HTMLInputElement>) {
 		const { name, value } = e.currentTarget;
-
 		setWarmupScheme((cur) => ({ ...cur, [name]: +value }));
 	}
 
@@ -29,9 +27,7 @@ export default function useActiveExercise(
 
 			if (!(thisExerciseIndex >= 0)) return cur;
 
-			newSession[thisExerciseIndex].schemes.push({
-				...scheme,
-			});
+			newSession[thisExerciseIndex].schemes.push(scheme);
 
 			return newSession;
 		});
