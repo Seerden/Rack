@@ -40,7 +40,7 @@ export default function ActiveExercise({
 		setWarmupScheme,
 		addWarmupSet,
 		inputProps,
-	} = useActiveExercise(defaultWarmupScheme, e);
+	} = useActiveExercise(defaultWarmupScheme, e.exercise_id);
 
 	return (
 		<AnimatePresence mode="popLayout" initial={false}>

@@ -1,12 +1,13 @@
 import { ChangeEvent, InputHTMLAttributes, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { ExerciseScheme, SessionExercise } from "../../../types/shared/session.types";
+import { ID } from "../../../types/shared/id.types";
+import { ExerciseScheme } from "../../../types/shared/session.types";
 import { activeWorkoutState } from "../state/workout-state";
 import { isScheme } from "../types/is-scheme";
 
 export default function useActiveExercise(
 	defaultWarmupScheme: Partial<ExerciseScheme>,
-	e: SessionExercise
+	exercise_id: ID
 ) {
 	const [showAddWarmup, setShowAddWarmup] = useState<boolean>(false);
 	const [warmupScheme, setWarmupScheme] =
@@ -23,7 +24,7 @@ export default function useActiveExercise(
 
 		setSession((cur) => {
 			const newSession = structuredClone(cur);
-			const thisExerciseIndex = cur.findIndex((x) => x.exercise_id === e?.exercise_id);
+			const thisExerciseIndex = cur.findIndex((x) => x.exercise_id === exercise_id);
 
 			if (!(thisExerciseIndex >= 0)) return cur;
 
