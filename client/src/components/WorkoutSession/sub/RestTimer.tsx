@@ -3,7 +3,7 @@ import { MdOutlineTimer, MdOutlineTimerOff } from "react-icons/md";
 import useRestTimer from "../hooks/useRestTimer";
 import * as S from "./RestTimer.style";
 
-const defaultRestMillis = 3 * 15 * 1000;
+const defaultRestMillis = 3 * 60 * 1000;
 
 export default function RestTimer() {
 	const { progressPercentage, millisElapsed, reset, on, toggle } = useRestTimer(
