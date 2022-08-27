@@ -45,7 +45,7 @@ export default function ActiveExercise({
 	return (
 		<AnimatePresence mode="popLayout" initial={false}>
 			<S.ActiveExercise
-				key={`activeExercise-${e.exercise_id}`}
+				key={`m.activeExercise-${e.exercise_id}`}
 				variants={slideVariants}
 				initial="hidden"
 				animate="appear"
