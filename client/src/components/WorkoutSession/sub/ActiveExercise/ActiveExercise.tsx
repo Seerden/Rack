@@ -5,10 +5,7 @@ import {
 	slideBounceVariants,
 	slideVariants,
 } from "../../../../helpers/framer/variants/slide-variants";
-import {
-	WeightUnit,
-	WorkoutWithExercises,
-} from "../../../../types/shared/exercise.types";
+import { Exercise, WeightUnit } from "../../../../types/shared/exercise.types";
 import { ExerciseScheme, SessionExercise } from "../../../../types/shared/session.types";
 import useActiveExercise from "../../hooks/useActiveExercise";
 import * as S from "./ActiveExercise.style";
@@ -16,14 +13,14 @@ import ExerciseRow from "./ExerciseRow";
 
 type ActiveExerciseProps = {
 	e: SessionExercise;
-	workout: WorkoutWithExercises;
+	exercises: Exercise[];
 	weight_unit: WeightUnit;
 	cycleIndex: () => void;
 };
 
 export default function ActiveExercise({
 	e,
-	workout,
+	exercises,
 	weight_unit,
 	cycleIndex,
 }: ActiveExerciseProps) {
@@ -55,7 +52,7 @@ export default function ActiveExercise({
 				<S.ActiveTitle key="m.activeTitle">
 					<motion.h1>
 						{
-							workout.exercises.find((ex) => ex.exercise_id === e.exercise_id)
+							exercises.find((ex) => ex.exercise_id === e.exercise_id)
 								?.exercise_name
 						}
 					</motion.h1>

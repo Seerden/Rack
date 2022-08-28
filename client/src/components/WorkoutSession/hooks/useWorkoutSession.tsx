@@ -62,14 +62,14 @@ export default function useWorkoutSession() {
 	}, [sessionEntries, session]);
 
 	const handleSubmit = useCallback(() => {
-		if (!workout || !allCompleted) return;
+		if (!workout?.weight_unit || !allCompleted) return;
 
 		const sessionWithEntries: WorkoutSessionWithEntriesInput = {
 			workout_id,
 			completed_at: new Date(),
 			started_at: startDate.current,
 			created_at: new Date(),
-			entries: parseSessionEntries(sessionEntries, workout.weight_unit, session),
+			entries: parseSessionEntries(sessionEntries, workout?.weight_unit, session),
 		};
 
 		mutate(sessionWithEntries, {
@@ -80,17 +80,17 @@ export default function useWorkoutSession() {
 				navigate("/workouts");
 			},
 		});
-	}, [session, sessionEntries, workout]);
+	}, [session, sessionEntries, workout?.weight_unit]);
 
 	return {
 		workout,
-		activeExercise,
-		setActiveExerciseId,
-		activeExerciseId,
-		cycleActiveIndex,
-		allCompleted,
-		handleSubmit,
 		session,
 		sessionEntries,
+		activeExercise,
+		activeExerciseId,
+		allCompleted,
+		setActiveExerciseId,
+		cycleActiveIndex,
+		handleSubmit,
 	} as const;
 }

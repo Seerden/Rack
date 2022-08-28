@@ -26,6 +26,8 @@ export default function WorkoutSession({
 	// enforce it here.
 	if (!workout) return <></>;
 
+	const { exercises, weight_unit } = workout;
+
 	return (
 		<S.Page
 			variants={pageVariants}
@@ -39,7 +41,7 @@ export default function WorkoutSession({
 			<RestTimer />
 
 			<SessionLog
-				exercises={workout.exercises}
+				exercises={exercises}
 				onClick={setActiveExerciseId}
 				activeExerciseId={activeExerciseId ?? 0}
 				session={session}
@@ -49,9 +51,9 @@ export default function WorkoutSession({
 			<ActiveExercise
 				key="m.ActiveExercise"
 				cycleIndex={cycleActiveIndex}
-				workout={workout}
+				exercises={exercises}
 				e={activeExercise}
-				weight_unit={workout.weight_unit}
+				weight_unit={weight_unit}
 			/>
 
 			{allCompleted && (
