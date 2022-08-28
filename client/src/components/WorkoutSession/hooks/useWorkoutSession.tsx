@@ -23,18 +23,16 @@ export default function useWorkoutSession({ workout, session, sessionEntries }: 
 
 	const allCompleted = useMemo(() => {
 		const completedIds: ID[] = [];
-
-		for (const exercise of session) {
-			const workingScheme = exercise.schemes.find((x) => !x.is_warmup);
+		for (const { schemes, exercise_id } of session) {
+			const workingScheme = schemes.find((x) => !x.is_warmup);
 			if (!workingScheme) continue;
 
-			const workingSets =
-				sessionEntries[exercise.exercise_id]?.[workingScheme?.weight];
+			const workingSets = sessionEntries[exercise_id]?.[workingScheme?.weight];
 
 			if (!workingSets) continue;
 
 			if (workingScheme.sets === workingSets.length) {
-				completedIds.push(exercise.exercise_id);
+				completedIds.push(exercise_id);
 			}
 		}
 
