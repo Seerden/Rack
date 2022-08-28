@@ -13,17 +13,11 @@ export default function useWorkoutSession() {
 	const params = useParams();
 	const navigate = useNavigate();
 	const workout_id = +params.workout_id!;
-
+	useQuerySuggestedWorkout(workout_id);
 	const startDate = useRef(new Date());
-
 	const { mutate } = useCreateWorkoutSession();
 	const { data } = useQueryWorkoutById(workout_id);
-	const workout = useMemo(() => {
-		return data?.workout;
-	}, [data]);
-
-	useQuerySuggestedWorkout(workout_id);
-
+	const workout = data?.workout;
 	const session = useRecoilValue(activeWorkoutState);
 	const sessionEntries = useRecoilValue(sessionEntriesState);
 
@@ -32,7 +26,6 @@ export default function useWorkoutSession() {
 
 		for (const exercise of session) {
 			const workingScheme = exercise.schemes.find((x) => !x.is_warmup);
-
 			if (!workingScheme) continue;
 
 			const workingSets =
@@ -50,6 +43,26 @@ export default function useWorkoutSession() {
 
 	const allCompleted = session?.length && completedExercises.length === session.length;
 	const [activeExerciseId, setActiveExerciseId] = useState<Maybe<number>>();
+
+	useEffect(() => {
+		if (session?.length) {
+			setActiveExerciseId(session[0].exercise_id);
+		}
+	}, [session]);
+
+	const activeIndex = session?.findIndex((x) => x.exercise_id === activeExerciseId);
+	const activeExercise = session?.[activeIndex];
+
+	const cycleActiveIndex = useCallback(() => {
+		const size = session?.length;
+		const newIndex = (activeIndex + 1) % size;
+		setActiveExerciseId(session[newIndex].exercise_id);
+	}, [session, activeIndex, activeExerciseId]);
+
+	// TODO: dev-only state logging
+	useEffect(() => {
+		console.log({ sessionEntries, session });
+	}, [sessionEntries, session]);
 
 	const handleSubmit = useCallback(() => {
 		if (!workout || !allCompleted) return;
@@ -71,26 +84,6 @@ export default function useWorkoutSession() {
 			},
 		});
 	}, [session, sessionEntries, workout]);
-
-	useEffect(() => {
-		if (session?.length) {
-			setActiveExerciseId(session[0].exercise_id);
-		}
-	}, [session]);
-
-	const activeIndex = session?.findIndex((x) => x.exercise_id === activeExerciseId);
-	const activeExercise = session?.[activeIndex];
-
-	const cycleActiveIndex = useCallback(() => {
-		const size = session?.length;
-		const newIndex = (activeIndex + 1) % size;
-		setActiveExerciseId(session[newIndex].exercise_id);
-	}, [session, activeIndex, activeExerciseId]);
-
-	// TODO: dev-only state logging
-	useEffect(() => {
-		console.log({ sessionEntries, session });
-	}, [sessionEntries, session]);
 
 	return {
 		workout,
