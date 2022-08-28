@@ -10,13 +10,15 @@ import {
 import { parseSessionEntries } from "../helpers/parse-session-entries";
 import { SessionEntriesInput } from "../types/workout-state.types";
 
-type Args = {
+export default function useWorkoutSession({
+	workout,
+	session,
+	sessionEntries,
+}: {
 	workout: WorkoutWithExercises;
 	session: SessionExercise[];
 	sessionEntries: SessionEntriesInput;
-};
-
-export default function useWorkoutSession({ workout, session, sessionEntries }: Args) {
+}) {
 	const { navigate } = useRouterProps();
 	const startDate = useRef(new Date());
 	const { mutate } = useCreateWorkoutSession();
