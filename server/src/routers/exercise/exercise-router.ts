@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { WorkoutInput } from "../../../types/shared/exercise.types";
+import { suggestSchemeForWorkout } from "../../helpers/suggest-session/suggest";
 import { insertWorkoutSession } from "./create-session";
 import { createWorkout } from "./create-workout";
-import { queryWorkoutsByUser } from "./query-workouts";
+import { getSessionEntriesForExercise } from "./query-sessions";
+import { queryWorkoutById, queryWorkoutsByUser } from "./query-workouts";
 
 export const exerciseRouter = Router({ mergeParams: true });
 
@@ -30,10 +32,28 @@ exerciseRouter.get("/workouts/user/:user_id/", async (req, res) => {
 	res.json({ workouts: await queryWorkoutsByUser({ user_id }) });
 });
 
+exerciseRouter.get("/workouts/id/:workout_id", async (req, res) => {
+	const workout_id = +req.params.workout_id;
+
+	res.json({ workout: await queryWorkoutById({ workout_id }) });
+});
+
 exerciseRouter.post("/workouts/session", async (req, res) => {
 	const { newWorkoutSession } = req.body;
 
 	// TODO: type-guard `newWorkoutSession`
 
 	res.json(await insertWorkoutSession({ sessionWithEntries: newWorkoutSession }));
+});
+
+exerciseRouter.get("/workouts/:workout_id/session/suggested", async (req, res) => {
+	const workout_id = +req.params.workout_id;
+
+	res.json({ suggested: await suggestSchemeForWorkout({ workout_id }) });
+});
+
+exerciseRouter.get("/workouts/exercise/:exerciseId/entries", async (req, res) => {
+	const exerciseId = +req.params.exerciseId;
+
+	res.json(await getSessionEntriesForExercise({ exercise_id: exerciseId }));
 });

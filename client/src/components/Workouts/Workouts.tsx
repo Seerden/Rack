@@ -1,5 +1,6 @@
 import { FaPlusCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Page from "../../helpers/framer/components/Page";
 import { SubTitle, Title } from "../../helpers/theme/snippets/Title";
 import useWorkouts from "./hooks/useWorkouts";
 import WorkoutCard from "./sub/WorkoutCard";
@@ -9,7 +10,7 @@ export default function Workouts() {
 	const { workouts } = useWorkouts();
 
 	return (
-		<S.Page>
+		<Page key="m.workouts">
 			<Title>Workouts overview</Title>
 
 			{(!workouts || workouts.length === 0) && (
@@ -34,6 +35,6 @@ export default function Workouts() {
 					</S.WorkoutList>
 				</section>
 			)}
-		</S.Page>
+		</Page>
 	);
 }

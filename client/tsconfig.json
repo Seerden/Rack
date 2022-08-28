@@ -9,6 +9,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"lib": ["DOM", "DOM.Iterable", "ESNext", "ES2017.Object"],
 		"allowJs": false,
+		"incremental": true,
 		"moduleResolution": "node",
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,

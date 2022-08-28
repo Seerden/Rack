@@ -1,8 +1,8 @@
-import { User } from "../../types/user.types";
+import { User } from "../../types/shared/user.types";
 import { localUser } from "./user-storage";
 
 const user: User = {
-	created_at: 1,
+	created_at: new Date(),
 	password_hash: "",
 	user_id: 1,
 	username: "a",
@@ -16,13 +16,13 @@ describe("localUser", () => {
 	test("sets user and gets it correctly", () => {
 		localUser.set(user);
 
-		expect(localUser.get()).toEqual(user);
+		expect(localUser.get()?.user_id).toEqual(user.user_id);
 	});
 
 	test("destroys user properly", () => {
 		localUser.set(user);
 
-		expect(localUser.get()).toEqual(user);
+		expect(localUser.get()?.user_id).toEqual(user.user_id);
 
 		localUser.destroy();
 

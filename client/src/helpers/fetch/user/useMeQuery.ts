@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { Data } from "../../../types/fetch-data";
-import { User } from "../../../types/user.types";
+import { User } from "../../../types/shared/user.types";
 import { localUser } from "../../auth/user-storage";
 import { baseUrl } from "../fetch-constants";
 
 export async function getMe() {
 	const response = await fetch(`${baseUrl}/user/me`, {
 		credentials: "include",
+		method: "GET",
 	});
 	return response.json();
 }

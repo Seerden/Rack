@@ -1,0 +1,14 @@
+FROM node:alpine
+
+WORKDIR /rack/server
+
+COPY package*.json ./
+
+RUN npm install && npm install typescript nodemon -g 
+COPY ./ ./
+
+RUN tsc -p .
+
+EXPOSE 5000
+
+CMD ["nodemon", "dist/index.js"]

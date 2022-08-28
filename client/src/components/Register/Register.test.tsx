@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "../../helpers/test/render-utils";
 
 import Register from "./Register";
 

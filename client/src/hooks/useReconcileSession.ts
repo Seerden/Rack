@@ -6,8 +6,13 @@ import useAuth from "./useAuth";
 export default function useReconcileSession() {
 	const { logout } = useAuth();
 	useMeQuery({
-		onSuccess: ({ user }) => {
+		onSuccess: (data) => {
 			const localMe = localUser.get();
+			const user = data?.user;
+
+			if (user && !localMe) {
+				return localUser.set(user);
+			}
 
 			if (!user) {
 				if (localMe) {

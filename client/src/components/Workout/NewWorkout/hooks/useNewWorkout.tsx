@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useReducer } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useCreateWorkout from "../../../../helpers/fetch/workouts/useCreateWorkout";
 import { splitNameAndIndex } from "../helpers/field-with-index";
@@ -33,10 +33,6 @@ export default function useNewWorkout() {
 	const [elements, dispatch] = useReducer(fieldsetElementReducer, [
 		<NewExercise key={0} index={0} onChange={handleInputChange} />,
 	]);
-
-	useEffect(() => {
-		console.log({ newWorkout });
-	}, [newWorkout]);
 
 	function handleInputChange(
 		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

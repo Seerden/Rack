@@ -1,4 +1,4 @@
-import { WeightUnit } from "./exercise.types";
+import { Exercise, WeightUnit } from "./exercise.types";
 import { ID } from "./id.types";
 
 export type WorkoutSessionInput = {
@@ -19,6 +19,7 @@ export type WorkoutSessionEntryInput = {
 	weight: number;
 	weight_unit: WeightUnit;
 	reps: number;
+	created_at: Date;
 	failed?: boolean;
 };
 
@@ -29,11 +30,34 @@ export type WorkoutSessionEntry = WorkoutSessionEntryInput & {
 };
 
 // Type as expected to be passed from client -> server
-export type WorkoutSessionWithEntriesInput = WorkoutSessionInput & {
+export interface WorkoutSessionWithEntriesInput extends WorkoutSessionInput {
 	entries: WorkoutSessionEntryInput[];
-};
+}
 
 /** Expected return type from POST `exercise/workout` */
 export type WorkoutSessionWithEntries = WorkoutSession & {
 	entries: WorkoutSessionEntry[];
+};
+
+export type ExerciseWithEntries = Exercise & { entries: WorkoutSessionEntry[] };
+
+export type ExerciseScheme = Pick<
+	Exercise,
+	"exercise_id" | "reps" | "sets" | "weight_unit"
+> & { weight: number; is_warmup?: boolean };
+
+export type HistoryList = [
+	{
+		exercise_id: number;
+		history: Array<{
+			workout_session_id: number;
+			exercise_id: number;
+			entries: WorkoutSessionEntry[];
+		}>;
+	}
+];
+
+export type SessionExercise = {
+	exercise_id: ID;
+	schemes: ExerciseScheme[]; // currently we only allow one working weight, but for things like 5/3/1, having a structure like this from the start is very beneficial
 };

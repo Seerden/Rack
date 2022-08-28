@@ -1,6 +1,7 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
-export const Title = styled.h1`
+export const Title = styled(motion.h1)`
 	font-size: 1.5rem;
 	margin-bottom: 1.2rem;
 	font-weight: 600;

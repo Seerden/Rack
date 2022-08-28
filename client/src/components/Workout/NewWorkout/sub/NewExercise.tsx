@@ -41,7 +41,6 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 	}, [openIdx]);
 
 	if (collapsed) {
-		console.log({ isValid, a: 1 });
 		return <CollapsedExercise index={index} {...exercise} isValid={isValid} />;
 	}
 

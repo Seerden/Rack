@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { NewUser } from "../../../components/Register/types/new-user.types";
-import { User } from "../../../types/user.types";
+import { User } from "../../../types/shared/user.types";
 import { baseUrl, postConfig } from "../fetch-constants";
 
 // TODO: generalize these fetch functions to prevent duplicating options a
