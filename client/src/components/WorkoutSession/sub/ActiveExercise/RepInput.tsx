@@ -15,7 +15,7 @@ type RepInputProps = {
 export default function RepInput({
 	index,
 	exercise_id,
-	scheme,
+	scheme: { weight, sets, is_warmup },
 	cycleIndex,
 }: RepInputProps) {
 	const [sessionEntries, setSessionEntries] = useRecoilState(sessionEntriesState);
@@ -29,20 +29,20 @@ export default function RepInput({
 		setSessionEntries((cur) => {
 			const newEntries = structuredClone(cur);
 			const hasValue =
-				typeof newEntries[exercise_id]?.[scheme.weight]?.[index]?.reps === "number";
+				typeof newEntries[exercise_id]?.[weight]?.[index]?.reps === "number";
 			const newValue = {
 				reps: +e.target.value,
 				// NOTE: a `timestamp` is only created once; the first time a value
 				// is set for  the exercise set. Changing the value doesn't re-set
 				// the timestamp.
 				timestamp: hasValue
-					? newEntries[exercise_id][scheme.weight][index].timestamp
+					? newEntries[exercise_id][weight][index].timestamp
 					: new Date(),
 			};
 
-			newEntries[exercise_id] ??= { [scheme.weight]: [] }; // Set a default in case this is the first set performed for this _exercise_
-			newEntries[exercise_id][scheme.weight] ??= []; // Again, set a default in case this is the first set for this _weight_
-			newEntries[exercise_id][scheme.weight][index] = newValue;
+			newEntries[exercise_id] ??= { [weight]: [] }; // Set a default in case this is the first set performed for this _exercise_
+			newEntries[exercise_id][weight] ??= []; // Again, set a default in case this is the first set for this _weight_
+			newEntries[exercise_id][weight][index] = newValue;
 
 			return newEntries;
 		});
@@ -51,7 +51,7 @@ export default function RepInput({
 	// Use a ref so that this doesn't update on rerender -- we only want to use
 	// the initial value.
 	const defaultValue = useRef<number | null>(
-		sessionEntries[exercise_id]?.[scheme.weight]?.[index]?.reps ?? null
+		sessionEntries[exercise_id]?.[weight]?.[index]?.reps
 	);
 
 	return (
@@ -66,7 +66,7 @@ export default function RepInput({
 				console.log({ defaultValue });
 				// On blurring the last working set, move to the next exercise.
 				if (!e.target.value || +e.target.value === defaultValue.current) return;
-				if (index === scheme.sets - 1 && !scheme.is_warmup) {
+				if (index === sets - 1 && !is_warmup) {
 					cycleIndex();
 				}
 			}}
