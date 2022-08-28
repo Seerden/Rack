@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
-export default function useRestTimer(targetMillis: number, initialOn?: boolean) {
-	const [on, setOn] = useState<boolean>(initialOn ?? false);
+export default function useRestTimer(targetMillis: number, initialOn = false) {
+	const [on, setOn] = useState<boolean>(initialOn);
 	const [delay, setDelay] = useState<number>(17); // Millisecond update interval -- ~17ms translates to 60fps
 	const [millisElapsed, setMillisElapsed] = useState<number>(0);
 	const reset = () => setMillisElapsed(0);
