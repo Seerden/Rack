@@ -7,7 +7,7 @@ export default function Home() {
 				<Link to="login">Log in</Link>
 			</li>
 			<li>
-				<Link to="workouts/new"> Create a new workout</Link>
+				<Link to="workout/new"> Create a new workout</Link>
 			</li>
 		</ul>
 	);
