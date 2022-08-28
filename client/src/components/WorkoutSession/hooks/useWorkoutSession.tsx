@@ -1,33 +1,25 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useRecoilValue, useResetRecoilState } from "recoil";
 import useCreateWorkoutSession from "../../../helpers/fetch/workouts/useCreateWorkoutSession";
-import { useQuerySuggestedWorkout } from "../../../helpers/fetch/workouts/useQuerySuggestedWorkout";
-import { useQueryWorkoutById } from "../../../helpers/fetch/workouts/useQueryWorkoutById";
 import useRouterProps from "../../../hooks/useRouterProps";
+import { WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ID } from "../../../types/shared/id.types";
-import { WorkoutSessionWithEntriesInput } from "../../../types/shared/session.types";
+import {
+	SessionExercise,
+	WorkoutSessionWithEntriesInput,
+} from "../../../types/shared/session.types";
 import { parseSessionEntries } from "../helpers/parse-session-entries";
-import { activeWorkoutState, sessionEntriesState } from "../state/workout-state";
+import { SessionEntriesInput } from "../types/workout-state.types";
 
-export default function useWorkoutSession() {
-	const { params, navigate } = useRouterProps();
-	const workout_id = +params.workout_id!;
-	useQuerySuggestedWorkout(workout_id);
+type Args = {
+	workout: WorkoutWithExercises;
+	session: SessionExercise[];
+	sessionEntries: SessionEntriesInput;
+};
+
+export default function useWorkoutSession({ workout, session, sessionEntries }: Args) {
+	const { navigate } = useRouterProps();
 	const startDate = useRef(new Date());
 	const { mutate } = useCreateWorkoutSession();
-	const { data } = useQueryWorkoutById(workout_id);
-	const workout = data?.workout;
-	const session = useRecoilValue(activeWorkoutState);
-	const resetSession = useResetRecoilState(activeWorkoutState);
-	const sessionEntries = useRecoilValue(sessionEntriesState);
-	const resetEntries = useResetRecoilState(sessionEntriesState);
-
-	useEffect(() => {
-		return () => {
-			resetSession();
-			resetEntries();
-		};
-	}, []);
 
 	const allCompleted = useMemo(() => {
 		const completedIds: ID[] = [];
@@ -46,17 +38,12 @@ export default function useWorkoutSession() {
 			}
 		}
 
-		return session?.length && completedIds.length === session.length;
+		return session.length && completedIds.length === session.length;
 	}, [session, sessionEntries]);
 
-	const [activeExerciseId, setActiveExerciseId] = useState<Maybe<number>>();
+	const [activeExerciseId, setActiveExerciseId] = useState(session[0].exercise_id);
 	const activeIndex = session?.findIndex((x) => x.exercise_id === activeExerciseId);
 	const activeExercise = session?.[activeIndex];
-
-	useEffect(() => {
-		if (!session?.length) return;
-		setActiveExerciseId(session[0].exercise_id);
-	}, [session]);
 
 	const cycleActiveIndex = useCallback(() => {
 		const size = session?.length;
@@ -70,14 +57,14 @@ export default function useWorkoutSession() {
 	}, [sessionEntries, session]);
 
 	const handleSubmit = useCallback(() => {
-		if (!workout?.weight_unit || !allCompleted) return;
+		if (!allCompleted) return;
 
 		const sessionWithEntries: WorkoutSessionWithEntriesInput = {
-			workout_id,
+			workout_id: workout.workout_id,
 			completed_at: new Date(),
 			started_at: startDate.current,
 			created_at: new Date(),
-			entries: parseSessionEntries(sessionEntries, workout?.weight_unit, session),
+			entries: parseSessionEntries(sessionEntries, workout.weight_unit, session),
 		};
 
 		mutate(sessionWithEntries, {
@@ -88,12 +75,9 @@ export default function useWorkoutSession() {
 				navigate("/workouts");
 			},
 		});
-	}, [session, sessionEntries, workout?.weight_unit]);
+	}, [session, sessionEntries, workout.weight_unit]);
 
 	return {
-		workout,
-		session,
-		sessionEntries,
 		activeExercise,
 		activeExerciseId,
 		allCompleted,

@@ -1,10 +1,15 @@
-import useWorkoutSession from "./hooks/useWorkoutSession";
+import useWorkoutSessionData from "./hooks/useWorkoutSessionData";
 import WorkoutSession from "./WorkoutSession";
 
 export default function WorkoutSessionView() {
-	const props = useWorkoutSession();
+	const { workout, session, sessionEntries } = useWorkoutSessionData();
+	if (!workout || !session?.length || !sessionEntries) return <></>;
 
-	if (!props.workout?.exercises || !props.activeExercise) return <></>;
-
-	return <WorkoutSession {...props} />;
+	return (
+		<WorkoutSession
+			workout={workout}
+			session={session}
+			sessionEntries={sessionEntries}
+		/>
+	);
 }

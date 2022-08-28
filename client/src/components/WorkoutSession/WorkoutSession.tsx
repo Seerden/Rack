@@ -3,28 +3,40 @@ import { MouseEvent } from "react";
 import { pageVariants } from "../../helpers/framer/variants/page-variants";
 import { scaleOutVariants } from "../../helpers/framer/variants/slide-variants";
 import { Title } from "../../helpers/theme/snippets/Title";
+import { WorkoutWithExercises } from "../../types/shared/exercise.types";
+import { SessionExercise } from "../../types/shared/session.types";
 import useWorkoutSession from "./hooks/useWorkoutSession";
 import ActiveExercise from "./sub/ActiveExercise/ActiveExercise";
 import RestTimer from "./sub/RestTimer";
 import SessionLog from "./sub/SessionLog/SessionLog";
 import WorkoutCompleted from "./sub/WorkoutCompleted";
+import { SessionEntriesInput } from "./types/workout-state.types";
 import * as S from "./WorkoutSession.style";
+
+type WorkoutSessionProps = {
+	workout: WorkoutWithExercises;
+	session: SessionExercise[];
+	sessionEntries: SessionEntriesInput;
+};
 
 export default function WorkoutSession({
 	workout,
-	activeExerciseId,
-	activeExercise,
-	allCompleted,
 	session,
 	sessionEntries,
-	setActiveExerciseId,
-	cycleActiveIndex,
-	handleSubmit,
-}: ReturnType<typeof useWorkoutSession>) {
-	// This should never happen because of the early return in
-	// WorkoutSessionView, but the typing is more straightforward if we only
-	// enforce it here.
-	if (!workout) return <></>;
+}: WorkoutSessionProps) {
+	const {
+		activeExercise,
+		activeExerciseId,
+		allCompleted,
+		cycleActiveIndex,
+		handleSubmit,
+		setActiveExerciseId,
+	} = useWorkoutSession({
+		workout,
+		session,
+		sessionEntries,
+	});
+	if (!activeExercise) return <></>;
 
 	const { exercises, weight_unit } = workout;
 
