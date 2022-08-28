@@ -20,7 +20,7 @@ export default function useWorkoutSession() {
 	const session = useRecoilValue(activeWorkoutState);
 	const sessionEntries = useRecoilValue(sessionEntriesState);
 
-	const completedExercises = useMemo(() => {
+	const allCompleted = useMemo(() => {
 		const completedIds: ID[] = [];
 
 		for (const exercise of session) {
@@ -37,10 +37,9 @@ export default function useWorkoutSession() {
 			}
 		}
 
-		return completedIds;
+		return session?.length && completedIds.length === session.length;
 	}, [session, sessionEntries]);
 
-	const allCompleted = session?.length && completedExercises.length === session.length;
 	const [activeExerciseId, setActiveExerciseId] = useState<Maybe<number>>();
 	const activeIndex = session?.findIndex((x) => x.exercise_id === activeExerciseId);
 	const activeExercise = session?.[activeIndex];
