@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { ID } from "../../../../types/shared/id.types";
 import { ExerciseScheme } from "../../../../types/shared/session.types";
@@ -23,13 +23,11 @@ export default function RepInput({
 	/**
 	 * Change handler that adds the performed reps to `sessionEntries` state.
 	 * NOTE: all state used in here is passed as a prop to this component, so
-	 * this function doesn't need to  be a callback.
-	 * TODO: return the old state is the new value isn't different from the old
-	 * one.
+	 * this function doesn't need to be a callback.
 	 */
 	function updateSessionEntries(e: ChangeEvent<HTMLInputElement>) {
 		setSessionEntries((cur) => {
-			const newEntries = structuredClone(cur); // Clone so we can safely mutate directly
+			const newEntries = structuredClone(cur);
 			const hasValue =
 				typeof newEntries[exercise_id]?.[scheme.weight]?.[index]?.reps === "number";
 			const newValue = {
@@ -50,8 +48,11 @@ export default function RepInput({
 		});
 	}
 
-	const defaultValue =
-		sessionEntries[exercise_id]?.[scheme.weight]?.[index]?.reps ?? null;
+	// Use a ref so that this doesn't update on rerender -- we only want to use
+	// the initial value.
+	const defaultValue = useRef<number | null>(
+		sessionEntries[exercise_id]?.[scheme.weight]?.[index]?.reps ?? null
+	);
 
 	return (
 		<S.Input
@@ -59,11 +60,12 @@ export default function RepInput({
 			min={0}
 			name={`${exercise_id}-set-${index}`}
 			autoComplete="disabled"
-			defaultValue={defaultValue}
+			{...(defaultValue.current && { defaultValue: defaultValue.current })}
 			onChange={(e) => updateSessionEntries(e)}
 			onBlur={(e) => {
+				console.log({ defaultValue });
 				// On blurring the last working set, move to the next exercise.
-				if (!e.target.value || +e.target.value === defaultValue) return;
+				if (!e.target.value || +e.target.value === defaultValue.current) return;
 				if (index === scheme.sets - 1 && !scheme.is_warmup) {
 					cycleIndex();
 				}
