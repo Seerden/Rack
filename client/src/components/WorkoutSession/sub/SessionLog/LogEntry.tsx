@@ -41,6 +41,7 @@ export default function LogEntry({
 		<S.Entry $isActive={isActive} onClick={() => onClick(exercise.exercise_id)}>
 			<S.Name>{exercise.exercise_name}</S.Name>
 			<S.Weight>
+				{/* FIXME: we want to use weight from session instead of starting_weight */}
 				{exercise.starting_weight}
 				{exercise.weight_unit}
 			</S.Weight>
