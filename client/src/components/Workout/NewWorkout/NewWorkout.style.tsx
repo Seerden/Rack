@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 import { inputStyle } from "../../../helpers/theme/snippets/input";
 import { pageStyle } from "../../../helpers/theme/snippets/page";
@@ -5,7 +6,7 @@ import { inputShadow } from "../../../helpers/theme/snippets/shadow";
 import { inputLabelStyle } from "../../../helpers/theme/snippets/text";
 import { fadeIn } from "./sub/CollapsedExercise.style";
 
-export const Form = styled.form`
+export const Form = styled(motion.form)`
 	${pageStyle};
 	max-width: max-content;
 `;

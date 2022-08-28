@@ -1,5 +1,6 @@
 import { FaPlusCircle, FaSave } from "react-icons/fa";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { pageVariants } from "../../../helpers/framer/variants/page-variants";
 import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
 import { WeightUnit } from "../../../types/shared/exercise.types";
 import { parseNewWorkout } from "./helpers/parse";
@@ -21,6 +22,10 @@ export default function NewWorkout() {
 
 	return (
 		<S.Form
+			variants={pageVariants}
+			initial="hidden"
+			animate="appear"
+			exit="exit"
 			onSubmit={(e) => {
 				e.preventDefault();
 				handleSubmit();
