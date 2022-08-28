@@ -1,17 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router";
 import { useRecoilValue } from "recoil";
 import useCreateWorkoutSession from "../../../helpers/fetch/workouts/useCreateWorkoutSession";
 import { useQuerySuggestedWorkout } from "../../../helpers/fetch/workouts/useQuerySuggestedWorkout";
 import { useQueryWorkoutById } from "../../../helpers/fetch/workouts/useQueryWorkoutById";
+import useRouterProps from "../../../hooks/useRouterProps";
 import { ID } from "../../../types/shared/id.types";
 import { WorkoutSessionWithEntriesInput } from "../../../types/shared/session.types";
 import { parseSessionEntries } from "../helpers/parse-session-entries";
 import { activeWorkoutState, sessionEntriesState } from "../state/workout-state";
 
 export default function useWorkoutSession() {
-	const params = useParams();
-	const navigate = useNavigate();
+	const { params, navigate } = useRouterProps();
 	const workout_id = +params.workout_id!;
 	useQuerySuggestedWorkout(workout_id);
 	const startDate = useRef(new Date());
@@ -43,15 +42,13 @@ export default function useWorkoutSession() {
 
 	const allCompleted = session?.length && completedExercises.length === session.length;
 	const [activeExerciseId, setActiveExerciseId] = useState<Maybe<number>>();
-
-	useEffect(() => {
-		if (session?.length) {
-			setActiveExerciseId(session[0].exercise_id);
-		}
-	}, [session]);
-
 	const activeIndex = session?.findIndex((x) => x.exercise_id === activeExerciseId);
 	const activeExercise = session?.[activeIndex];
+
+	useEffect(() => {
+		if (!session?.length) return;
+		setActiveExerciseId(session[0].exercise_id);
+	}, [session]);
 
 	const cycleActiveIndex = useCallback(() => {
 		const size = session?.length;
