@@ -42,11 +42,11 @@ export default function useWorkoutSession({
 	}, [session, sessionEntries]);
 
 	const [activeExerciseId, setActiveExerciseId] = useState(session[0].exercise_id);
-	const activeIndex = session?.findIndex((x) => x.exercise_id === activeExerciseId);
-	const activeExercise = session?.[activeIndex];
+	const activeIndex = session.findIndex((x) => x.exercise_id === activeExerciseId);
+	const activeExercise = session[activeIndex];
 
 	const cycleActiveIndex = useCallback(() => {
-		const size = session?.length;
+		const size = session.length;
 		const newIndex = (activeIndex + 1) % size;
 		setActiveExerciseId(session[newIndex].exercise_id);
 	}, [session, activeIndex, activeExerciseId]);
