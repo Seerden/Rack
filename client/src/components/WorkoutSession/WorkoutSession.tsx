@@ -28,7 +28,6 @@ export default function WorkoutSession({
 
 	return (
 		<S.Page
-			as={motion.div}
 			variants={pageVariants}
 			initial="hidden"
 			animate="appear"

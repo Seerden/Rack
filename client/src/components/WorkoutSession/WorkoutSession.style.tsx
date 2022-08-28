@@ -1,8 +1,9 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import { pageStyle } from "../../helpers/theme/snippets/page";
 import { SubmitButton } from "../../helpers/theme/snippets/SubmitButton";
 
-export const Page = styled.section`
+export const Page = styled(motion.section)`
 	${pageStyle}
 
 	display: flex;
