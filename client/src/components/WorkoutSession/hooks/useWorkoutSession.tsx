@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import useCreateWorkoutSession from "../../../helpers/fetch/workouts/useCreateWorkoutSession";
 import { useQuerySuggestedWorkout } from "../../../helpers/fetch/workouts/useQuerySuggestedWorkout";
 import { useQueryWorkoutById } from "../../../helpers/fetch/workouts/useQueryWorkoutById";
@@ -18,7 +18,16 @@ export default function useWorkoutSession() {
 	const { data } = useQueryWorkoutById(workout_id);
 	const workout = data?.workout;
 	const session = useRecoilValue(activeWorkoutState);
+	const resetSession = useResetRecoilState(activeWorkoutState);
 	const sessionEntries = useRecoilValue(sessionEntriesState);
+	const resetEntries = useResetRecoilState(sessionEntriesState);
+
+	useEffect(() => {
+		return () => {
+			resetSession();
+			resetEntries();
+		};
+	}, []);
 
 	const allCompleted = useMemo(() => {
 		const completedIds: ID[] = [];
