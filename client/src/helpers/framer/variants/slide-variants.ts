@@ -49,3 +49,23 @@ export const scaleOutVariants: Variants = {
 		originY: "50%",
 	},
 };
+
+export const minimalSlideVariants: Variants = {
+	initial: {
+		x: "-15%",
+		opacity: 0,
+	},
+	animate: {
+		x: 0,
+		opacity: 1,
+	},
+	exit: {
+		x: "35%",
+		color: "rgba(0,0,0,0)",
+		backgroundColor: "transparent",
+		opacity: 0,
+		transition: {
+			duration: 0.5,
+		},
+	},
+};
