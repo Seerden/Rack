@@ -113,14 +113,10 @@ export const Fieldset = styled.fieldset<{ $isValid?: boolean }>`
 	padding: 0.8rem 1rem;
 
 	border-left: 3px solid ${(p) => (p.$isValid ? "green" : "orangered")};
-	border-radius: ${(p) => (p.$isValid ? 5 : 3)}px;
+	--radius: ${(p) => (p.$isValid ? 10 : 3)}px;
+	border-radius: 0 var(--radius) var(--radius) 0;
 
 	${inputShadow};
-
-	&:not(:nth-of-type(1)) {
-		border-top: 2px solid #ccc;
-		margin-top: 1.2rem;
-	}
 `;
 
 export const FieldsWrapper = styled.div`
@@ -219,4 +215,30 @@ export const Exercises = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 0.9rem;
+`;
+
+export const ExpandButton = styled(motion.button)`
+	background-color: #eee;
+	border: 1px solid #ddd;
+	padding: 0.3rem 0.35rem;
+	font-size: 0.75rem;
+	border-radius: 5px;
+
+	position: absolute;
+	right: 1rem;
+	bottom: 0.4rem;
+	z-index: 2;
+	outline: 1px solid transparent;
+
+	&:hover {
+		border-color: #fff;
+		box-shadow: 0 0.2rem 0.5rem -0.15rem #888;
+		outline-color: #ccc;
+	}
+
+	transition: all 15ms ease-out;
+`;
+
+export const Collapsed = styled(motion.div)`
+	user-select: none;
 `;

@@ -59,29 +59,46 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 		<S.Fieldset
 			key={`m.exercise-${index}`}
 			$isValid={isValid}
-			style={{ overflow: "hidden" }}
+			style={{ overflow: "hidden", position: "relative" }}
 			as={motion.fieldset}
-			onClick={(e: any) => {
-				e.stopPropagation();
-				setOpenIdx(index);
-			}}
 		>
 			<AnimatePresence mode="popLayout">
+				{openIdx !== index && (
+					<S.ExpandButton
+						key="m.expand"
+						aria-controls={`fieldset-${index}`}
+						onClick={(e: any) => {
+							e.preventDefault();
+							setOpenIdx(index);
+						}}
+						layout
+						exit={{ opacity: 0, color: "transparent" }}
+					>
+						Expand
+					</S.ExpandButton>
+				)}
 				{collapsed && (
-					<motion.div
+					<S.Collapsed
+						id={`fieldset-${index}`}
+						aria-label="Only showing this exercise's name. Click the expand button to show its fields."
 						key="m.name"
+						aria-expanded={false}
 						variants={minimalSlideVariants}
 						initial="initial"
 						animate="animate"
 						exit="exit"
 					>
-						{exercise.exercise_name?.length
-							? exercise.exercise_name
-							: "Unnamed exercise"}
-					</motion.div>
+						{exercise.exercise_name?.length ? (
+							exercise.exercise_name
+						) : (
+							<em>Unnamed exercise</em>
+						)}
+					</S.Collapsed>
 				)}
 				{!collapsed && (
 					<S.FieldsWrapper
+						aria-expanded={true}
+						id={`fieldset-${index}`}
 						as={motion.div}
 						key="m.fields"
 						variants={minimalSlideVariants}
