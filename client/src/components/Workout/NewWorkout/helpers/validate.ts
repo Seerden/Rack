@@ -12,7 +12,7 @@ export function isValidNewExercise(
 	const { exercise_name, reps, sets, starting_weight, weight_progression } = exercise;
 
 	return (
-		exercise_name.length > 0 &&
+		exercise_name?.length > 0 &&
 		reps > 0 &&
 		sets > 0 &&
 		starting_weight > 0 &&

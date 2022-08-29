@@ -52,7 +52,7 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 			name: fields[field],
 			onChange: (e: ChangeEvent<HTMLInputElement>) => onChange?.(e),
 		}),
-		[onChange]
+		[onChange, exercise, fields]
 	);
 
 	return (
