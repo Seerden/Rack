@@ -24,6 +24,7 @@ export default function NewWorkout() {
 		<S.Form
 			variants={pageVariants}
 			initial="hidden"
+			style={{ overflow: "hidden" }}
 			animate="appear"
 			exit="exit"
 			onSubmit={(e) => {

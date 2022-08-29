@@ -4,14 +4,13 @@ import { inputStyle } from "../../../helpers/theme/snippets/input";
 import { pageStyle } from "../../../helpers/theme/snippets/page";
 import { inputShadow } from "../../../helpers/theme/snippets/shadow";
 import { inputLabelStyle } from "../../../helpers/theme/snippets/text";
-import { fadeIn } from "./sub/CollapsedExercise.style";
 
 export const Form = styled(motion.form)`
 	${pageStyle};
 	max-width: max-content;
 `;
 
-export const Input = styled.input`
+export const Input = styled(motion.input)`
 	${inputStyle};
 
 	&[type="text"] {
@@ -108,15 +107,13 @@ export const Icon = styled.span`
 	padding-bottom: 0.5rem;
 `;
 
-export const Fieldset = styled.fieldset<{ isValid?: boolean }>`
+export const Fieldset = styled.fieldset<{ $isValid?: boolean }>`
 	outline: none;
 	border: none;
 	padding: 0.8rem 1rem;
 
-	border-left: 3px solid ${(p) => (p.isValid ? "green" : "orangered")};
-	border-radius: ${(p) => (p.isValid ? 5 : 3)}px;
-
-	transition: all 45ms ease-out;
+	border-left: 3px solid ${(p) => (p.$isValid ? "green" : "orangered")};
+	border-radius: ${(p) => (p.$isValid ? 5 : 3)}px;
 
 	${inputShadow};
 
@@ -124,15 +121,15 @@ export const Fieldset = styled.fieldset<{ isValid?: boolean }>`
 		border-top: 2px solid #ccc;
 		margin-top: 1.2rem;
 	}
+`;
 
+export const FieldsWrapper = styled.div`
 	display: grid;
 	grid-template-areas:
 		"exercise weight"
 		"scheme progress";
 	grid-template-columns: repeat(2, 1fr);
 	grid-row-gap: 1.3rem;
-
-	animation: ${fadeIn} 145ms ease-in;
 `;
 
 export const InputWithUnit = styled.span`
