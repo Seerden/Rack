@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useReducer } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import useCreateWorkout from "../../../../helpers/fetch/workouts/useCreateWorkout";
+import useRouterProps from "../../../../hooks/useRouterProps";
 import { splitNameAndIndex } from "../helpers/field-with-index";
 import { parseNewWorkout } from "../helpers/parse";
 import { newWorkoutState, weightUnitState } from "../state/new-workout-state";
@@ -10,6 +11,7 @@ export default function useNewWorkout() {
 	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
 	const resetNewWorkout = useResetRecoilState(newWorkoutState);
 	const { mutate } = useCreateWorkout();
+	const { navigate } = useRouterProps();
 	const weightUnit = useRecoilValue(weightUnitState);
 
 	useEffect(() => {
@@ -67,8 +69,7 @@ export default function useNewWorkout() {
 	const handleSubmit = useCallback(() => {
 		mutate(parseNewWorkout(newWorkout, weightUnit), {
 			onSuccess: (data) => {
-				// TODO: once authentication ipmlemented, redirect to /workouts
-				alert(JSON.stringify(data));
+				navigate("/workouts");
 			},
 		});
 	}, [newWorkout]);
