@@ -1,17 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ChangeEvent, ChangeEventHandler, useCallback, useEffect, useMemo } from "react";
+import { ChangeEvent, ChangeEventHandler, useCallback } from "react";
 import { RiDeleteBackLine } from "react-icons/ri";
-import { useRecoilState, useRecoilValue } from "recoil";
 import { minimalSlideVariants } from "../../../../helpers/framer/variants/slide-variants";
-import { NewExercise, WEIGHT_UNITS } from "../../../../types/shared/exercise.types";
-import { isValidNewExercise } from "../helpers/validate";
+import { NewExercise } from "../../../../types/shared/exercise.types";
 import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
-import {
-	newWorkoutState,
-	openIndexState,
-	weightUnitState,
-} from "../state/new-workout-state";
 
 type NewExerciseProps = {
 	index: number;
@@ -19,32 +12,17 @@ type NewExerciseProps = {
 	onDelete?: (index: number) => void;
 };
 
-const defaultExercise: NewExercise = {
-	exercise_name: "",
-	reps: 0,
-	sets: 0,
-	starting_weight: 0,
-	weight_progression: 0,
-	weight_unit: WEIGHT_UNITS.KG,
-};
-
 function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
-	const { fields } = useNewExercise(index);
-	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
-	const weightUnit = useRecoilValue(weightUnitState);
-	const exercise = useMemo(() => {
-		return newWorkout?.exercises[index] ?? defaultExercise;
-	}, [newWorkout]);
-
-	const isValid = isValidNewExercise(exercise);
-
-	const [openIdx, setOpenIdx] = useRecoilState(openIndexState);
-	useEffect(() => {
-		setOpenIdx(index);
-	}, []);
-	const collapsed = useMemo(() => {
-		return openIdx !== index;
-	}, [openIdx]);
+	const {
+		fields,
+		exercise,
+		isValid,
+		openIdx,
+		setOpenIdx,
+		collapsed,
+		setNewWorkout,
+		weightUnit,
+	} = useNewExercise(index);
 
 	const getInputProps = useCallback(
 		(field: keyof typeof fields) => ({
