@@ -87,7 +87,6 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 					<S.Collapsed
 						id={`fieldset-${index}`}
 						aria-label="Only showing this exercise's name. Click the expand button to show its fields."
-						aria-role="heading"
 						key="m.name"
 						aria-expanded={false}
 						variants={minimalSlideVariants}
