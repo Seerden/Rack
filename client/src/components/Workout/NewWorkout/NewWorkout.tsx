@@ -49,6 +49,7 @@ export default function NewWorkout() {
 				<div>
 					<S.Label htmlFor="weight_unit">Weight unit</S.Label>
 					<S.Select
+						id="weight_unit"
 						name="weight_unit"
 						onChange={(e) => setWeightUnit(e.target.value as WeightUnit)}
 					>
