@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { ChangeEvent, useCallback, useEffect, useReducer, useRef } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import useCreateWorkout from "../../../../helpers/fetch/workouts/useCreateWorkout";
 import useRouterProps from "../../../../hooks/useRouterProps";
@@ -40,7 +40,6 @@ export default function useNewWorkout() {
 				);
 			case "delete":
 				deleteCount.current++;
-
 				return state.filter((x) => +x.key! !== action.index);
 			default:
 				return state;
@@ -56,11 +55,8 @@ export default function useNewWorkout() {
 		/>,
 	]);
 
-	function handleInputChange(
-		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-	) {
+	function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
 		const { name, value } = e.currentTarget;
-
 		const [field, exerciseIndex] = splitNameAndIndex(name);
 
 		// NewExercise input names are like 'exercise_name-1', and NewWorkout
@@ -68,9 +64,7 @@ export default function useNewWorkout() {
 		if (!isNaN(exerciseIndex)) {
 			setNewWorkout((cur) => {
 				const exercises = structuredClone(cur.exercises);
-
 				exercises[exerciseIndex] = { ...exercises[exerciseIndex], [field]: value };
-
 				return { ...cur, exercises };
 			});
 		} else {
