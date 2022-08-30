@@ -47,10 +47,6 @@ export default function useNewWorkout() {
 		}
 	}
 
-	useEffect(() => {
-		console.log({ newWorkout });
-	}, [newWorkout]);
-
 	const [elements, dispatch] = useReducer(fieldsetElementReducer, [
 		<NewExercise
 			key={0}
