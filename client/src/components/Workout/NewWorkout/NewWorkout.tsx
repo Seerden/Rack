@@ -13,6 +13,8 @@ export default function NewWorkout() {
 		handleInputChange,
 		handleSubmit,
 		isValid,
+		weightUnit,
+		newWorkout,
 		setOpenIndex,
 		setWeightUnit,
 	} = useNewWorkout();

@@ -52,35 +52,46 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 			}}
 		>
 			<AnimatePresence mode="popLayout" initial={false}>
-				{openIdx !== index && (
-					<S.ExpandButton
-						aria-controls={`fieldset-${index}`}
-						onClick={(e: any) => {
-							e.preventDefault();
-							setOpenIdx(index);
-						}}
-						exit={{ opacity: 0, color: "rgba(0,0,0,0)" }}
-					>
-						Expand
-					</S.ExpandButton>
-				)}
 				{collapsed && (
-					<S.Collapsed
-						id={`fieldset-${index}`}
-						aria-label="Only showing this exercise's name. Click the expand button to show its fields."
-						key={`m.name-${index}`}
-						aria-expanded={false}
-						variants={minimalSlideVariants}
-						initial="initial"
-						animate="animate"
-						exit="exit"
-					>
-						{exercise.exercise_name?.length ? (
-							exercise.exercise_name
-						) : (
-							<em>Unnamed exercise</em>
+					<S.CollapsedContainer $isValid={isValid}>
+						<S.Collapsed
+							id={`fieldset-${index}`}
+							aria-label="Only showing this exercise's name. Click the expand button to show its fields."
+							key={`m.name-${index}`}
+							aria-expanded={false}
+							variants={minimalSlideVariants}
+							initial="initial"
+							animate="animate"
+							exit="exit"
+						>
+							{exercise.exercise_name?.length ? (
+								exercise.exercise_name
+							) : (
+								<em>Unnamed exercise</em>
+							)}
+						</S.Collapsed>
+						{isValid && (
+							<>
+								<S.Datum>
+									{exercise.sets} x {exercise.reps} reps
+								</S.Datum>
+								<S.Datum>
+									{exercise.starting_weight} {weightUnit} (+
+									{exercise.weight_progression} {weightUnit})
+								</S.Datum>
+							</>
 						)}
-					</S.Collapsed>
+						<S.ExpandButton
+							aria-controls={`fieldset-${index}`}
+							onClick={(e: any) => {
+								e.preventDefault();
+								setOpenIdx(index);
+							}}
+							exit={{ opacity: 0, color: "rgba(0,0,0,0)" }}
+						>
+							Expand
+						</S.ExpandButton>
+					</S.CollapsedContainer>
 				)}
 				{!collapsed && (
 					<>

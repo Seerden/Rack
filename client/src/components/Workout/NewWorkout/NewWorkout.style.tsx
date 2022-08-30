@@ -207,17 +207,15 @@ export const Exercises = styled.div`
 `;
 
 export const ExpandButton = styled(motion.button)`
-	position: absolute;
-	right: 0.4rem;
-	bottom: 0.4rem;
-	z-index: 2;
-
 	background-color: #eee;
 	border: 1px solid #ddd;
 	padding: 0.3rem 0.35rem;
 	font-size: 0.75rem;
 	border-radius: 5px;
 	border-width: 2px;
+
+	width: max-content;
+	place-self: flex-end;
 
 	outline: 1px solid transparent;
 
@@ -232,6 +230,7 @@ export const ExpandButton = styled(motion.button)`
 
 export const DeleteButton = styled(ExpandButton)`
 	padding: 0.2rem 0.8rem;
+
 	display: inline-flex;
 	place-self: center;
 	border-radius: 8px;
@@ -239,6 +238,11 @@ export const DeleteButton = styled(ExpandButton)`
 	justify-content: center;
 	color: orangered;
 	background-color: white;
+
+	position: absolute;
+	top: 0.4rem;
+	right: 0.4rem;
+	z-index: 2;
 
 	&:hover {
 		color: white;
@@ -251,6 +255,9 @@ export const DeleteButton = styled(ExpandButton)`
 export const Collapsed = styled(motion.div)`
 	display: flex;
 	user-select: none;
+
+	font-size: 1.12rem;
+	font-weight: 600;
 `;
 
 export const Fieldset = styled(motion.fieldset)<{ $isValid?: boolean }>`
@@ -259,17 +266,45 @@ export const Fieldset = styled(motion.fieldset)<{ $isValid?: boolean }>`
 	min-width: 550px;
 	padding: 0.8rem 1rem;
 
-	border-left: 3px solid ${(p) => (p.$isValid ? "green" : "orangered")};
 	--radius: ${(p) => (p.$isValid ? 10 : 3)}px;
 	border-radius: 0 var(--radius) var(--radius) 0;
 
-	${inputShadow};
+	box-shadow: 1.5rem 1.5rem 0 -1.3rem ${(p) => (p.$isValid ? "green" : "orangered")},
+		0 0.4rem 0.5rem -0.15rem #c1c1c1;
 
-	&:first-of-type {
-		&:last-of-type {
-			${DeleteButton} {
-				display: none;
-			}
+	&:only-child {
+		${DeleteButton} {
+			display: none;
 		}
+	}
+`;
+
+export const CollapsedContainer = styled.div<{ $isValid?: boolean }>`
+	display: grid;
+	${(p) =>
+		p.$isValid
+			? css`
+					grid-template-columns: 1fr 8rem 8rem 1fr;
+			  `
+			: css`
+					grid-template-columns: 1fr max-content;
+			  `}
+`;
+
+export const Datum = styled.span`
+	display: flex;
+	padding: 0 0.5rem;
+	background-color: #fefefe;
+	align-items: center;
+
+	border-radius: 4px;
+	justify-content: center;
+
+	margin-bottom: -0.2rem;
+	margin-top: -0.2rem;
+	border: 1px solid #eee;
+
+	&:nth-of-type(1) {
+		margin-right: 0.9rem;
 	}
 `;
