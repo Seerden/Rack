@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeEvent, ChangeEventHandler, useCallback, useMemo } from "react";
+import { RiDeleteRow } from "react-icons/ri";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { minimalSlideVariants } from "../../../../helpers/framer/variants/slide-variants";
 import { NewExercise, WEIGHT_UNITS } from "../../../../types/shared/exercise.types";
@@ -64,23 +65,29 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 		>
 			<AnimatePresence mode="popLayout">
 				{openIdx !== index && (
-					<S.ExpandButton
-						key="m.expand"
-						aria-controls={`fieldset-${index}`}
-						onClick={(e: any) => {
-							e.preventDefault();
-							setOpenIdx(index);
-						}}
-						layout
-						exit={{ opacity: 0, color: "transparent" }}
-					>
-						Expand
-					</S.ExpandButton>
+					<S.Buttons>
+						<S.ExpandButton
+							key="m.expand"
+							aria-controls={`fieldset-${index}`}
+							onClick={(e: any) => {
+								e.preventDefault();
+								setOpenIdx(index);
+							}}
+							layout
+							exit={{ opacity: 0, color: "transparent" }}
+						>
+							Expand
+						</S.ExpandButton>
+						<S.DeleteButton title="Delete this exercise">
+							<RiDeleteRow size={18} />
+						</S.DeleteButton>
+					</S.Buttons>
 				)}
 				{collapsed && (
 					<S.Collapsed
 						id={`fieldset-${index}`}
 						aria-label="Only showing this exercise's name. Click the expand button to show its fields."
+						aria-role="heading"
 						key="m.name"
 						aria-expanded={false}
 						variants={minimalSlideVariants}

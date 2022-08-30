@@ -217,17 +217,25 @@ export const Exercises = styled.div`
 	gap: 0.9rem;
 `;
 
+/** Container for an individual exercise's "expand" and "delete" buttons */
+export const Buttons = styled.div`
+	position: absolute;
+	right: 1rem;
+	bottom: 0.4rem;
+	z-index: 2;
+
+	display: flex;
+	gap: 0.55rem;
+`;
+
 export const ExpandButton = styled(motion.button)`
 	background-color: #eee;
 	border: 1px solid #ddd;
 	padding: 0.3rem 0.35rem;
 	font-size: 0.75rem;
 	border-radius: 5px;
+	border-width: 2px;
 
-	position: absolute;
-	right: 1rem;
-	bottom: 0.4rem;
-	z-index: 2;
 	outline: 1px solid transparent;
 
 	&:hover {
@@ -239,6 +247,29 @@ export const ExpandButton = styled(motion.button)`
 	transition: all 15ms ease-out;
 `;
 
+export const DeleteButton = styled(ExpandButton)`
+	--size: 1.7rem;
+
+	display: inline-flex;
+	width: var(--size);
+	height: var(--size);
+	place-self: center;
+	border-radius: 50%;
+	align-items: center;
+	justify-content: center;
+	border-color: orangered;
+	color: orangered;
+	background-color: white;
+
+	&:hover {
+		color: white;
+		background-color: orangered;
+		transform: scale(1.05);
+		border-radius: 10px;
+	}
+`;
+
 export const Collapsed = styled(motion.div)`
+	display: flex;
 	user-select: none;
 `;
