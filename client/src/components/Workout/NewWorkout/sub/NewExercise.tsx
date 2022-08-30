@@ -3,6 +3,7 @@ import { ChangeEvent, ChangeEventHandler, useCallback } from "react";
 import { RiDeleteBackLine } from "react-icons/ri";
 import { minimalSlideVariants } from "../../../../helpers/framer/variants/slide-variants";
 import { NewExercise } from "../../../../types/shared/exercise.types";
+import { defaultExercise } from "../helpers/constants";
 import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
 
@@ -88,10 +89,13 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 							onClick={(e) => {
 								e.preventDefault();
 								onDelete?.(index);
-								setNewWorkout((cur) => ({
-									...cur,
-									exercises: cur.exercises.filter((x, i) => i !== index),
-								}));
+								setNewWorkout((cur) => {
+									// Do NOT manipulate the length of .exercises, because
+									// that influences rendering.
+									const updated = structuredClone(cur);
+									updated.exercises[index] = defaultExercise;
+									return updated;
+								});
 							}}
 							exit={{ opacity: 0, color: "rgba(0,0,0,0)" }}
 						>
