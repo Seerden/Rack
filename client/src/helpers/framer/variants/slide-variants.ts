@@ -33,7 +33,7 @@ export const slideVariants: Variants = {
 /** Scale horizontally by expanding from right -> left. */
 export const scaleOutVariants: Variants = {
 	initial: {
-		color: "transparent",
+		color: "rgba(0,0,0,0)",
 		scaleX: 0,
 		originX: "95%",
 		originY: "50%",
@@ -43,7 +43,7 @@ export const scaleOutVariants: Variants = {
 		scaleX: 1,
 	},
 	exit: {
-		color: "transparent",
+		color: "rgba(0,0,0,0)",
 		scaleX: 0,
 		originX: "95%",
 		originY: "50%",
@@ -60,12 +60,11 @@ export const minimalSlideVariants: Variants = {
 		opacity: 1,
 	},
 	exit: {
-		x: "35%",
 		color: "rgba(0,0,0,0)",
-		backgroundColor: "transparent",
+		backgroundColor: "rgba(0,0,0,0)",
 		opacity: 0,
 		transition: {
-			duration: 0.5,
+			duration: 0.25,
 		},
 	},
 };
