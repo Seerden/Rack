@@ -13,14 +13,14 @@ import {
 import NewExercise from "../sub/NewExercise";
 
 export default function useNewWorkout() {
-	const deleteCount = useRef(0);
-	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
-	const resetNewWorkout = useResetRecoilState(newWorkoutState);
 	const { mutate } = useCreateWorkout();
 	const { navigate } = useRouterProps();
-	const setOpenIndex = useSetRecoilState(openIndexState);
 	const [weightUnit, setWeightUnit] = useRecoilState(weightUnitState);
+	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
+	const resetNewWorkout = useResetRecoilState(newWorkoutState);
 	const isValid = isValidNewWorkout(parseNewWorkout(newWorkout, weightUnit));
+	const setOpenIndex = useSetRecoilState(openIndexState);
+	const deleteCount = useRef(0);
 
 	useEffect(() => {
 		return () => resetNewWorkout();
@@ -28,7 +28,7 @@ export default function useNewWorkout() {
 
 	/** Reducer to manipulate `elements` state. Note that this has to be defined
 	 * inside this component so that it has access to local state setters. */
-	function fieldsetElementReducer(
+	function exerciseElementsReducer(
 		state: JSX.Element[],
 		action: { type: string; index?: number }
 	): JSX.Element[] {
@@ -53,7 +53,7 @@ export default function useNewWorkout() {
 		}
 	}
 
-	const [elements, dispatch] = useReducer(fieldsetElementReducer, [
+	const [elements, dispatch] = useReducer(exerciseElementsReducer, [
 		<NewExercise
 			key={0}
 			index={0}
