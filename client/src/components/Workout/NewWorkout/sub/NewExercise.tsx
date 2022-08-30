@@ -51,7 +51,7 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 				transition: { type: "tween", duration: 0.15 },
 			}}
 		>
-			<AnimatePresence mode="popLayout" initial={false}>
+			<AnimatePresence initial={false}>
 				{collapsed && (
 					<S.CollapsedContainer $isValid={isValid}>
 						<S.Collapsed
