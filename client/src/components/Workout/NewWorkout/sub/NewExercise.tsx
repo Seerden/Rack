@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ChangeEvent, ChangeEventHandler, useCallback, useMemo } from "react";
-import { RiDeleteRow } from "react-icons/ri";
+import { ChangeEvent, ChangeEventHandler, useCallback, useEffect, useMemo } from "react";
+import { RiDeleteBackLine } from "react-icons/ri";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { minimalSlideVariants } from "../../../../helpers/framer/variants/slide-variants";
 import { NewExercise, WEIGHT_UNITS } from "../../../../types/shared/exercise.types";
@@ -16,6 +16,7 @@ import {
 type NewExerciseProps = {
 	index: number;
 	onChange?: ChangeEventHandler<HTMLInputElement>;
+	onDelete?: (index: number) => void;
 };
 
 const defaultExercise: NewExercise = {
@@ -27,9 +28,9 @@ const defaultExercise: NewExercise = {
 	weight_unit: WEIGHT_UNITS.KG,
 };
 
-export default function NewExercise({ index, onChange }: NewExerciseProps) {
+function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 	const { fields } = useNewExercise(index);
-	const newWorkout = useRecoilValue(newWorkoutState);
+	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
 	const weightUnit = useRecoilValue(weightUnitState);
 	const exercise = useMemo(() => {
 		return newWorkout?.exercises[index] ?? defaultExercise;
@@ -38,6 +39,9 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 	const isValid = isValidNewExercise(exercise);
 
 	const [openIdx, setOpenIdx] = useRecoilState(openIndexState);
+	useEffect(() => {
+		setOpenIdx(index);
+	}, []);
 	const collapsed = useMemo(() => {
 		return openIdx !== index;
 	}, [openIdx]);
@@ -46,7 +50,7 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 		(field: keyof typeof fields) => ({
 			exit: {
 				opacity: 0,
-				backgroundColor: "transparent",
+				backgroundColor: "rgba(0,0,0,0)",
 			},
 			defaultValue: exercise[field],
 			id: fields[field],
@@ -58,36 +62,34 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 
 	return (
 		<S.Fieldset
-			key={`m.exercise-${index}`}
+			key={`m.fieldset-${index}`}
 			$isValid={isValid}
 			style={{ overflow: "hidden", position: "relative" }}
-			as={motion.fieldset}
+			exit={{
+				opacity: 0,
+				scaleY: 0,
+				originY: 0,
+				transition: { type: "tween", duration: 0.15 },
+			}}
 		>
-			<AnimatePresence mode="popLayout">
+			<AnimatePresence mode="popLayout" initial={false}>
 				{openIdx !== index && (
-					<S.Buttons>
-						<S.ExpandButton
-							key="m.expand"
-							aria-controls={`fieldset-${index}`}
-							onClick={(e: any) => {
-								e.preventDefault();
-								setOpenIdx(index);
-							}}
-							layout
-							exit={{ opacity: 0, color: "transparent" }}
-						>
-							Expand
-						</S.ExpandButton>
-						<S.DeleteButton title="Delete this exercise">
-							<RiDeleteRow size={18} />
-						</S.DeleteButton>
-					</S.Buttons>
+					<S.ExpandButton
+						aria-controls={`fieldset-${index}`}
+						onClick={(e: any) => {
+							e.preventDefault();
+							setOpenIdx(index);
+						}}
+						exit={{ opacity: 0, color: "rgba(0,0,0,0)" }}
+					>
+						Expand
+					</S.ExpandButton>
 				)}
 				{collapsed && (
 					<S.Collapsed
 						id={`fieldset-${index}`}
 						aria-label="Only showing this exercise's name. Click the expand button to show its fields."
-						key="m.name"
+						key={`m.name-${index}`}
 						aria-expanded={false}
 						variants={minimalSlideVariants}
 						initial="initial"
@@ -102,60 +104,91 @@ export default function NewExercise({ index, onChange }: NewExerciseProps) {
 					</S.Collapsed>
 				)}
 				{!collapsed && (
-					<S.FieldsWrapper
-						aria-expanded={true}
-						id={`fieldset-${index}`}
-						as={motion.div}
-						key="m.fields"
-						variants={minimalSlideVariants}
-						initial="initial"
-						animate="animate"
-						exit="exit"
-					>
-						<S.Field gridArea="exercise">
-							<S.Label htmlFor={fields.exercise_name}>Exercise:</S.Label>
-							<S.Input
-								{...getInputProps("exercise_name")}
-								type="text"
-								onChange={(e) => onChange?.(e)}
-							/>
-						</S.Field>
+					<>
+						<S.DeleteButton
+							title="Delete this exercise"
+							onClick={(e) => {
+								e.preventDefault();
+								onDelete?.(index);
+								setNewWorkout((cur) => ({
+									...cur,
+									exercises: cur.exercises.filter((x, i) => i !== index),
+								}));
+							}}
+							exit={{ opacity: 0, color: "rgba(0,0,0,0)" }}
+						>
+							<RiDeleteBackLine size={18} />
+						</S.DeleteButton>
+						<S.FieldsWrapper
+							aria-expanded={true}
+							id={`fieldset-${index}`}
+							as={motion.div}
+							key={`m.fields-${index}`}
+							variants={minimalSlideVariants}
+							initial="initial"
+							animate="animate"
+							exit="exit"
+						>
+							<S.Field gridArea="exercise">
+								<S.Label htmlFor={fields.exercise_name}>Exercise:</S.Label>
+								<S.Input
+									{...getInputProps("exercise_name")}
+									type="text"
+									onChange={(e) => onChange?.(e)}
+								/>
+							</S.Field>
 
-						<S.Field gridArea="weight">
-							<S.Label htmlFor={fields.starting_weight}>Starting weight</S.Label>
-							<S.InputWithUnit>
-								<S.Input {...getInputProps("starting_weight")} type="text" />
-								<span>{weightUnit}</span>
-							</S.InputWithUnit>
-						</S.Field>
+							<S.Field gridArea="weight">
+								<S.Label htmlFor={fields.starting_weight}>
+									Starting weight
+								</S.Label>
+								<S.InputWithUnit>
+									<S.Input {...getInputProps("starting_weight")} type="text" />
+									<span>{weightUnit}</span>
+								</S.InputWithUnit>
+							</S.Field>
 
-						<S.Field gridArea="scheme">
-							<S.Label>Rep scheme:</S.Label>
-							<S.InputGroup>
-								<S.SubField>
-									<S.Label htmlFor={fields.sets}>Sets</S.Label>
-									<S.Input {...getInputProps("sets")} type={"number"} min={1} />
-								</S.SubField>
-								<S.Icon>x</S.Icon>
-								<S.SubField>
-									<S.Label htmlFor={fields.reps}>Reps</S.Label>
-									<S.Input {...getInputProps("reps")} type={"number"} min={1} />
-								</S.SubField>
-							</S.InputGroup>
-						</S.Field>
+							<S.Field gridArea="scheme">
+								<S.Label>Rep scheme:</S.Label>
+								<S.InputGroup>
+									<S.SubField>
+										<S.Label htmlFor={fields.sets}>Sets</S.Label>
+										<S.Input
+											{...getInputProps("sets")}
+											type={"number"}
+											min={1}
+										/>
+									</S.SubField>
+									<S.Icon>x</S.Icon>
+									<S.SubField>
+										<S.Label htmlFor={fields.reps}>Reps</S.Label>
+										<S.Input
+											{...getInputProps("reps")}
+											type={"number"}
+											min={1}
+										/>
+									</S.SubField>
+								</S.InputGroup>
+							</S.Field>
 
-						<S.Field gridArea="progress">
-							<S.Label htmlFor={fields.weight_progression}>
-								Weight progression
-							</S.Label>
-							<S.InputWithUnit>
-								<S.Input {...getInputProps("weight_progression")} type="text" />
-								<span>{weightUnit}</span>
-							</S.InputWithUnit>
-						</S.Field>
-					</S.FieldsWrapper>
+							<S.Field gridArea="progress">
+								<S.Label htmlFor={fields.weight_progression}>
+									Weight progression
+								</S.Label>
+								<S.InputWithUnit>
+									<S.Input
+										{...getInputProps("weight_progression")}
+										type="text"
+									/>
+									<span>{weightUnit}</span>
+								</S.InputWithUnit>
+							</S.Field>
+						</S.FieldsWrapper>
+					</>
 				)}
 			</AnimatePresence>
 		</S.Fieldset>
 	);
 }
+
+export default NewExercise;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import useCreateWorkout from "../../../../helpers/fetch/workouts/useCreateWorkout";
 import useRouterProps from "../../../../hooks/useRouterProps";
@@ -8,6 +8,7 @@ import { newWorkoutState, weightUnitState } from "../state/new-workout-state";
 import NewExercise from "../sub/NewExercise";
 
 export default function useNewWorkout() {
+	const deleteCount = useRef(0);
 	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
 	const resetNewWorkout = useResetRecoilState(newWorkoutState);
 	const { mutate } = useCreateWorkout();
@@ -20,25 +21,43 @@ export default function useNewWorkout() {
 
 	/** Reducer to manipulate `elements` state. Note that this has to be defined
 	 * inside this component so that it has access to local state setters. */
-	function fieldsetElementReducer(state: JSX.Element[], action: string): JSX.Element[] {
+	function fieldsetElementReducer(
+		state: JSX.Element[],
+		action: { type: string; index?: number }
+	): JSX.Element[] {
 		const rowCount = state.length;
+		const id = rowCount + deleteCount.current;
 
-		switch (action) {
+		switch (action.type) {
 			case "add":
 				return state.concat(
 					<NewExercise
-						key={rowCount}
-						index={rowCount}
+						key={id}
+						index={id}
 						onChange={handleInputChange}
+						onDelete={() => dispatch({ type: "delete", index: id })}
 					/>
 				);
+			case "delete":
+				deleteCount.current++;
+
+				return state.filter((x) => +x.key! !== action.index);
 			default:
 				return state;
 		}
 	}
 
+	useEffect(() => {
+		console.log({ newWorkout });
+	}, [newWorkout]);
+
 	const [elements, dispatch] = useReducer(fieldsetElementReducer, [
-		<NewExercise key={0} index={0} onChange={handleInputChange} />,
+		<NewExercise
+			key={0}
+			index={0}
+			onChange={handleInputChange}
+			onDelete={() => dispatch({ type: "delete", index: 0 })}
+		/>,
 	]);
 
 	function handleInputChange(

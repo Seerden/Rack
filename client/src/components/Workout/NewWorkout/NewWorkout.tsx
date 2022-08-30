@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import { FaPlusCircle, FaSave } from "react-icons/fa";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { pageVariants } from "../../../helpers/framer/variants/page-variants";
@@ -35,7 +36,7 @@ export default function NewWorkout() {
 			<Title>New workout</Title>
 
 			<SubTitle>Workout details</SubTitle>
-			<S.MetaField>
+			<S.MetaField as="fieldset">
 				<div>
 					<S.Label htmlFor="name">Name</S.Label>
 					<S.Input
@@ -60,13 +61,15 @@ export default function NewWorkout() {
 			</S.MetaField>
 
 			<SubTitle>Exercises</SubTitle>
-			<S.Exercises>{elements}</S.Exercises>
+			<S.Exercises>
+				<AnimatePresence mode="popLayout">{elements}</AnimatePresence>
+			</S.Exercises>
 
 			<S.ActionBar>
 				<S.AddButton
 					onClick={(e) => {
 						e.preventDefault();
-						dispatch("add");
+						dispatch({ type: "add" });
 						setOpenIndex(elements.length); // automatically 'open' the just-added element
 					}}
 				>

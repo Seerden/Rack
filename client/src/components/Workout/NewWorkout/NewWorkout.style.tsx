@@ -64,6 +64,7 @@ export const Select = styled.select`
 export const MetaField = styled(Field)`
 	display: grid;
 	grid-template-columns: 1fr max-content;
+	border: none;
 
 	div {
 		display: flex;
@@ -105,18 +106,6 @@ export const SubField = styled.span`
 export const Icon = styled.span`
 	align-self: flex-end;
 	padding-bottom: 0.5rem;
-`;
-
-export const Fieldset = styled.fieldset<{ $isValid?: boolean }>`
-	outline: none;
-	border: none;
-	padding: 0.8rem 1rem;
-
-	border-left: 3px solid ${(p) => (p.$isValid ? "green" : "orangered")};
-	--radius: ${(p) => (p.$isValid ? 10 : 3)}px;
-	border-radius: 0 var(--radius) var(--radius) 0;
-
-	${inputShadow};
 `;
 
 export const FieldsWrapper = styled.div`
@@ -217,18 +206,12 @@ export const Exercises = styled.div`
 	gap: 0.9rem;
 `;
 
-/** Container for an individual exercise's "expand" and "delete" buttons */
-export const Buttons = styled.div`
+export const ExpandButton = styled(motion.button)`
 	position: absolute;
-	right: 1rem;
+	right: 0.4rem;
 	bottom: 0.4rem;
 	z-index: 2;
 
-	display: flex;
-	gap: 0.55rem;
-`;
-
-export const ExpandButton = styled(motion.button)`
 	background-color: #eee;
 	border: 1px solid #ddd;
 	padding: 0.3rem 0.35rem;
@@ -248,16 +231,12 @@ export const ExpandButton = styled(motion.button)`
 `;
 
 export const DeleteButton = styled(ExpandButton)`
-	--size: 1.7rem;
-
+	padding: 0.2rem 0.8rem;
 	display: inline-flex;
-	width: var(--size);
-	height: var(--size);
 	place-self: center;
-	border-radius: 50%;
+	border-radius: 8px;
 	align-items: center;
 	justify-content: center;
-	border-color: orangered;
 	color: orangered;
 	background-color: white;
 
@@ -272,4 +251,25 @@ export const DeleteButton = styled(ExpandButton)`
 export const Collapsed = styled(motion.div)`
 	display: flex;
 	user-select: none;
+`;
+
+export const Fieldset = styled(motion.fieldset)<{ $isValid?: boolean }>`
+	outline: none;
+	border: none;
+	min-width: 550px;
+	padding: 0.8rem 1rem;
+
+	border-left: 3px solid ${(p) => (p.$isValid ? "green" : "orangered")};
+	--radius: ${(p) => (p.$isValid ? 10 : 3)}px;
+	border-radius: 0 var(--radius) var(--radius) 0;
+
+	${inputShadow};
+
+	&:first-of-type {
+		&:last-of-type {
+			${DeleteButton} {
+				display: none;
+			}
+		}
+	}
 `;
