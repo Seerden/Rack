@@ -240,7 +240,7 @@ export const DeleteButton = styled(ExpandButton)`
 	background-color: white;
 
 	position: absolute;
-	top: 0.4rem;
+	bottom: 0.4rem;
 	right: 0.4rem;
 	z-index: 2;
 
