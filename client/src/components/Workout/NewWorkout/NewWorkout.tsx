@@ -1,25 +1,21 @@
 import { AnimatePresence } from "framer-motion";
 import { FaPlusCircle, FaSave } from "react-icons/fa";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { pageVariants } from "../../../helpers/framer/variants/page-variants";
 import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
 import { WeightUnit } from "../../../types/shared/exercise.types";
-import { parseNewWorkout } from "./helpers/parse";
-import { isValidNewWorkout } from "./helpers/validate";
 import useNewWorkout from "./hooks/useNewWorkout";
 import * as S from "./NewWorkout.style";
-import {
-	newWorkoutState,
-	openIndexState,
-	weightUnitState,
-} from "./state/new-workout-state";
 
 export default function NewWorkout() {
-	const { elements, dispatch, handleInputChange, handleSubmit } = useNewWorkout();
-	const newWorkout = useRecoilValue(newWorkoutState);
-	const setOpenIndex = useSetRecoilState(openIndexState);
-	const [weightUnit, setWeightUnit] = useRecoilState(weightUnitState);
-	const isValid = isValidNewWorkout(parseNewWorkout(newWorkout, weightUnit));
+	const {
+		elements,
+		dispatch,
+		handleInputChange,
+		handleSubmit,
+		isValid,
+		setOpenIndex,
+		setWeightUnit,
+	} = useNewWorkout();
 
 	return (
 		<S.Form
