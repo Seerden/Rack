@@ -1,7 +1,8 @@
 const path = require("path");
 const miniCss = require("mini-css-extract-plugin");
-const Dotenv = require("dotenv-webpack");
 const html = require("html-webpack-plugin");
+require("dotenv").config({ path: "./.env" });
+const webpack = require("webpack");
 
 module.exports = {
 	optimization: {
@@ -76,8 +77,10 @@ module.exports = {
 		},
 	},
 	plugins: [
+		new webpack.DefinePlugin({
+			"process.env": JSON.stringify(process.env),
+		}),
 		new miniCss(),
-		new Dotenv(),
 		new html({
 			template: "./src/index.build.html",
 			filename: "index.build.html",
