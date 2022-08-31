@@ -53,7 +53,7 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 		>
 			<AnimatePresence initial={false}>
 				{collapsed && (
-					<S.CollapsedContainer $isValid={isValid}>
+					<S.CollapsedContainer $isValid={isValid} data-collapsed={true}>
 						<S.Collapsed
 							id={`fieldset-${index}`}
 							aria-label="Only showing this exercise's name. Click the expand button to show its fields."
@@ -113,6 +113,7 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 							<RiDeleteBackLine size={18} />
 						</S.DeleteButton>
 						<S.FieldsWrapper
+							data-collapsed={false}
 							aria-expanded={true}
 							id={`fieldset-${index}`}
 							as={motion.div}
