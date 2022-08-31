@@ -13,8 +13,6 @@ export default function NewWorkout() {
 		handleInputChange,
 		handleSubmit,
 		isValid,
-		weightUnit,
-		newWorkout,
 		setOpenIndex,
 		setWeightUnit,
 	} = useNewWorkout();
@@ -60,7 +58,7 @@ export default function NewWorkout() {
 
 			<SubTitle>Exercises</SubTitle>
 			<S.Exercises>
-				<AnimatePresence mode="popLayout">{elements}</AnimatePresence>
+				<AnimatePresence>{elements}</AnimatePresence>
 			</S.Exercises>
 
 			<S.ActionBar>

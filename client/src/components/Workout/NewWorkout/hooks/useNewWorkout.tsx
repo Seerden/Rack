@@ -92,8 +92,6 @@ export default function useNewWorkout() {
 
 	return {
 		elements,
-		newWorkout,
-		weightUnit,
 		dispatch,
 		handleInputChange,
 		handleSubmit,
