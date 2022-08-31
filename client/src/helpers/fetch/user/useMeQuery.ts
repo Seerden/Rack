@@ -18,13 +18,19 @@ export default function useMeQuery(options?: {
 	onSuccess?: ({ user }: UserData) => void;
 }) {
 	return useQuery<UserData>(["me"], async () => getMe(), {
-		onSuccess: ({ user }) => options?.onSuccess?.({ user }),
+		onSuccess: ({ user }) => {
+			options?.onSuccess?.({ user });
+			if (user) {
+				localUser.set(user);
+			}
+		},
 		onError: () => {
 			console.log("No user found, destroying local user");
 			localUser.destroy();
 		},
+		enabled: true,
 		retry: false,
-		refetchOnMount: false,
+		refetchOnMount: true,
 		refetchOnWindowFocus: false,
 	});
 }
