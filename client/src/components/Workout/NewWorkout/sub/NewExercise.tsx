@@ -17,16 +17,8 @@ type NewExerciseProps = {
 };
 
 function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
-	const {
-		fields,
-		exercise,
-		isValid,
-		openIdx,
-		setOpenIdx,
-		collapsed,
-		setNewWorkout,
-		weightUnit,
-	} = useNewExercise(index);
+	const { fields, exercise, isValid, setOpenIdx, collapsed, setNewWorkout, weightUnit } =
+		useNewExercise(index);
 
 	const getInputProps = useCallback(
 		(field: keyof typeof fields) => ({

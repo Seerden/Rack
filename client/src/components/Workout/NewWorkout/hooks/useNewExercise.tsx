@@ -33,7 +33,6 @@ export default function useNewExercise(index: number) {
 		fields,
 		exercise,
 		isValid,
-		openIdx,
 		setOpenIdx,
 		collapsed,
 		setNewWorkout,
