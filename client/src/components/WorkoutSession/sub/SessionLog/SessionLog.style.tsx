@@ -73,7 +73,7 @@ export const RepScheme = styled.span`
 
 export const SetIcons = styled.span`
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	flex-direction: row;
 	gap: 0.3rem;
 	min-width: 5rem;
