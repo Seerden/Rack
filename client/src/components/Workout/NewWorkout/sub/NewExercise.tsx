@@ -115,11 +115,7 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 						>
 							<S.Field gridArea="exercise">
 								<S.Label htmlFor={fields.exercise_name}>Exercise:</S.Label>
-								<S.Input
-									{...getInputProps("exercise_name")}
-									type="text"
-									onChange={(e) => onChange?.(e)}
-								/>
+								<S.Input {...getInputProps("exercise_name")} type="text" />
 							</S.Field>
 
 							<S.Field gridArea="weight">
