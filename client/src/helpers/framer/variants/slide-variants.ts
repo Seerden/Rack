@@ -1,4 +1,4 @@
-import { Transition, Variants } from "framer-motion";
+import { TargetAndTransition, Transition, Variants } from "framer-motion";
 
 export const slideBounceVariants: Variants & Transition = {
 	initial: { y: "-100%", opacity: 0 },
@@ -67,4 +67,11 @@ export const minimalSlideVariants: Variants = {
 			duration: 0.25,
 		},
 	},
+};
+
+export const scaleOutExit: TargetAndTransition = {
+	opacity: 0,
+	scaleY: 0,
+	originY: 0,
+	transition: { type: "tween", duration: 0.15 },
 };

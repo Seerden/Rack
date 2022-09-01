@@ -1,7 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeEvent, ChangeEventHandler, useCallback } from "react";
 import { RiDeleteBackLine } from "react-icons/ri";
-import { minimalSlideVariants } from "../../../../helpers/framer/variants/slide-variants";
+import {
+	minimalSlideVariants,
+	scaleOutExit,
+} from "../../../../helpers/framer/variants/slide-variants";
 import { NewExercise } from "../../../../types/shared/exercise.types";
 import { defaultExercise } from "../helpers/constants";
 import useNewExercise from "../hooks/useNewExercise";
@@ -44,12 +47,7 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 			key={`m.fieldset-${index}`}
 			$isValid={isValid}
 			style={{ overflow: "hidden", position: "relative" }}
-			exit={{
-				opacity: 0,
-				scaleY: 0,
-				originY: 0,
-				transition: { type: "tween", duration: 0.15 },
-			}}
+			exit={scaleOutExit}
 		>
 			<AnimatePresence initial={false}>
 				{collapsed && (
