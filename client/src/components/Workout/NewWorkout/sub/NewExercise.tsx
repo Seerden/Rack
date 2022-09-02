@@ -6,20 +6,19 @@ import {
 	minimalSlideVariants,
 	scaleOutExit,
 } from "../../../../helpers/framer/variants/slide-variants";
-import { NewExercise } from "../../../../types/shared/exercise.types";
 import { defaultExercise } from "../helpers/constants";
 import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
 
 type NewExerciseProps = {
-	index: number;
+	id: number;
 	onChange?: ChangeEventHandler<HTMLInputElement>;
-	onDelete?: (index: number) => void;
+	onDelete?: (id: number) => void;
 };
 
-function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
+export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps) {
 	const { fields, exercise, isValid, setOpenIdx, collapsed, setNewWorkout, weightUnit } =
-		useNewExercise(index);
+		useNewExercise(id);
 
 	const getInputProps = useCallback(
 		(field: keyof typeof fields) => ({
@@ -37,7 +36,7 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 
 	return (
 		<S.Fieldset
-			key={`m.fieldset-${index}`}
+			key={`m.fieldset-${id}`}
 			$isValid={isValid}
 			style={{ overflow: "hidden", position: "relative" }}
 			exit={scaleOutExit}
@@ -46,9 +45,9 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 				{collapsed && (
 					<S.CollapsedContainer $isValid={isValid} data-collapsed={true}>
 						<S.Collapsed
-							id={`fieldset-${index}`}
+							id={`fieldset-${id}`}
 							aria-label="Only showing this exercise's name. Click the expand button to show its fields."
-							key={`m.name-${index}`}
+							key={`m.name-${id}`}
 							aria-expanded={false}
 							variants={minimalSlideVariants}
 							initial="initial"
@@ -78,10 +77,10 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 							</S.Summary>
 						)}
 						<S.ExpandButton
-							aria-controls={`fieldset-${index}`}
+							aria-controls={`fieldset-${id}`}
 							onClick={(e) => {
 								e.preventDefault();
-								setOpenIdx(index);
+								setOpenIdx(id);
 							}}
 							exit={{ opacity: 0, color: "rgba(0,0,0,0)" }}
 						>
@@ -95,12 +94,12 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 							title="Delete this exercise"
 							onClick={(e) => {
 								e.preventDefault();
-								onDelete?.(index);
+								onDelete?.(id);
 								setNewWorkout((cur) => {
 									// Do NOT manipulate the length of .exercises, because
 									// that influences rendering.
 									const updated = structuredClone(cur);
-									updated.exercises[index] = defaultExercise;
+									updated.exercises[id] = defaultExercise;
 									return updated;
 								});
 							}}
@@ -111,9 +110,9 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 						<S.FieldsWrapper
 							data-collapsed={false}
 							aria-expanded={true}
-							id={`fieldset-${index}`}
+							id={`fieldset-${id}`}
 							as={motion.div}
-							key={`m.fields-${index}`}
+							key={`m.fields-${id}`}
 							{...makeDefaultVariantProps(minimalSlideVariants)}
 						>
 							<S.Field gridArea="exercise">
@@ -173,5 +172,3 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 		</S.Fieldset>
 	);
 }
-
-export default NewExercise;

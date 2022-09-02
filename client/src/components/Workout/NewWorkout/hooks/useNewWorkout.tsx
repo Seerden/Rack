@@ -30,7 +30,7 @@ export default function useNewWorkout() {
 	 * inside this component so that it has access to local state setters. */
 	function exerciseElementsReducer(
 		state: JSX.Element[],
-		action: { type: string; index?: number }
+		action: { type: string; id?: number }
 	): JSX.Element[] {
 		const rowCount = state.length;
 		const id = rowCount + deleteCount.current;
@@ -40,14 +40,14 @@ export default function useNewWorkout() {
 				return state.concat(
 					<NewExercise
 						key={id}
-						index={id}
+						id={id}
 						onChange={handleInputChange}
-						onDelete={() => dispatch({ type: "delete", index: id })}
+						onDelete={() => dispatch({ type: "delete", id })}
 					/>
 				);
 			case "delete":
 				deleteCount.current++;
-				return state.filter((x) => +x.key! !== action.index);
+				return state.filter((x) => +x.key! !== action.id);
 			default:
 				return state;
 		}
@@ -56,9 +56,9 @@ export default function useNewWorkout() {
 	const [elements, dispatch] = useReducer(exerciseElementsReducer, [
 		<NewExercise
 			key={0}
-			index={0}
+			id={0}
 			onChange={handleInputChange}
-			onDelete={() => dispatch({ type: "delete", index: 0 })}
+			onDelete={() => dispatch({ type: "delete", id: 0 })}
 		/>,
 	]);
 
