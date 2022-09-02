@@ -296,6 +296,8 @@ export const Datum = styled.span`
 	padding: 0 0.5rem;
 	background-color: #fefefe;
 	align-items: center;
+	font-size: 0.79rem;
+	align-items: center;
 
 	border-radius: 4px;
 	justify-content: center;
