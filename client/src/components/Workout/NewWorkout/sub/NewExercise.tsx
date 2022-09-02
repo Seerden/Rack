@@ -79,7 +79,7 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 						)}
 						<S.ExpandButton
 							aria-controls={`fieldset-${index}`}
-							onClick={(e: any) => {
+							onClick={(e) => {
 								e.preventDefault();
 								setOpenIdx(index);
 							}}
