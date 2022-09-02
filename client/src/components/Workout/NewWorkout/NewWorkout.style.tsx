@@ -284,7 +284,7 @@ export const CollapsedContainer = styled.div<{ $isValid?: boolean }>`
 	${(p) =>
 		p.$isValid
 			? css`
-					grid-template-columns: 1fr 8rem 8rem 1fr;
+					grid-template-columns: 1fr 16rem 1fr;
 			  `
 			: css`
 					grid-template-columns: 1fr max-content;
@@ -300,6 +300,8 @@ export const Datum = styled.span`
 	border-radius: 4px;
 	justify-content: center;
 
+	max-width: 7rem;
+
 	margin-bottom: -0.2rem;
 	margin-top: -0.2rem;
 	border: 1px solid #eee;
@@ -307,4 +309,11 @@ export const Datum = styled.span`
 	&:nth-of-type(1) {
 		margin-right: 0.9rem;
 	}
+`;
+
+export const Summary = styled(motion.div)`
+	display: flex;
+	flex-direction: row;
+	gap: 0.2rem;
+	justify-content: space-evenly;
 `;

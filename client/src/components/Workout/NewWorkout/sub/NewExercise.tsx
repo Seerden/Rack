@@ -61,15 +61,20 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 							)}
 						</S.Collapsed>
 						{isValid && (
-							<>
+							<S.Summary
+								variants={minimalSlideVariants}
+								initial="initial"
+								animate="animate"
+								exit="exit"
+							>
 								<S.Datum>
 									{exercise.sets} x {exercise.reps} reps
 								</S.Datum>
 								<S.Datum>
-									{exercise.starting_weight} {weightUnit} (+
-									{exercise.weight_progression} {weightUnit})
+									{exercise.starting_weight} (+
+									{exercise.weight_progression}) {weightUnit}
 								</S.Datum>
-							</>
+							</S.Summary>
 						)}
 						<S.ExpandButton
 							aria-controls={`fieldset-${index}`}
