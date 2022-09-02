@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeEvent, ChangeEventHandler, useCallback } from "react";
 import { RiDeleteBackLine } from "react-icons/ri";
+import { makeDefaultVariantProps } from "../../../../helpers/framer/build-variant-props";
 import {
 	minimalSlideVariants,
 	scaleOutExit,
@@ -113,10 +114,7 @@ function NewExercise({ index, onChange, onDelete }: NewExerciseProps) {
 							id={`fieldset-${index}`}
 							as={motion.div}
 							key={`m.fields-${index}`}
-							variants={minimalSlideVariants}
-							initial="initial"
-							animate="animate"
-							exit="exit"
+							{...makeDefaultVariantProps(minimalSlideVariants)}
 						>
 							<S.Field gridArea="exercise">
 								<S.Label htmlFor={fields.exercise_name}>Exercise:</S.Label>
