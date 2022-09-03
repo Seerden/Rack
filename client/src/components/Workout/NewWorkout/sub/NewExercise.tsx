@@ -167,13 +167,10 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 										onClick={(e) => {
 											e.preventDefault();
 											e.stopPropagation();
+											setShowInfo(true);
 										}}
 									>
-										<FaInfo
-											title="What is this?"
-											size={17}
-											onClick={() => setShowInfo(true)}
-										/>
+										<FaInfo title="What is this?" size={17} />
 									</S.Info>
 								</S.Label>
 								<AnimatePresence>
