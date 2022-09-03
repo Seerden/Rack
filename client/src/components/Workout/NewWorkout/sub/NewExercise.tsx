@@ -161,7 +161,13 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 							<S.Field gridArea="progress" style={{ position: "relative" }}>
 								<S.Label htmlFor={fields.weight_progression}>
 									Weight progression{" "}
-									<FaInfo title="What is this?" onClick={toggleInfo} />
+									<S.Info onClick={(e) => e.preventDefault()}>
+										<FaInfo
+											title="What is this?"
+											size={17}
+											onClick={toggleInfo}
+										/>
+									</S.Info>
 								</S.Label>
 								{showInfo && (
 									<Tooltip onClose={toggleInfo}>
