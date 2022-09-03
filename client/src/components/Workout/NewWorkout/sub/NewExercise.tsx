@@ -37,7 +37,6 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 	);
 
 	const [showInfo, setShowInfo] = useState(false);
-	const toggleInfo = () => setShowInfo((x) => !x);
 
 	return (
 		<S.Fieldset
@@ -161,21 +160,28 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 							<S.Field gridArea="progress" style={{ position: "relative" }}>
 								<S.Label htmlFor={fields.weight_progression}>
 									Weight progression{" "}
-									<S.Info onClick={(e) => e.preventDefault()}>
+									<S.Info
+										onClick={(e) => {
+											e.preventDefault();
+											e.stopPropagation();
+										}}
+									>
 										<FaInfo
 											title="What is this?"
 											size={17}
-											onClick={toggleInfo}
+											onClick={() => setShowInfo(true)}
 										/>
 									</S.Info>
 								</S.Label>
-								{showInfo && (
-									<Tooltip onClose={toggleInfo}>
-										Weight progression is the amount by which we'll increase the
-										working weight, if you hit at least your target reps on your
-										final set.
-									</Tooltip>
-								)}
+								<AnimatePresence>
+									{showInfo && (
+										<Tooltip key="m.tooltip" onClose={() => setShowInfo(false)}>
+											<S.Highlight>Weight progression</S.Highlight> is the
+											amount by which your working weight increases if you hit
+											at least your target reps on your final set.
+										</Tooltip>
+									)}
+								</AnimatePresence>
 								<S.InputWithUnit>
 									<S.Input
 										{...getInputProps("weight_progression")}

@@ -1,8 +1,8 @@
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
-export const Tooltip = styled.aside`
+export const Tooltip = styled(motion.aside)`
 	position: absolute;
-	top: -0.2rem;
 	right: 0;
 	z-index: 2;
 	background-color: #555555e9;
@@ -59,8 +59,8 @@ export const Close = styled.button`
 `;
 
 export const Text = styled.p`
-	text-align: justify;
+	max-width: 15rem;
 	word-wrap: break-word;
 	font-size: 0.83rem;
-	padding: 0.4rem 1.2rem;
+	padding: 0.4rem 1.1rem;
 `;

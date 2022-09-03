@@ -344,3 +344,9 @@ export const Info = styled.button`
 		}
 	}
 `;
+
+export const Highlight = styled.span`
+	font-weight: 700;
+	border-bottom: 2px solid deepskyblue;
+	padding: 0 0.2rem;
+`;

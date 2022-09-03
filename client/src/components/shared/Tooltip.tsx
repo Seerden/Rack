@@ -1,5 +1,7 @@
 import { MutableRefObject, PropsWithChildren, useEffect, useRef } from "react";
 import { MdClose } from "react-icons/md";
+import { makeDefaultVariantProps } from "../../helpers/framer/build-variant-props";
+import { fadeInVariants } from "../../helpers/framer/variants/fade-variants";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import * as S from "./Tooltip.style";
 
@@ -22,8 +24,13 @@ export default function Tooltip(props: PropsWithChildren<{ onClose?: () => void 
 	}, []);
 
 	return (
-		<S.Tooltip>
-			<S.Close onClick={() => props.onClose?.()}>
+		<S.Tooltip {...makeDefaultVariantProps(fadeInVariants)}>
+			<S.Close
+				onClick={(e) => {
+					e.preventDefault();
+					props.onClose?.();
+				}}
+			>
 				<MdClose size={18} />
 			</S.Close>
 			<S.Text ref={ref}>{props.children}</S.Text>
