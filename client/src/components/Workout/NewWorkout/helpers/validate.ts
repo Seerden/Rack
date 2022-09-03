@@ -19,7 +19,7 @@ export function isValidNewExercise(
 		exercise_name?.length > 0 &&
 		reps > 0 &&
 		sets > 0 &&
-		starting_weight > 0 &&
-		weight_progression > 0
+		starting_weight >= 0 &&
+		weight_progression >= 0
 	);
 }
