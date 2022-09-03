@@ -129,7 +129,12 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 									Starting weight
 								</S.Label>
 								<S.InputWithUnit>
-									<S.Input {...getInputProps("starting_weight")} type="text" />
+									<S.Input
+										{...getInputProps("starting_weight")}
+										type="number"
+										min={0}
+										step={0.1}
+									/>
 									<span>{weightUnit}</span>
 								</S.InputWithUnit>
 							</S.Field>
@@ -189,7 +194,9 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 								<S.InputWithUnit>
 									<S.Input
 										{...getInputProps("weight_progression")}
-										type="text"
+										type="number"
+										min={0}
+										step={0.1}
 									/>
 									<span>{weightUnit}</span>
 								</S.InputWithUnit>
