@@ -1,3 +1,5 @@
+import { ID } from "./id.types";
+
 export type WeightUnit = "kg" | "lbs";
 
 export type NewWorkout = {
@@ -33,7 +35,7 @@ export type Exercise = NewExercise & {
 
 /** This is the expected type of the object coming from the client. */
 export type WorkoutInput = NewWorkout & {
-	exercises: NewExercise[];
+	exercises: Array<NewExercise | ID>;
 };
 
 export type WorkoutWithExercises = Workout & { exercises: Exercise[] };
