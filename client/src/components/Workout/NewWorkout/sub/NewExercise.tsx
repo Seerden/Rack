@@ -1,11 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ChangeEvent, ChangeEventHandler, useCallback } from "react";
+import { ChangeEvent, ChangeEventHandler, useCallback, useState } from "react";
+import { FaInfo } from "react-icons/fa";
 import { RiDeleteBackLine } from "react-icons/ri";
 import { makeDefaultVariantProps } from "../../../../helpers/framer/build-variant-props";
 import {
 	minimalSlideVariants,
 	scaleOutExit,
 } from "../../../../helpers/framer/variants/slide-variants";
+import Tooltip from "../../../shared/Tooltip";
 import { defaultExercise } from "../helpers/constants";
 import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
@@ -33,6 +35,9 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 		}),
 		[onChange, exercise, fields]
 	);
+
+	const [showInfo, setShowInfo] = useState(false);
+	const toggleInfo = () => setShowInfo((x) => !x);
 
 	return (
 		<S.Fieldset
@@ -153,10 +158,18 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 								</S.InputGroup>
 							</S.Field>
 
-							<S.Field gridArea="progress">
+							<S.Field gridArea="progress" style={{ position: "relative" }}>
 								<S.Label htmlFor={fields.weight_progression}>
-									Weight progression
+									Weight progression{" "}
+									<FaInfo title="What is this?" onClick={toggleInfo} />
 								</S.Label>
+								{showInfo && (
+									<Tooltip onClose={toggleInfo}>
+										Weight progression is the amount by which we'll increase the
+										working weight, if you hit at least your target reps on your
+										final set.
+									</Tooltip>
+								)}
 								<S.InputWithUnit>
 									<S.Input
 										{...getInputProps("weight_progression")}
