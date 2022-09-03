@@ -5,7 +5,9 @@ import { fadeInVariants } from "../../helpers/framer/variants/fade-variants";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import * as S from "./Tooltip.style";
 
-export default function Tooltip(props: PropsWithChildren<{ onClose?: () => void }>) {
+export default function Tooltip(
+	props: PropsWithChildren<{ onClose?: () => void; ariaLabel?: string }>
+) {
 	function handleKeydown(e: KeyboardEvent) {
 		if (!(e.key === "Escape")) return;
 
@@ -24,7 +26,10 @@ export default function Tooltip(props: PropsWithChildren<{ onClose?: () => void 
 	}, []);
 
 	return (
-		<S.Tooltip {...makeDefaultVariantProps(fadeInVariants)}>
+		<S.Tooltip
+			{...makeDefaultVariantProps(fadeInVariants)}
+			aria-labelledby={props.ariaLabel}
+		>
 			<S.Close
 				onClick={(e) => {
 					e.preventDefault();

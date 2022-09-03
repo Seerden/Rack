@@ -158,7 +158,10 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 							</S.Field>
 
 							<S.Field gridArea="progress" style={{ position: "relative" }}>
-								<S.Label htmlFor={fields.weight_progression}>
+								<S.Label
+									htmlFor={fields.weight_progression}
+									aria-describedby="weight-progression-tooltip"
+								>
 									Weight progression{" "}
 									<S.Info
 										onClick={(e) => {
@@ -175,7 +178,11 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 								</S.Label>
 								<AnimatePresence>
 									{showInfo && (
-										<Tooltip key="m.tooltip" onClose={() => setShowInfo(false)}>
+										<Tooltip
+											key="m.tooltip"
+											onClose={() => setShowInfo(false)}
+											ariaLabel="weight-progression-tooltip"
+										>
 											<S.Highlight>Weight progression</S.Highlight> is the
 											amount by which your working weight increases if you hit
 											at least your target reps on your final set.
