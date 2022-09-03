@@ -36,6 +36,7 @@ export type Exercise = NewExercise & {
 /** This is the expected type of the object coming from the client. */
 export type WorkoutInput = NewWorkout & {
 	exercises: Array<NewExercise | ID>;
+	sharedExercises: number[];
 };
 
 export type WorkoutWithExercises = Workout & { exercises: Exercise[] };
