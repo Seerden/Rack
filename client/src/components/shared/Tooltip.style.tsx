@@ -10,14 +10,13 @@ export const Tooltip = styled.aside`
 	user-select: none;
 	border-radius: 5px;
 	border: 1px solid #bbb;
-	box-shadow: 0 0.2rem 0.6rem 0 #bbb;
 	z-index: 2;
 
-	--color: #ffe800;
+	border-left-color: #fff;
+	border-bottom-color: #fff;
+	border-left-width: 2px;
 	border-bottom-width: 2px;
-	border-right-width: 2px;
-	border-bottom-color: var(--color);
-	border-right-color: var(--color);
+	box-shadow: -0.25rem 0.25rem 0 -0.1rem #666, 0 0.2rem 0.6rem 0 #bbb;
 `;
 
 export const Close = styled.button`
@@ -35,8 +34,8 @@ export const Close = styled.button`
 	margin-bottom: 0.3rem;
 	float: right;
 	margin-left: 0.7rem;
-	margin-right: -0.7rem;
-	margin-top: -0.7rem;
+	margin-right: -0.45rem;
+	margin-top: -0.45rem;
 
 	svg {
 		fill: orangered;
@@ -45,8 +44,7 @@ export const Close = styled.button`
 
 	&:hover,
 	&:focus {
-		box-shadow: 0 0 0.2rem 0 #aaa;
-		border-color: orangered;
+		box-shadow: 0 0 0.04rem 0 #000;
 		background-color: orangered;
 
 		svg {
