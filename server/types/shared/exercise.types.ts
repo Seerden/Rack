@@ -29,7 +29,6 @@ export type NewExercise = {
 /** Matches type of `exercises` table. */
 export type Exercise = NewExercise & {
 	exercise_id: number;
-	workout_id: number;
 };
 
 /** This is the expected type of the object coming from the client. */
