@@ -1,44 +1,69 @@
-import { useCallback, useReducer } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { ChangeEvent, useCallback, useEffect, useReducer, useRef } from "react";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import useCreateWorkout from "../../../../helpers/fetch/workouts/useCreateWorkout";
+import useRouterProps from "../../../../hooks/useRouterProps";
 import { splitNameAndIndex } from "../helpers/field-with-index";
 import { parseNewWorkout } from "../helpers/parse";
-import { newWorkoutState, weightUnitState } from "../state/new-workout-state";
+import { isValidNewWorkout } from "../helpers/validate";
+import {
+	newWorkoutState,
+	openIndexState,
+	weightUnitState,
+} from "../state/new-workout-state";
 import NewExercise from "../sub/NewExercise";
 
 export default function useNewWorkout() {
-	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
 	const { mutate } = useCreateWorkout();
-	const weightUnit = useRecoilValue(weightUnitState);
+	const { navigate } = useRouterProps();
+	const [weightUnit, setWeightUnit] = useRecoilState(weightUnitState);
+	const [newWorkout, setNewWorkout] = useRecoilState(newWorkoutState);
+	const resetNewWorkout = useResetRecoilState(newWorkoutState);
+	const isValid = isValidNewWorkout(parseNewWorkout(newWorkout, weightUnit));
+	const setOpenIndex = useSetRecoilState(openIndexState);
+	const deleteCount = useRef(0);
+
+	useEffect(() => {
+		return () => resetNewWorkout();
+	}, []);
 
 	/** Reducer to manipulate `elements` state. Note that this has to be defined
 	 * inside this component so that it has access to local state setters. */
-	function fieldsetElementReducer(state: JSX.Element[], action: string): JSX.Element[] {
+	function exerciseElementsReducer(
+		state: JSX.Element[],
+		action: { type: string; id?: number }
+	): JSX.Element[] {
 		const rowCount = state.length;
+		const id = rowCount + deleteCount.current;
 
-		switch (action) {
+		switch (action.type) {
 			case "add":
 				return state.concat(
 					<NewExercise
-						key={rowCount}
-						index={rowCount}
+						key={id}
+						id={id}
 						onChange={handleInputChange}
+						onDelete={() => dispatch({ type: "delete", id })}
 					/>
 				);
+			case "delete":
+				deleteCount.current++;
+				return state.filter((x) => +x.key! !== action.id);
 			default:
 				return state;
 		}
 	}
 
-	const [elements, dispatch] = useReducer(fieldsetElementReducer, [
-		<NewExercise key={0} index={0} onChange={handleInputChange} />,
+	const [elements, dispatch] = useReducer(exerciseElementsReducer, [
+		<NewExercise
+			key={0}
+			id={0}
+			onChange={handleInputChange}
+			onDelete={() => dispatch({ type: "delete", id: 0 })}
+		/>,
 	]);
 
-	function handleInputChange(
-		e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-	) {
+	function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
 		const { name, value } = e.currentTarget;
-
 		const [field, exerciseIndex] = splitNameAndIndex(name);
 
 		// NewExercise input names are like 'exercise_name-1', and NewWorkout
@@ -46,9 +71,10 @@ export default function useNewWorkout() {
 		if (!isNaN(exerciseIndex)) {
 			setNewWorkout((cur) => {
 				const exercises = structuredClone(cur.exercises);
-
-				exercises[exerciseIndex] = { ...exercises[exerciseIndex], [field]: value };
-
+				exercises[exerciseIndex] = {
+					...exercises[exerciseIndex],
+					[field]: field === "exercise_name" ? value : +value, // exercise_name is currently the only non-number field
+				};
 				return { ...cur, exercises };
 			});
 		} else {
@@ -62,11 +88,18 @@ export default function useNewWorkout() {
 	const handleSubmit = useCallback(() => {
 		mutate(parseNewWorkout(newWorkout, weightUnit), {
 			onSuccess: (data) => {
-				// TODO: once authentication ipmlemented, redirect to /workouts
-				alert(JSON.stringify(data));
+				navigate("/workouts");
 			},
 		});
 	}, [newWorkout]);
 
-	return { elements, dispatch, handleInputChange, handleSubmit } as const;
+	return {
+		elements,
+		dispatch,
+		handleInputChange,
+		handleSubmit,
+		setWeightUnit,
+		isValid,
+		setOpenIndex,
+	} as const;
 }

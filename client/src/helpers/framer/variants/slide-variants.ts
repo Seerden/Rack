@@ -1,4 +1,4 @@
-import { Transition, Variants } from "framer-motion";
+import { TargetAndTransition, Transition, Variants } from "framer-motion";
 
 export const slideBounceVariants: Variants & Transition = {
 	initial: { y: "-100%", opacity: 0 },
@@ -33,7 +33,7 @@ export const slideVariants: Variants = {
 /** Scale horizontally by expanding from right -> left. */
 export const scaleOutVariants: Variants = {
 	initial: {
-		color: "transparent",
+		color: "rgba(0,0,0,0)",
 		scaleX: 0,
 		originX: "95%",
 		originY: "50%",
@@ -43,9 +43,35 @@ export const scaleOutVariants: Variants = {
 		scaleX: 1,
 	},
 	exit: {
-		color: "transparent",
+		color: "rgba(0,0,0,0)",
 		scaleX: 0,
 		originX: "95%",
 		originY: "50%",
 	},
+};
+
+export const minimalSlideVariants: Variants = {
+	initial: {
+		x: "-15%",
+		opacity: 0,
+	},
+	animate: {
+		x: 0,
+		opacity: 1,
+	},
+	exit: {
+		color: "rgba(0,0,0,0)",
+		backgroundColor: "rgba(0,0,0,0)",
+		opacity: 0,
+		transition: {
+			duration: 0.25,
+		},
+	},
+};
+
+export const scaleOutExit: TargetAndTransition = {
+	opacity: 0,
+	scaleY: 0,
+	originY: 0,
+	transition: { type: "tween", duration: 0.15 },
 };

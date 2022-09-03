@@ -1,118 +1,210 @@
-import { ChangeEventHandler, useMemo } from "react";
-import { useRecoilValue } from "recoil";
-import { NewExercise, WEIGHT_UNITS } from "../../../../types/shared/exercise.types";
-import { isValidNewExercise } from "../helpers/validate";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChangeEvent, ChangeEventHandler, useCallback, useState } from "react";
+import { FaInfo } from "react-icons/fa";
+import { RiDeleteBackLine } from "react-icons/ri";
+import { makeDefaultVariantProps } from "../../../../helpers/framer/build-variant-props";
+import {
+	minimalSlideVariants,
+	scaleOutExit,
+} from "../../../../helpers/framer/variants/slide-variants";
+import Tooltip from "../../../shared/Tooltip";
+import { defaultExercise } from "../helpers/constants";
 import useNewExercise from "../hooks/useNewExercise";
 import * as S from "../NewWorkout.style";
-import {
-	newWorkoutState,
-	openIndexState,
-	weightUnitState,
-} from "../state/new-workout-state";
-import CollapsedExercise from "./CollapsedExercise";
 
 type NewExerciseProps = {
-	index: number;
+	id: number;
 	onChange?: ChangeEventHandler<HTMLInputElement>;
+	onDelete?: (id: number) => void;
 };
 
-const defaultExercise: NewExercise = {
-	exercise_name: "",
-	reps: 0,
-	sets: 0,
-	starting_weight: 0,
-	weight_progression: 0,
-	weight_unit: WEIGHT_UNITS.KG,
-};
+export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps) {
+	const { fields, exercise, isValid, setOpenIdx, collapsed, setNewWorkout, weightUnit } =
+		useNewExercise(id);
 
-export default function NewExercise({ index, onChange }: NewExerciseProps) {
-	const { fields } = useNewExercise(index);
-	const newWorkout = useRecoilValue(newWorkoutState);
-	const weightUnit = useRecoilValue(weightUnitState);
-	const exercise = useMemo(() => {
-		return newWorkout?.exercises[index] ?? defaultExercise;
-	}, [newWorkout]);
+	const getInputProps = useCallback(
+		(field: keyof typeof fields) => ({
+			exit: {
+				opacity: 0,
+				backgroundColor: "rgba(0,0,0,0)",
+			},
+			defaultValue: exercise[field],
+			id: fields[field],
+			name: fields[field],
+			onChange: (e: ChangeEvent<HTMLInputElement>) => onChange?.(e),
+		}),
+		[onChange, exercise, fields]
+	);
 
-	const isValid = isValidNewExercise(exercise);
-
-	const openIdx = useRecoilValue(openIndexState);
-	const collapsed = useMemo(() => {
-		return openIdx !== index;
-	}, [openIdx]);
-
-	if (collapsed) {
-		return <CollapsedExercise index={index} {...exercise} isValid={isValid} />;
-	}
+	const [showInfo, setShowInfo] = useState(false);
 
 	return (
-		<S.Fieldset isValid={isValid}>
-			<S.Field gridArea="exercise">
-				<S.Label htmlFor={fields.exercise_name}>Exercise:</S.Label>
-				<S.Input
-					type="text"
-					id={fields.exercise_name}
-					name={fields.exercise_name}
-					defaultValue={exercise.exercise_name}
-					onChange={(e) => onChange?.(e)}
-				/>
-			</S.Field>
+		<S.Fieldset
+			key={`m.fieldset-${id}`}
+			$isValid={isValid}
+			style={{ overflow: "hidden", position: "relative" }}
+			exit={scaleOutExit}
+		>
+			<AnimatePresence initial={false}>
+				{collapsed && (
+					<S.CollapsedContainer $isValid={isValid} data-collapsed={true}>
+						<S.Collapsed
+							id={`fieldset-${id}`}
+							aria-label="Only showing this exercise's name. Click the expand button to show its fields."
+							key={`m.name-${id}`}
+							aria-expanded={false}
+							variants={minimalSlideVariants}
+							initial="initial"
+							animate="animate"
+							exit="exit"
+						>
+							{exercise.exercise_name?.length ? (
+								exercise.exercise_name
+							) : (
+								<em>Unnamed exercise</em>
+							)}
+						</S.Collapsed>
+						{isValid && (
+							<S.Summary
+								variants={minimalSlideVariants}
+								initial="initial"
+								animate="animate"
+								exit="exit"
+							>
+								<S.Datum>
+									{exercise.sets} x {exercise.reps} reps
+								</S.Datum>
+								<S.Datum>
+									{exercise.starting_weight} (+
+									{exercise.weight_progression}) {weightUnit}
+								</S.Datum>
+							</S.Summary>
+						)}
+						<S.ExpandButton
+							aria-controls={`fieldset-${id}`}
+							onClick={(e) => {
+								e.preventDefault();
+								setOpenIdx(id);
+							}}
+							exit={{ opacity: 0, color: "rgba(0,0,0,0)" }}
+						>
+							Expand
+						</S.ExpandButton>
+					</S.CollapsedContainer>
+				)}
+				{!collapsed && (
+					<>
+						<S.DeleteButton
+							title="Delete this exercise"
+							onClick={(e) => {
+								e.preventDefault();
+								onDelete?.(id);
+								setNewWorkout((cur) => {
+									// Do NOT manipulate the length of .exercises, because
+									// that influences rendering.
+									const updated = structuredClone(cur);
+									updated.exercises[id] = defaultExercise;
+									return updated;
+								});
+							}}
+							exit={{ opacity: 0, color: "rgba(0,0,0,0)" }}
+						>
+							<RiDeleteBackLine size={18} />
+						</S.DeleteButton>
+						<S.FieldsWrapper
+							data-collapsed={false}
+							aria-expanded={true}
+							id={`fieldset-${id}`}
+							as={motion.div}
+							key={`m.fields-${id}`}
+							{...makeDefaultVariantProps(minimalSlideVariants)}
+						>
+							<S.Field gridArea="exercise">
+								<S.Label htmlFor={fields.exercise_name}>Exercise:</S.Label>
+								<S.Input {...getInputProps("exercise_name")} type="text" />
+							</S.Field>
 
-			<S.Field gridArea="weight">
-				<S.Label htmlFor={fields.starting_weight}>Starting weight</S.Label>
-				<S.InputWithUnit>
-					<S.Input
-						type="text"
-						id={fields.starting_weight}
-						name={fields.starting_weight}
-						defaultValue={exercise.starting_weight}
-						onChange={(e) => onChange?.(e)}
-					/>
-					<span>{weightUnit}</span>
-				</S.InputWithUnit>
-			</S.Field>
+							<S.Field gridArea="weight">
+								<S.Label htmlFor={fields.starting_weight}>
+									Starting weight
+								</S.Label>
+								<S.InputWithUnit>
+									<S.Input
+										{...getInputProps("starting_weight")}
+										type="number"
+										min={0}
+										step={0.1}
+									/>
+									<span>{weightUnit}</span>
+								</S.InputWithUnit>
+							</S.Field>
 
-			<S.Field gridArea="scheme">
-				<S.Label>Rep scheme:</S.Label>
-				<S.InputGroup>
-					<S.SubField>
-						<S.Label htmlFor={fields.sets}>Sets</S.Label>
-						<S.Input
-							id={fields.sets}
-							name={fields.sets}
-							type={"number"}
-							defaultValue={exercise.sets}
-							min={1}
-							onChange={(e) => onChange?.(e)}
-						/>
-					</S.SubField>
-					<S.Icon>x</S.Icon>
-					<S.SubField>
-						<S.Label htmlFor={fields.reps}>Reps</S.Label>
-						<S.Input
-							id={fields.reps}
-							name={fields.reps}
-							defaultValue={exercise.reps}
-							type={"number"}
-							min={1}
-							onChange={(e) => onChange?.(e)}
-						/>
-					</S.SubField>
-				</S.InputGroup>
-			</S.Field>
+							<S.Field gridArea="scheme">
+								<S.Label>Rep scheme:</S.Label>
+								<S.InputGroup>
+									<S.SubField>
+										<S.Label htmlFor={fields.sets}>Sets</S.Label>
+										<S.Input
+											{...getInputProps("sets")}
+											type={"number"}
+											min={1}
+										/>
+									</S.SubField>
+									<S.Icon>x</S.Icon>
+									<S.SubField>
+										<S.Label htmlFor={fields.reps}>Reps</S.Label>
+										<S.Input
+											{...getInputProps("reps")}
+											type={"number"}
+											min={1}
+										/>
+									</S.SubField>
+								</S.InputGroup>
+							</S.Field>
 
-			<S.Field gridArea="progress">
-				<S.Label htmlFor={fields.weight_progression}>Weight progression</S.Label>
-				<S.InputWithUnit>
-					<S.Input
-						type="text"
-						defaultValue={exercise.weight_progression}
-						id={fields.weight_progression}
-						name={fields.weight_progression}
-						onChange={(e) => onChange?.(e)}
-					/>
-					<span>{weightUnit}</span>
-				</S.InputWithUnit>
-			</S.Field>
+							<S.Field gridArea="progress" style={{ position: "relative" }}>
+								<S.Label
+									htmlFor={fields.weight_progression}
+									aria-describedby="weight-progression-tooltip"
+								>
+									Weight progression{" "}
+									<S.Info
+										onClick={(e) => {
+											e.preventDefault();
+											e.stopPropagation();
+											setShowInfo(true);
+										}}
+									>
+										<FaInfo title="What is this?" size={17} />
+									</S.Info>
+								</S.Label>
+								<AnimatePresence>
+									{showInfo && (
+										<Tooltip
+											key="m.tooltip"
+											onClose={() => setShowInfo(false)}
+											ariaLabel="weight-progression-tooltip"
+										>
+											<S.Highlight>Weight progression</S.Highlight> is the
+											amount by which your working weight increases if you hit
+											at least your target reps on your final set.
+										</Tooltip>
+									)}
+								</AnimatePresence>
+								<S.InputWithUnit>
+									<S.Input
+										{...getInputProps("weight_progression")}
+										type="number"
+										min={0}
+										step={0.1}
+									/>
+									<span>{weightUnit}</span>
+								</S.InputWithUnit>
+							</S.Field>
+						</S.FieldsWrapper>
+					</>
+				)}
+			</AnimatePresence>
 		</S.Fieldset>
 	);
 }

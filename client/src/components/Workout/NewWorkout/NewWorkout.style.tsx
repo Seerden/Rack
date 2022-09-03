@@ -1,16 +1,16 @@
+import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 import { inputStyle } from "../../../helpers/theme/snippets/input";
 import { pageStyle } from "../../../helpers/theme/snippets/page";
 import { inputShadow } from "../../../helpers/theme/snippets/shadow";
 import { inputLabelStyle } from "../../../helpers/theme/snippets/text";
-import { fadeIn } from "./sub/CollapsedExercise.style";
 
-export const Form = styled.form`
+export const Form = styled(motion.form)`
 	${pageStyle};
 	max-width: max-content;
 `;
 
-export const Input = styled.input`
+export const Input = styled(motion.input)`
 	${inputStyle};
 
 	&[type="text"] {
@@ -25,6 +25,11 @@ export const Input = styled.input`
 export const Label = styled.label`
 	${inputLabelStyle};
 	font-size: 1.1rem;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 `;
 
 export const Field = styled.div<{ gridArea?: string }>`
@@ -64,6 +69,7 @@ export const Select = styled.select`
 export const MetaField = styled(Field)`
 	display: grid;
 	grid-template-columns: 1fr max-content;
+	border: none;
 
 	div {
 		display: flex;
@@ -107,31 +113,13 @@ export const Icon = styled.span`
 	padding-bottom: 0.5rem;
 `;
 
-export const Fieldset = styled.fieldset<{ isValid?: boolean }>`
-	outline: none;
-	border: none;
-	padding: 0.8rem 1rem;
-
-	border-left: 3px solid ${(p) => (p.isValid ? "green" : "orangered")};
-	border-radius: ${(p) => (p.isValid ? 5 : 3)}px;
-
-	transition: all 45ms ease-out;
-
-	${inputShadow};
-
-	&:not(:nth-of-type(1)) {
-		border-top: 2px solid #ccc;
-		margin-top: 1.2rem;
-	}
-
+export const FieldsWrapper = styled.div`
 	display: grid;
 	grid-template-areas:
 		"exercise weight"
 		"scheme progress";
 	grid-template-columns: repeat(2, 1fr);
 	grid-row-gap: 1.3rem;
-
-	animation: ${fadeIn} 145ms ease-in;
 `;
 
 export const InputWithUnit = styled.span`
@@ -221,4 +209,144 @@ export const Exercises = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 0.9rem;
+`;
+
+export const ExpandButton = styled(motion.button)`
+	background-color: #eee;
+	border: 1px solid #ddd;
+	padding: 0.3rem 0.35rem;
+	font-size: 0.75rem;
+	border-radius: 5px;
+	border-width: 2px;
+
+	width: max-content;
+	place-self: flex-end;
+
+	outline: 1px solid transparent;
+
+	&:hover {
+		border-color: #fff;
+		box-shadow: 0 0.2rem 0.5rem -0.15rem #888;
+		outline-color: #ccc;
+	}
+
+	transition: all 15ms ease-out;
+`;
+
+export const DeleteButton = styled(ExpandButton)`
+	padding: 0.2rem 0.8rem;
+
+	display: inline-flex;
+	place-self: center;
+	border-radius: 8px;
+	align-items: center;
+	justify-content: center;
+	color: orangered;
+	background-color: white;
+
+	position: absolute;
+	bottom: 0.4rem;
+	right: 0.4rem;
+	z-index: 2;
+
+	&:hover {
+		color: white;
+		background-color: orangered;
+		transform: scale(1.05);
+		border-radius: 10px;
+	}
+`;
+
+export const Collapsed = styled(motion.div)`
+	display: flex;
+	user-select: none;
+
+	font-size: 1.12rem;
+	font-weight: 600;
+`;
+
+export const Fieldset = styled(motion.fieldset)<{ $isValid?: boolean }>`
+	outline: none;
+	border: none;
+	min-width: 550px;
+	padding: 0.8rem 1rem;
+
+	--radius: ${(p) => (p.$isValid ? 10 : 3)}px;
+	border-radius: 0 var(--radius) var(--radius) 0;
+
+	box-shadow: 1.5rem 1.5rem 0 -1.3rem ${(p) => (p.$isValid ? "green" : "orangered")},
+		0 0.4rem 0.5rem -0.15rem #c1c1c1;
+
+	&:only-child {
+		${DeleteButton} {
+			display: none;
+		}
+	}
+`;
+
+export const CollapsedContainer = styled.div<{ $isValid?: boolean }>`
+	display: grid;
+	${(p) =>
+		p.$isValid
+			? css`
+					grid-template-columns: 1fr 16rem 1fr;
+			  `
+			: css`
+					grid-template-columns: 1fr max-content;
+			  `}
+`;
+
+export const Datum = styled.span`
+	display: flex;
+	padding: 0 0.5rem;
+	background-color: #fefefe;
+	align-items: center;
+	font-size: 0.79rem;
+	align-items: center;
+
+	border-radius: 4px;
+	justify-content: center;
+
+	max-width: 7rem;
+
+	margin-bottom: -0.2rem;
+	margin-top: -0.2rem;
+	border: 1px solid #eee;
+
+	&:nth-of-type(1) {
+		margin-right: 0.9rem;
+	}
+`;
+
+export const Summary = styled(motion.div)`
+	display: flex;
+	flex-direction: row;
+	gap: 0.2rem;
+	justify-content: space-evenly;
+`;
+
+export const Info = styled.button`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: none;
+	border: none;
+	outline: none;
+	border-radius: 50%;
+	background-color: unset;
+
+	transition: all 35ms linear;
+
+	&:focus,
+	&:hover {
+		svg {
+			color: #0079b1;
+		}
+	}
+`;
+
+export const Highlight = styled.span`
+	font-weight: 700;
+	border-bottom: 2px solid deepskyblue;
+	padding: 0 0.2rem;
 `;

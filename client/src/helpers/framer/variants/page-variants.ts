@@ -21,7 +21,7 @@ export const pageVariants: Variants = {
 	},
 	exit: {
 		opacity: 0,
-		color: "transparent",
+		color: "rgba(0,0,0,0)",
 		transition: {
 			duration: 0.15,
 			type: "spring",

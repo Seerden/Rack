@@ -1,26 +1,29 @@
+import { AnimatePresence } from "framer-motion";
 import { FaPlusCircle, FaSave } from "react-icons/fa";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { pageVariants } from "../../../helpers/framer/variants/page-variants";
 import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
 import { WeightUnit } from "../../../types/shared/exercise.types";
-import { parseNewWorkout } from "./helpers/parse";
-import { isValidNewWorkout } from "./helpers/validate";
 import useNewWorkout from "./hooks/useNewWorkout";
 import * as S from "./NewWorkout.style";
-import {
-	newWorkoutState,
-	openIndexState,
-	weightUnitState,
-} from "./state/new-workout-state";
 
 export default function NewWorkout() {
-	const { elements, dispatch, handleInputChange, handleSubmit } = useNewWorkout();
-	const newWorkout = useRecoilValue(newWorkoutState);
-	const setOpenIndex = useSetRecoilState(openIndexState);
-	const [weightUnit, setWeightUnit] = useRecoilState(weightUnitState);
-	const isValid = isValidNewWorkout(parseNewWorkout(newWorkout, weightUnit));
+	const {
+		elements,
+		dispatch,
+		handleInputChange,
+		handleSubmit,
+		isValid,
+		setOpenIndex,
+		setWeightUnit,
+	} = useNewWorkout();
 
 	return (
 		<S.Form
+			variants={pageVariants}
+			initial="hidden"
+			style={{ overflow: "hidden" }}
+			animate="appear"
+			exit="exit"
 			onSubmit={(e) => {
 				e.preventDefault();
 				handleSubmit();
@@ -29,7 +32,7 @@ export default function NewWorkout() {
 			<Title>New workout</Title>
 
 			<SubTitle>Workout details</SubTitle>
-			<S.MetaField>
+			<S.MetaField as="fieldset">
 				<div>
 					<S.Label htmlFor="name">Name</S.Label>
 					<S.Input
@@ -43,6 +46,7 @@ export default function NewWorkout() {
 				<div>
 					<S.Label htmlFor="weight_unit">Weight unit</S.Label>
 					<S.Select
+						id="weight_unit"
 						name="weight_unit"
 						onChange={(e) => setWeightUnit(e.target.value as WeightUnit)}
 					>
@@ -53,13 +57,15 @@ export default function NewWorkout() {
 			</S.MetaField>
 
 			<SubTitle>Exercises</SubTitle>
-			<S.Exercises>{elements}</S.Exercises>
+			<S.Exercises>
+				<AnimatePresence>{elements}</AnimatePresence>
+			</S.Exercises>
 
 			<S.ActionBar>
 				<S.AddButton
 					onClick={(e) => {
 						e.preventDefault();
-						dispatch("add");
+						dispatch({ type: "add" });
 						setOpenIndex(elements.length); // automatically 'open' the just-added element
 					}}
 				>

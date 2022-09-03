@@ -3,17 +3,20 @@ import "@testing-library/jest-dom";
 import { render, RenderOptions } from "@testing-library/react";
 import { ReactElement, ReactNode } from "react";
 import { MemoryRouter } from "react-router";
+import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import { queryClient } from "../query-client";
 import { theme } from "../theme/theme";
 
 const WithProviders = ({ children }: { children: ReactNode }) => {
 	return (
-		<ThemeProvider theme={theme}>
-			<MemoryRouter>
-				<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-			</MemoryRouter>
-		</ThemeProvider>
+		<RecoilRoot>
+			<ThemeProvider theme={theme}>
+				<MemoryRouter>
+					<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+				</MemoryRouter>
+			</ThemeProvider>
+		</RecoilRoot>
 	);
 };
 

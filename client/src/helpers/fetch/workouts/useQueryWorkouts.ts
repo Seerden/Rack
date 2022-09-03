@@ -31,6 +31,7 @@ export default function useQueryWorkoutsByUser() {
 					client.setQueryData(["workout", workout.workout_id], workout);
 				}
 			},
+			enabled: !!currentUser?.user_id,
 		}
 	);
 }
