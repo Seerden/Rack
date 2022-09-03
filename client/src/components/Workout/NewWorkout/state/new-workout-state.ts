@@ -4,6 +4,7 @@ import {
 	WeightUnit,
 	WorkoutInput,
 } from "../../../../types/shared/exercise.types";
+import { defaultExercise } from "../helpers/constants";
 
 export type RawNewWorkout = Omit<WorkoutInput, "exercises"> & {
 	exercises: Array<Omit<NewExercise, "weight_unit">>;
@@ -18,7 +19,11 @@ export const newWorkoutState = atom<RawNewWorkout>({
 	key: "newWorkout",
 	default: selector({
 		key: "newWorkoutSelector",
-		get: ({ get }) => ({ weight_unit: get(weightUnitState), name: "", exercises: [] }),
+		get: ({ get }) => ({
+			weight_unit: get(weightUnitState),
+			name: "",
+			exercises: [defaultExercise],
+		}),
 	}),
 });
 
