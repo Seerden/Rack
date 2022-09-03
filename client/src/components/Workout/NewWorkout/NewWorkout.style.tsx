@@ -25,6 +25,11 @@ export const Input = styled(motion.input)`
 export const Label = styled.label`
 	${inputLabelStyle};
 	font-size: 1.1rem;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 `;
 
 export const Field = styled.div<{ gridArea?: string }>`
