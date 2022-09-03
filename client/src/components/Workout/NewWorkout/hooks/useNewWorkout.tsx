@@ -71,7 +71,10 @@ export default function useNewWorkout() {
 		if (!isNaN(exerciseIndex)) {
 			setNewWorkout((cur) => {
 				const exercises = structuredClone(cur.exercises);
-				exercises[exerciseIndex] = { ...exercises[exerciseIndex], [field]: value };
+				exercises[exerciseIndex] = {
+					...exercises[exerciseIndex],
+					[field]: field === "exercise_name" ? value : +value, // exercise_name is currently the only non-number field
+				};
 				return { ...cur, exercises };
 			});
 		} else {
