@@ -32,44 +32,32 @@ export async function insertWorkout({
  * */
 export async function insertExercises({
 	sql = sqlConnection,
-	workout_id,
 	exercises,
 }: WithSQL<{
-	workout_id: ID;
-	exercises: Array<number | Omit<Exercise, "exercise_id">>;
+	exercises: Array<Omit<Exercise, "exercise_id">>;
 }>) {
-	const newExercises = exercises.filter((e) => typeof e !== "number") as Array<
-		Omit<Exercise, "exercise_id">
-	>;
-	const existingExercises = exercises.filter((e) => typeof e === "number") as ID[];
+	return await sql<[Exercise]>`
+      insert into exercises ${sql(exercises)} 
+      returning exercise_id
+   `;
+}
 
-	const insertedExercises = await sql<[Exercise]>`
-         insert into exercises ${sql(newExercises)} 
-         returning *
-      `;
-
-	// Build rows to insert into `workout_exercises` table.
-	const mappedIds = insertedExercises
-		.map((e) => e.exercise_id)
-		.concat(existingExercises)
-		.map((exercise_id) => ({
-			exercise_id,
-			workout_id,
-		}));
-
+async function insertWorkoutExerciseRelations({
+	sql = sqlConnection,
+	mappedIds,
+}: WithSQL<{ mappedIds: { workout_id: ID; exercise_id: ID }[] }>) {
 	const exerciseIds: number[] = [];
-
-	// inserting in a loop because a multi-insert query with 'where exists' is
-	// too finicky for me atm -- see https://stackoverflow.com/questions/24769157/insert-multiple-rows-where-not-exists-postgresql
-	// for a 'proper' implementation
+	// Multi-inserting in 1 query is too tricky for me right now. For a proper
+	// implementation, see the following link:
+	// https://stackoverflow.com/questions/24769157/insert-multiple-rows-where-not-exists-postgresql
 	for (const { workout_id: w_id, exercise_id: e_id } of mappedIds) {
-		const [{ exercise_id }] = await sql<[{ exercise_id: number }]>`
-            insert into workout_exercises(exercise_id, workout_id) select ${e_id}, ${w_id}
-               where exists (select * from exercises e where e.exercise_id = ${e_id})
-               and exists (select * from workouts w where w.workout_id = ${w_id})
-            returning exercise_id
-         `;
-		exerciseIds.push(exercise_id);
+		const added = await sql<[{ exercise_id: number }]>`
+      insert into workout_exercises(exercise_id, workout_id) select ${e_id}, ${w_id}
+         where exists (select * from exercises e where e.exercise_id = ${e_id})
+         and exists (select * from workouts w where w.workout_id = ${w_id})
+      returning exercise_id
+   `;
+		exerciseIds.push(...added.map((a) => a.exercise_id));
 	}
 
 	return exerciseIds;
@@ -83,22 +71,38 @@ export async function createWorkout({
 }: WithUserId<WithSQL<{ newWorkout: WorkoutInput }>>) {
 	if (!user_id) throw Error("createWorkout requires a user_id parameter");
 
-	const { exercises, ...workout } = newWorkout;
+	const { exercises, sharedExercises, ...workout } = newWorkout;
 	const workoutWithUser = { ...workout, user_id };
 
 	return sql.begin(async (q): Promise<WorkoutWithExercises> => {
 		const [insertedWorkout] = await insertWorkout({ sql: q, workoutWithUser });
 
-		const insertedExerciseIds = await insertExercises({
-			sql: q,
-			workout_id: insertedWorkout.workout_id,
-			exercises,
-		});
+		const insertedExerciseIds = (
+			await insertExercises({
+				sql: q,
+				exercises,
+			})
+		).map((e) => e.exercise_id);
 
-		const insertedExercises = await q<
-			Exercise[]
-		>`select * from exercises where exercise_id in ${sql(insertedExerciseIds)}`;
+		const insertedExercises = await q<Exercise[]>`
+         select * from exercises where exercise_id in ${sql(insertedExerciseIds)}
+      `;
 
-		return { ...insertedWorkout, exercises: insertedExercises };
+		// Build rows to insert into `workout_exercises` table.
+		const mappedIds = insertedExercises
+			.map((e) => e.exercise_id)
+			.concat(sharedExercises)
+			.map((exercise_id) => ({
+				exercise_id,
+				workout_id: insertedWorkout.workout_id,
+			}));
+
+		const exerciseIds = await insertWorkoutExerciseRelations({ sql: q, mappedIds });
+
+		const allExercises = await q<[Exercise]>`
+         select * from exercises where exercise_id in ${sql(exerciseIds)}
+      `;
+
+		return { ...insertedWorkout, exercises: allExercises };
 	});
 }
