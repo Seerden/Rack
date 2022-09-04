@@ -5,7 +5,8 @@ import { createRoot } from "react-dom/client";
 import "./index.scss";
 import { worker } from "./mocks/browser";
 
-if (process.env.NODE_ENV === "development") {
+// eslint-disable-next-line
+if (process.env.NODE_ENV === "development" && 0) {
 	worker.start();
 }
 

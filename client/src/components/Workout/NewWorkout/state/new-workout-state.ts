@@ -8,6 +8,7 @@ import { defaultExercise } from "../helpers/constants";
 
 export type RawNewWorkout = Omit<WorkoutInput, "exercises"> & {
 	exercises: Array<Omit<NewExercise, "weight_unit">>;
+	sharedExercises: number[];
 };
 
 export const weightUnitState = atom<WeightUnit>({
@@ -23,6 +24,7 @@ export const newWorkoutState = atom<RawNewWorkout>({
 			weight_unit: get(weightUnitState),
 			name: "",
 			exercises: [defaultExercise],
+			sharedExercises: [],
 		}),
 	}),
 });

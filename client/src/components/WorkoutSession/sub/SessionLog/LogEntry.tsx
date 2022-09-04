@@ -30,7 +30,7 @@ export default function LogEntry({
 	const workingScheme = session?.schemes.find((x) => !x.is_warmup);
 	const workingWeight = workingScheme?.weight;
 
-	if (!workingWeight) return <></>;
+	if ((!workingWeight && workingWeight !== 0) || !workingScheme) return <></>;
 
 	const workingSets = entries?.[workingWeight]?.map((x) => x.reps);
 	const workingSetsFailed = workingSets?.map(
