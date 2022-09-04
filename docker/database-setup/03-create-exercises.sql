@@ -1,4 +1,5 @@
 create table if not exists exercises (
+   user_id serial not null references users(user_id),
    exercise_id serial primary key,
    exercise_name varchar(32) not null,
    sets int not null,

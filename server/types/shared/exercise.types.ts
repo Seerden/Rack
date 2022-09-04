@@ -29,9 +29,10 @@ export type NewExercise = {
 };
 
 /** Matches type of `exercises` table. */
-export type Exercise = NewExercise & {
-	exercise_id: number;
-};
+export interface Exercise extends NewExercise {
+	user_id: ID;
+	exercise_id: ID;
+}
 
 /** This is the expected type of the object coming from the client. */
 export type WorkoutInput = NewWorkout & {

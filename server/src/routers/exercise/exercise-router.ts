@@ -3,6 +3,7 @@ import { WorkoutInput } from "../../../types/shared/exercise.types";
 import { suggestSchemeForWorkout } from "../../helpers/suggest-session/suggest";
 import { insertWorkoutSession } from "./create-session";
 import { createWorkout } from "./create-workout";
+import { queryExercisesByUser } from "./query-exercises";
 import { getSessionEntriesForExercise } from "./query-sessions";
 import { queryWorkoutById, queryWorkoutsByUser } from "./query-workouts";
 
@@ -56,4 +57,11 @@ exerciseRouter.get("/workouts/exercise/:exerciseId/entries", async (req, res) =>
 	const exerciseId = +req.params.exerciseId;
 
 	res.json(await getSessionEntriesForExercise({ exercise_id: exerciseId }));
+});
+
+exerciseRouter.get("/exercises/user/:user_id", async (req, res) => {
+	const user_id = +req.params.user_id;
+	const exercises = await queryExercisesByUser({ user_id });
+
+	res.json({ exercises });
 });
