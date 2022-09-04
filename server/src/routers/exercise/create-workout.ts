@@ -73,6 +73,10 @@ export async function createWorkout({
 
 	const { exercises, sharedExercises, ...workout } = newWorkout;
 	const workoutWithUser = { ...workout, user_id };
+	const exercisesWithUser: Omit<Exercise, "exercise_id">[] = exercises.map((e) => ({
+		...e,
+		user_id,
+	}));
 
 	return sql.begin(async (q): Promise<WorkoutWithExercises> => {
 		const [insertedWorkout] = await insertWorkout({ sql: q, workoutWithUser });
@@ -80,7 +84,7 @@ export async function createWorkout({
 		const insertedExerciseIds = (
 			await insertExercises({
 				sql: q,
-				exercises,
+				exercises: exercisesWithUser,
 			})
 		).map((e) => e.exercise_id);
 
