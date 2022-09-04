@@ -15,9 +15,9 @@ export async function queryWorkoutsByUser({
       from ( 
          select distinct(w.*), jsonb_agg(to_json(e.*)) exercises
          from workouts w 
-         left join workout_exercises we
-         on we.workout_id = w.workout_id
-         and w.user_id = ${user_id}
+         inner join workout_exercises we
+            on we.workout_id = w.workout_id
+            and w.user_id = ${user_id}
          left join exercises e 
             on e.exercise_id = we.exercise_id
          group by w.workout_id
