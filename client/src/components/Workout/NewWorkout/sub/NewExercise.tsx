@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeEvent, ChangeEventHandler, useCallback, useState } from "react";
-import { FaInfo } from "react-icons/fa";
 import { RiDeleteBackLine } from "react-icons/ri";
 import { makeDefaultVariantProps } from "../../../../helpers/framer/build-variant-props";
 import {
 	minimalSlideVariants,
 	scaleOutExit,
 } from "../../../../helpers/framer/variants/slide-variants";
+import Info from "../../../shared/Info";
 import Tooltip from "../../../shared/Tooltip";
 import { defaultExercise } from "../helpers/constants";
 import useNewExercise from "../hooks/useNewExercise";
@@ -167,16 +167,7 @@ export default function NewExercise({ id, onChange, onDelete }: NewExerciseProps
 									htmlFor={fields.weight_progression}
 									aria-describedby="weight-progression-tooltip"
 								>
-									Weight progression{" "}
-									<S.Info
-										onClick={(e) => {
-											e.preventDefault();
-											e.stopPropagation();
-											setShowInfo(true);
-										}}
-									>
-										<FaInfo title="What is this?" size={17} />
-									</S.Info>
+									Weight progression <Info onClick={() => setShowInfo(true)} />
 								</S.Label>
 								<AnimatePresence>
 									{showInfo && (
