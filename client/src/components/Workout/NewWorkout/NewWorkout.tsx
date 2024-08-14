@@ -3,6 +3,9 @@ import { FaPlusCircle, FaSave } from "react-icons/fa";
 import { pageVariants } from "../../../helpers/framer/variants/page-variants";
 import { SubTitle, Title } from "../../../helpers/theme/snippets/Title";
 import { WeightUnit } from "../../../types/shared/exercise.types";
+import Info from "../../shared/Info";
+import Tooltip from "../../shared/Tooltip";
+import useTooltip from "../../shared/useTooltip";
 import useNewWorkout from "./hooks/useNewWorkout";
 import * as S from "./NewWorkout.style";
 
@@ -16,6 +19,8 @@ export default function NewWorkout() {
 		setOpenIndex,
 		setWeightUnit,
 	} = useNewWorkout();
+
+	const sharedExerciseTooltip = useTooltip();
 
 	return (
 		<S.Form
@@ -57,6 +62,24 @@ export default function NewWorkout() {
 			</S.MetaField>
 
 			<SubTitle>Exercises</SubTitle>
+			<section style={{ position: "relative", display: "flex" }}>
+				<span>
+					Re-use exercises
+					<Info onClick={() => sharedExerciseTooltip.open()} />
+				</span>
+				<AnimatePresence>
+					{sharedExerciseTooltip.show && (
+						<S.SharedExerciseTooltipWrapper>
+							<Tooltip onClose={() => sharedExerciseTooltip.close()}>
+								Re-use an exercise from another workout to share progress. In
+								contrast, a new exercise (even if it has the same name as another
+								exercise) will be treated as a separate exercise, so its progress
+								would be tracked separately.
+							</Tooltip>
+						</S.SharedExerciseTooltipWrapper>
+					)}
+				</AnimatePresence>
+			</section>
 			<S.Exercises>
 				<AnimatePresence>{elements}</AnimatePresence>
 			</S.Exercises>

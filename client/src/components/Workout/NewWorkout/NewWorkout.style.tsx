@@ -4,6 +4,7 @@ import { inputStyle } from "../../../helpers/theme/snippets/input";
 import { pageStyle } from "../../../helpers/theme/snippets/page";
 import { inputShadow } from "../../../helpers/theme/snippets/shadow";
 import { inputLabelStyle } from "../../../helpers/theme/snippets/text";
+import { Tooltip } from "../../shared/Tooltip.style";
 
 export const Form = styled(motion.form)`
 	${pageStyle};
@@ -205,7 +206,7 @@ export const ActionBar = styled.div`
 	grid-template-columns: 1fr ${saveWidth};
 `;
 
-export const Exercises = styled.div`
+export const Exercises = styled.section`
 	display: flex;
 	flex-direction: column;
 	gap: 0.9rem;
@@ -325,28 +326,23 @@ export const Summary = styled(motion.div)`
 	justify-content: space-evenly;
 `;
 
-export const Info = styled.button`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: none;
-	border: none;
-	outline: none;
-	border-radius: 50%;
-	background-color: unset;
-
-	transition: all 35ms linear;
-
-	&:focus,
-	&:hover {
-		svg {
-			color: #0079b1;
-		}
-	}
-`;
-
 export const Highlight = styled.span`
 	font-weight: 700;
 	border-bottom: 2px solid deepskyblue;
 	padding: 0 0.2rem;
+`;
+
+export const SharedExerciseTooltipWrapper = styled.div`
+	// Overwrite default tooltip styles. This should be more straightforward.
+	${Tooltip} {
+		p {
+			max-width: 25rem;
+		}
+	}
+`;
+
+export const ExerciseSectionHeader = styled.h1`
+	display: flex;
+	gap: 0.6rem;
+	align-items: center;
 `;
