@@ -6,26 +6,27 @@ import { ID } from "../../../types/shared/id.types";
 import { SessionExercise } from "../../../types/shared/session.types";
 import { baseUrl } from "../fetch-constants";
 
-async function querySuggestedWorkoutById(workout_id: ID) {
-	return (
-		await fetch(`${baseUrl}/exercise/workouts/${workout_id}/session/suggested`, {
-			credentials: "include",
-			method: "GET",
-		})
-	).json();
-}
-
 export function useQuerySuggestedWorkout(workout_id: ID) {
 	const setActiveWorkout = useSetRecoilState(activeWorkoutState);
 
-	return useQuery<Data<"suggested", SessionExercise[]>>(
-		["suggested", workout_id],
-		async () => querySuggestedWorkoutById(workout_id),
-		{
-			refetchOnWindowFocus: false,
-			onSuccess: ({ suggested }) => {
-				setActiveWorkout(suggested);
-			},
-		}
-	);
+	async function querySuggestedWorkoutById(workout_id: ID) {
+		const response = await fetch(
+			`${baseUrl}/exercise/workouts/${workout_id}/session/suggested`,
+			{
+				credentials: "include",
+				method: "GET",
+			}
+		);
+		const data = await response.json();
+
+		if (data.suggested) setActiveWorkout(data.suggested);
+
+		return data;
+	}
+
+	return useQuery<Data<"suggested", SessionExercise[]>>({
+		queryKey: ["suggested", workout_id],
+		queryFn: () => querySuggestedWorkoutById(workout_id),
+		refetchOnWindowFocus: false,
+	});
 }

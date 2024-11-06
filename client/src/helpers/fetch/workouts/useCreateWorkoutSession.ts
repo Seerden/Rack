@@ -15,8 +15,8 @@ async function postWorkoutSession(newWorkoutSession: WorkoutSessionWithEntriesIn
 }
 
 export default function useCreateWorkoutSession() {
-	return useMutation<WorkoutSessionWithEntries, any, WorkoutSessionWithEntriesInput>(
-		["workout/session"],
-		async (session) => postWorkoutSession(session)
-	);
+	return useMutation<WorkoutSessionWithEntries, any, WorkoutSessionWithEntriesInput>({
+		mutationKey: ["workout/session"],
+		mutationFn: async (newWorkoutSession) => postWorkoutSession(newWorkoutSession),
+	});
 }

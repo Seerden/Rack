@@ -2,22 +2,24 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { localUser } from "../../auth/user-storage";
 import { baseUrl, postConfig } from "../fetch-constants";
 
-async function postLogout() {
-	return (
-		await fetch(`${baseUrl}/user/logout`, {
-			...postConfig,
-		})
-	).json();
-}
-
 export default function useLogoutMutation() {
 	const client = useQueryClient();
 
-	return useMutation(["logout"], async () => postLogout(), {
-		// Unset local user on successful logout.
-		onSuccess: () => {
+	async function postLogout() {
+		const response = await fetch(`${baseUrl}/user/logout`, {
+			...postConfig,
+		});
+		const data = await response.json();
+
+		if (data) {
 			localUser.destroy();
-			client.removeQueries(["me"]);
-		},
+			client.removeQueries({ queryKey: ["me"] });
+		}
+		return data;
+	}
+
+	return useMutation({
+		mutationKey: ["logout"],
+		mutationFn: postLogout,
 	});
 }
