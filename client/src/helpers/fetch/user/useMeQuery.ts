@@ -4,30 +4,32 @@ import { User } from "../../../types/shared/user.types";
 import { localUser } from "../../auth/user-storage";
 import { baseUrl } from "../fetch-constants";
 
-export async function getMe() {
+type UseMeQueryOptions = {
+	onSuccess?: ({ user }: UserData) => void;
+};
+
+export async function getMe(options?: UseMeQueryOptions) {
 	const response = await fetch(`${baseUrl}/user/me`, {
 		credentials: "include",
 		method: "GET",
 	});
-	return response.json();
+	const data = await response.json();
+
+	if (data.user) {
+		options?.onSuccess?.({ user: data.user });
+	} else {
+		localUser.destroy();
+	}
+
+	return data;
 }
 
 type UserData = Data<"user", Maybe<User>>;
 
-export default function useMeQuery(options?: {
-	onSuccess?: ({ user }: UserData) => void;
-}) {
-	return useQuery<UserData>(["me"], async () => getMe(), {
-		onSuccess: ({ user }) => {
-			options?.onSuccess?.({ user });
-			if (user) {
-				localUser.set(user);
-			}
-		},
-		onError: () => {
-			console.log("No user found, destroying local user");
-			localUser.destroy();
-		},
+export default function useMeQuery(options?: UseMeQueryOptions) {
+	return useQuery<UserData>({
+		queryKey: ["me"],
+		queryFn: () => getMe(options),
 		enabled: true,
 		retry: false,
 		refetchOnMount: true,
