@@ -7,6 +7,8 @@ import { SessionExercise } from "../../../types/shared/session.types";
 import { baseUrl } from "../fetch-constants";
 
 export function useQuerySuggestedWorkout(workout_id: ID) {
+	const setActiveWorkout = useSetRecoilState(activeWorkoutState);
+
 	async function querySuggestedWorkoutById(workout_id: ID) {
 		const response = await fetch(
 			`${baseUrl}/exercise/workouts/${workout_id}/session/suggested`,
@@ -17,10 +19,7 @@ export function useQuerySuggestedWorkout(workout_id: ID) {
 		);
 		const data = await response.json();
 
-		const setActiveWorkout = useSetRecoilState(activeWorkoutState);
-		if (data.suggested) {
-			setActiveWorkout(data.suggested);
-		}
+		if (data.suggested) setActiveWorkout(data.suggested);
 
 		return data;
 	}
