@@ -6,9 +6,7 @@
 	"scripts": {
 		"serve": "webpack serve --mode development",
 		"build": "webpack --mode production",
-		"test": "jest --silent=false",
-		"storybook": "start-storybook -p 6006",
-		"build-storybook": "build-storybook"
+		"test": "jest --silent=false"
 	},
 	"keywords": [],
 	"author": "",
