@@ -1,11 +1,22 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
+const space = {
+   primary: "0.3rem",
+   secondary: "0.5rem",
+   tertiary: "0.8rem",
+} as const;
+
+const colors = {
+   main: "seagreen",
+   secondary: "#209b45",
+} as const;
+
 export const Section = styled(motion.section)`
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	margin-top: 0.3rem;
+	margin-top: ${space.primary};
 `;
 
 export const Text = styled.p`
@@ -15,17 +26,17 @@ export const Text = styled.p`
 	font-size: 0.89rem;
 	color: #333;
 
-	margin-right: 0.3rem;
-	margin-bottom: 0.3rem;
-	box-shadow: 0.3rem 0.3rem 0 0.1rem seagreen;
+	margin-right: ${space.primary};
+	margin-bottom: ${space.primary};
+	box-shadow: ${space.primary} ${space.primary} 0 0.1rem ${colors.main};
 
-	border: 3px solid #209b45;
+	border: 3px solid ${colors.secondary};
 `;
 
 export const Title = styled.h1`
 	position: absolute;
-	right: 0.8rem;
-	top: 0.5rem;
+	right: ${space.tertiary};
+	top: ${space.secondary};
 
 	display: flex;
 	justify-content: flex-end;
