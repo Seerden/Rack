@@ -3,8 +3,9 @@ import { localUser } from "../../auth/user-storage";
 import { baseUrl, postConfig } from "../fetch-constants";
 
 export default function useLogoutMutation() {
+	const client = useQueryClient();
+
 	async function postLogout() {
-		const client = useQueryClient();
 		const response = await fetch(`${baseUrl}/user/logout`, {
 			...postConfig,
 		});
