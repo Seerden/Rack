@@ -2,6 +2,12 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 import { SubTitle } from "../../../../helpers/theme/snippets/Title";
 
+const colors = {
+   main: "#ffe800",
+   secondary: "#ffe600",
+   tertiary: "#d8c200"
+} as const;
+
 export const ExerciseRow = styled(motion.div)`
 	&:nth-of-type(1) {
 		margin-top: 0.8rem;
@@ -55,7 +61,7 @@ export const Input = styled.input`
 	&:focus,
 	&:active {
 		outline: 1px solid white;
-		box-shadow: 0 0.2rem 0 0 #ffe800;
+		box-shadow: 0 0.2rem 0 0 ${colors.main};
 		transform: translateY(-2px);
 	}
 `;
@@ -81,7 +87,7 @@ export const WarmupForm = styled.form`
 	}
 
 	box-shadow: 6px 6px 0 -2px #ccc, -6px -6px 0 -2px white;
-	border: 3px solid #ffe800;
+	border: 3px solid ${colors.main};
 	border-radius: 8px;
 	background-color: #fefefe;
 `;
@@ -123,17 +129,17 @@ export const Button = styled(motion.button)`
 		padding: 0.25rem 0.7rem;
 	}
 
-	background-color: #ffe600;
+	background-color: ${colors.secondary};
 	color: black;
-	border: 2px solid #ffe600ba;
+	border: 2px solid ${colors.secondary};
 	font-size: 0.95rem;
 	border-radius: 12px;
 
 	&:hover,
 	&:active {
 		transform: translateY(-2px);
-		border-bottom-color: #d8c200;
-		box-shadow: 0 0.1rem 0.4rem -0.05rem #d8c200;
+		border-bottom-color: ${colors.tertiary};
+		box-shadow: 0 0.1rem 0.4rem -0.05rem ${colors.tertiary};
 	}
 
 	transition: all 25ms linear;
@@ -147,7 +153,7 @@ export const SaveButton = styled.button`
 	height: max-content;
 	margin-left: auto;
 	align-self: flex-end;
-	background-color: #ffe800;
+	background-color: ${colors.main};
 	border: 1px solid #eee;
 	outline: none;
 	border-radius: 50%;
