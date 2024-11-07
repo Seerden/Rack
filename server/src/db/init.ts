@@ -28,4 +28,8 @@ const testOptions = {
 	host: DB_TEST_HOST,
 };
 
+// TODO: where is IS_TEST_ENVIRONMENT supposed to be injected into the
+// environment?
+// as far as I can tell, jest sets NODE_ENV to "test" when running tests so we
+// could just use that
 export const sqlConnection = postgres(IS_TEST_ENVIRONMENT ? testOptions : options);
