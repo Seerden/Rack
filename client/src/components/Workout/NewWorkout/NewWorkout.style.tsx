@@ -1,3 +1,4 @@
+import { flex } from "@helpers/theme/snippets/layout";
 import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 import { inputStyle } from "../../../helpers/theme/snippets/input";
@@ -33,8 +34,8 @@ export const Label = styled.label`
 `;
 
 export const Field = styled.div<{ gridArea?: string }>`
-	display: flex;
-	flex-direction: column;
+	${flex.column};
+
 	min-height: 100%;
 	width: 100%;
 	justify-content: space-around;
@@ -72,8 +73,7 @@ export const MetaField = styled(Field)`
 	border: none;
 
 	div {
-		display: flex;
-		flex-direction: column;
+		${flex.column};
 	}
 
 	background-color: #f3f3f3;
@@ -91,15 +91,14 @@ export const MetaField = styled(Field)`
 `;
 
 export const InputGroup = styled.span`
-	display: flex;
-	flex-direction: row;
+	${flex.row};
+
 	gap: 1rem;
 	align-items: center;
 `;
 
 export const SubField = styled.span`
-	display: flex;
-	flex-direction: column;
+	${flex.column};
 
 	${Label} {
 		font-size: 0.82rem;
@@ -184,10 +183,10 @@ export const SaveButton = styled(Button)`
 	${(p) =>
 		!p.disabled &&
 		css`
-			border-color: forestgreen;
+			border-color: ${p.theme.colors.green.main};
 
 			&:hover {
-				border-color: forestgreen;
+				border-color: ${p.theme.colors.green.main};
 			}
 
 			box-shadow: none;
@@ -206,8 +205,7 @@ export const ActionBar = styled.div`
 `;
 
 export const Exercises = styled.div`
-	display: flex;
-	flex-direction: column;
+	${flex.column};
 	gap: 0.9rem;
 `;
 
@@ -241,7 +239,7 @@ export const DeleteButton = styled(ExpandButton)`
 	border-radius: 8px;
 	align-items: center;
 	justify-content: center;
-	color: orangered;
+	color: ${p => p.theme.colors.red.secondary};;
 	background-color: white;
 
 	position: absolute;
@@ -251,7 +249,7 @@ export const DeleteButton = styled(ExpandButton)`
 
 	&:hover {
 		color: white;
-		background-color: orangered;
+		background-color: ${p => p.theme.colors.red.secondary};;
 		transform: scale(1.05);
 		border-radius: 10px;
 	}
@@ -274,7 +272,7 @@ export const Fieldset = styled(motion.fieldset)<{ $isValid?: boolean }>`
 	--radius: ${(p) => (p.$isValid ? 10 : 3)}px;
 	border-radius: 0 var(--radius) var(--radius) 0;
 
-	box-shadow: 1.5rem 1.5rem 0 -1.3rem ${(p) => (p.$isValid ? "green" : "orangered")},
+	box-shadow: 1.5rem 1.5rem 0 -1.3rem ${(p) => (p.$isValid ? "green" : p.theme.colors.red.secondary)},
 		0 0.4rem 0.5rem -0.15rem #c1c1c1;
 
 	&:only-child {
@@ -319,8 +317,7 @@ export const Datum = styled.span`
 `;
 
 export const Summary = styled(motion.div)`
-	display: flex;
-	flex-direction: row;
+	${flex.row};
 	gap: 0.2rem;
 	justify-content: space-evenly;
 `;

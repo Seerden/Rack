@@ -10,7 +10,7 @@ export const TimerButton = styled.button<{ stopped?: boolean }>`
 	${(p) =>
 		p.stopped &&
 		css`
-			background-color: orangered;
+			background-color: ${p.theme.colors.red.secondary};;
 
 			svg {
 				fill: ${p.stopped ? "white" : "lightgrey"};
@@ -96,7 +96,7 @@ export const Text = styled.text<{ pastDue?: boolean }>`
 	${(p) =>
 		p.pastDue &&
 		css`
-			fill: forestgreen;
+			fill: ${p.theme.colors.green.main};
 		`}
 
 	transform: rotate(90deg);

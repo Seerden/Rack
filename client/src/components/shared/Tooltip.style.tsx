@@ -38,14 +38,14 @@ export const Close = styled.button`
 	margin-top: -0.45rem;
 
 	svg {
-		fill: orangered;
+		fill: ${p => p.theme.colors.red.secondary};
 		transition: all 35ms linear;
 	}
 
 	&:hover,
 	&:focus {
 		box-shadow: 0 0 0.04rem 0 #000;
-		background-color: orangered;
+		background-color: ${p => p.theme.colors.red.secondary};;
 
 		svg {
 			fill: white;
