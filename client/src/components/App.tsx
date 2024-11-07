@@ -16,16 +16,13 @@ const NewWorkout = lazy(() => import("@components/Workout/NewWorkout/NewWorkout"
 const Register = lazy(() => import("@components/Register/Register"));
 const Workouts = lazy(() => import("@components/Workouts/Workouts"));
 const WorkoutSessionView = lazy(
-	() => import("@components/WorkoutSession/WorkoutSessionView")
+	() => import("@components/WorkoutSession/WorkoutSessionView"),
 );
 
 const App = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ReactQueryDevtools
-				initialIsOpen={false}
-				position="bottom"
-			/>
+			<ReactQueryDevtools initialIsOpen={false} position="bottom" />
 			<RecoilRoot>
 				<ThemeProvider theme={theme}>
 					<Router>
