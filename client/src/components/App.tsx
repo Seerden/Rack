@@ -8,12 +8,12 @@ import { queryClient } from "../helpers/query-client";
 import { theme } from "../helpers/theme/theme";
 import AnimatedRoutes from "./AnimatedRoutes";
 import Suspended from "./Suspended";
-import NewWorkout from "./Workout/NewWorkout/NewWorkout";
 
-const Register = lazy(() => import("@components/Register/Register"));
+const Header = lazy(() => import("@components/Header/Header"));
 const Home = lazy(() => import("@components/Home/Home"));
 const Login = lazy(() => import("@components/Login/Login"));
-const Header = lazy(() => import("@components/Header/Header"));
+const NewWorkout = lazy(() => import("@components/Workout/NewWorkout/NewWorkout"));
+const Register = lazy(() => import("@components/Register/Register"));
 const Workouts = lazy(() => import("@components/Workouts/Workouts"));
 const WorkoutSessionView = lazy(
 	() => import("@components/WorkoutSession/WorkoutSessionView")
