@@ -1,10 +1,10 @@
+import { flex } from "@/helpers/theme/snippets/layout";
 import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 
 export const Exercises = styled.ul`
-	display: flex;
+	${flex.column};
 	gap: 0.4rem;
-	flex-direction: column;
 	margin-bottom: 1rem;
 `;
 
@@ -17,8 +17,7 @@ export const Entry = styled(motion.li)<{ $isActive?: boolean }>`
 	justify-content: center;
 	place-self: center;
 
-	display: flex;
-	flex-direction: row;
+	${flex.row};
 	gap: 1rem;
 
 	padding: 0.42rem 2.2rem;
@@ -72,9 +71,8 @@ export const RepScheme = styled.span`
 `;
 
 export const SetIcons = styled.span`
-	display: flex;
+	${flex.row};
 	justify-content: space-evenly;
-	flex-direction: row;
 	gap: 0.3rem;
 	min-width: 5rem;
 	align-items: center;

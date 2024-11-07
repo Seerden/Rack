@@ -1,3 +1,4 @@
+import { flex } from "@/helpers/theme/snippets/layout";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
@@ -14,8 +15,7 @@ const colors = {
 
 export const Section = styled(motion.section)`
 	position: relative;
-	display: flex;
-	flex-direction: column;
+	${flex.column};
 	margin-top: ${space.primary};
 `;
 

@@ -1,13 +1,13 @@
+import { flex } from "@/helpers/theme/snippets/layout";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { pageStyle } from "../../helpers/theme/snippets/page";
 import { SubmitButton } from "../../helpers/theme/snippets/SubmitButton";
 
 export const Page = styled(motion.section)`
-	${pageStyle}
+	${pageStyle};
 
-	display: flex;
-	flex-direction: column;
+	${flex.column};
 `;
 
 export const EndButton = styled(SubmitButton)`

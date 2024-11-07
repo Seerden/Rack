@@ -1,3 +1,4 @@
+import { flex } from "@/helpers/theme/snippets/layout";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { SubTitle } from "../../../../helpers/theme/snippets/Title";
@@ -30,8 +31,7 @@ export const ExerciseRow = styled(motion.div)`
 	}
 
 	@media screen and (max-width: 320px) {
-		display: flex;
-		flex-direction: column;
+		${flex.column};
 		gap: 0.3rem;
 		align-items: flex-start;
 	}
@@ -77,8 +77,7 @@ export const Reps = styled.span`
 `;
 
 export const WarmupForm = styled.form`
-	display: flex;
-	flex-direction: column;
+	${flex.column};
 
 	padding: 1.3rem 2rem;
 
@@ -93,8 +92,7 @@ export const WarmupForm = styled.form`
 `;
 
 export const WarmupFields = styled.div`
-	display: flex;
-	flex-direction: row;
+	${flex.row};
 	gap: 1rem;
 
 	@media screen and (max-width: 320px) {
@@ -113,8 +111,7 @@ export const WarmupFields = styled.div`
 			padding-bottom: 0.1rem;
 		}
 
-		display: flex;
-		flex-direction: column;
+		${flex.column};
 		min-width: max-content;
 	}
 `;
@@ -171,8 +168,7 @@ export const SaveButton = styled.button`
 `;
 
 export const Warmup = styled(motion.section)`
-	display: flex;
-	flex-direction: column;
+	${flex.column};
 	width: 100%;
 `;
 
@@ -188,9 +184,8 @@ export const ActiveExercise = styled(motion.section)`
 `;
 
 export const ActiveTitle = styled(motion.header)`
-	display: flex;
+	${flex.row};
 	height: 2.4rem;
-	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 1rem;

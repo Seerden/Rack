@@ -27,8 +27,7 @@ export const Label = styled.label`
 	${inputLabelStyle};
 	font-size: 1.1rem;
 
-	display: flex;
-	flex-direction: row;
+	${flex.row};
 	justify-content: space-between;
 	align-items: center;
 `;
