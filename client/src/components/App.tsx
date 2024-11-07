@@ -24,7 +24,6 @@ const App = () => {
 		<QueryClientProvider client={queryClient}>
 			<ReactQueryDevtools
 				initialIsOpen={false}
-				
 				position="bottom"
 			/>
 			<RecoilRoot>
