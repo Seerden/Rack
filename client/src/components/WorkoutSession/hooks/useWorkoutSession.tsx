@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import useCreateWorkoutSession from "../../../helpers/fetch/workouts/useCreateWorkoutSession";
 import useRouterProps from "../../../hooks/useRouterProps";
 import { WorkoutWithExercises } from "../../../types/shared/exercise.types";
 import { ID } from "../../../types/shared/id.types";
 import {
-	SessionExercise,
-	WorkoutSessionWithEntriesInput,
+   SessionExercise,
+   WorkoutSessionWithEntriesInput,
 } from "../../../types/shared/session.types";
 import { parseSessionEntries } from "../helpers/parse-session-entries";
 import { SessionEntriesInput } from "../types/workout-state.types";
@@ -50,11 +50,6 @@ export default function useWorkoutSession({
 		const newIndex = (activeIndex + 1) % size;
 		setActiveExerciseId(session[newIndex].exercise_id);
 	}, [session, activeIndex, activeExerciseId]);
-
-	// TODO: dev-only state logging
-	useEffect(() => {
-		console.log({ sessionEntries, session });
-	}, [sessionEntries, session]);
 
 	const handleSubmit = useCallback(() => {
 		if (!allCompleted) return;

@@ -63,8 +63,9 @@ export default function RepInput({
 			{...(defaultValue.current && { defaultValue: defaultValue.current })}
 			onChange={(e) => updateSessionEntries(e)}
 			onBlur={(e) => {
-				console.log({ defaultValue });
 				// On blurring the last working set, move to the next exercise.
+            // TODO: only move on if the current exercise is not the last one
+            // (there's no reason to loop back around)
 				if (!e.target.value || +e.target.value === defaultValue.current) return;
 				if (index === sets - 1 && !is_warmup) {
 					cycleIndex();
